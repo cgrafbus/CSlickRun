@@ -1,14 +1,12 @@
-﻿using System.Diagnostics;
-using System.IO;
+﻿using System.IO;
 using System.Windows;
-using CSlickRun.UI.Windows;
 using Newtonsoft.Json;
 
 namespace CSlickRun.Logic;
 
 public class CommandManager
 {
-    public List<Command> UserCommands = new();
+    public List<Command>? UserCommands = new();
 
     public string CreateDefaultCommandsAsJson()
     {
@@ -16,6 +14,7 @@ public class CommandManager
         CommandList.Add(new Command("Config", null, null));
         return JsonConvert.SerializeObject(CommandList);
     }
+
     public async Task LoadCommands()
     {
         var commandsAsJson = await File.ReadAllTextAsync(Global.CommandsFile);
@@ -52,7 +51,6 @@ public class CommandManager
         try
         {
             command.Execute();
-
         }
         catch (Exception ex)
         {

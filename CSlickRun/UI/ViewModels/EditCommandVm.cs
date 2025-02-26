@@ -1,5 +1,4 @@
 ﻿using System.Collections.ObjectModel;
-using System.ComponentModel.DataAnnotations;
 using System.Windows;
 using CSlickRun.Logic;
 using CSlickRun.UI.ViewModels.Base;
@@ -11,9 +10,9 @@ public class EditCommandVm : ViewModelBase
 {
     private readonly CommandVm _parentVm;
 
-    private CommandPath _selectedPath;
-
     private ObservableCollection<CommandPath>? _commandPaths;
+
+    private CommandPath _selectedPath;
 
     public EditCommandVm(CommandVm parentVm, Command command)
     {
@@ -28,6 +27,7 @@ public class EditCommandVm : ViewModelBase
                 CommandPaths.Add(path);
             }
         }
+
         SaveCommand = new RelayCommand(ExecuteSaveCommand);
 
         GoBackCommand = new RelayCommand(_ => _parentVm.CurrentCommandView = new CommandListView(_parentVm));
@@ -38,23 +38,6 @@ public class EditCommandVm : ViewModelBase
     {
         get => _commandPaths;
         set => SetField(ref _commandPaths, value);
-    }
-
-    private void ExecuteSaveCommand(object? obj)
-    {
-        if (string.IsNullOrWhiteSpace(CurrentCommand.Name) || string.IsNullOrEmpty(CurrentCommand.Name))
-        {
-            MessageBox.Show("Invalid Name");
-            return;
-        }
-        CurrentCommand.Paths = CommandPaths?.ToList() ?? [];
-        if (_parentVm.Commands != null && !_parentVm.Commands.Contains(CurrentCommand))
-        {
-            _parentVm.Commands.Add(CurrentCommand);
-        }
-
-        _parentVm.CurrentCommandView = new CommandListView(_parentVm);
-        _parentVm.SaveCommand.Execute(this);
     }
 
     public CommandPath SelectedPath
@@ -68,5 +51,21 @@ public class EditCommandVm : ViewModelBase
     public RelayCommand SaveCommand { get; }
     public RelayCommand GoBackCommand { get; }
 
+    private void ExecuteSaveCommand(object? obj)
+    {
+        if (string.IsNullOrWhiteSpace(CurrentCommand.Name) || string.IsNullOrEmpty(CurrentCommand.Name))
+        {
+            MessageBox.Show("Invalid Name");
+            return;
+        }
 
+        CurrentCommand.Paths = CommandPaths?.ToList() ?? [];
+        if (!_parentVm.Commands.Contains(CurrentCommand))
+        {
+            _parentVm.Commands.Add(CurrentCommand);
+        }
+
+        _parentVm.CurrentCommandView = new CommandListView(_parentVm);
+        _parentVm.SaveCommand.Execute(this);
+    }
 }

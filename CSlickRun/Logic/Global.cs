@@ -1,5 +1,4 @@
 ﻿using System.IO;
-using System.Reflection;
 
 namespace CSlickRun.Logic;
 
@@ -19,4 +18,6 @@ public class Global
     {
         new Command("Config", null, null)
     };
+
+    public static KeyboardHook GlobalHook = new();
 }

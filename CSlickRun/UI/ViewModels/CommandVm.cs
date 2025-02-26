@@ -1,55 +1,44 @@
 ﻿using System.Collections.ObjectModel;
-using System.Reflection.Emit;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Input;
 using CSlickRun.Logic;
 using CSlickRun.UI.ViewModels.Base;
 using CSlickRun.UI.Views;
 
 namespace CSlickRun.UI.ViewModels;
 
-public class CommandVm : ViewModelBase
+public class CommandVm : CommandVm_Base
 {
-    private UserControl _currentCommandView;
-    public UserControl CurrentCommandView
-    {
-        get => _currentCommandView;
-        set => SetField(ref _currentCommandView, value);
-    }
-
-    private ObservableCollection<Command>? _commands;
-
-    public ObservableCollection<Command>? Commands
-    {
-        get => _commands;
-        set => SetField(ref _commands, value);
-    }
-    public ICommand EditCommand { get; }
-    public ICommand AddCommand { get; }
-    public ICommand DeleteCommand { get; }
-    public ICommand ShowCommandsList { get; }
-    public ICommand SaveCommand { get; }
-
-
     public CommandVm()
     {
-        Commands = new ObservableCollection<Command>(Global.GlobalCommandManager.UserCommands ?? new());
+        Commands = new ObservableCollection<Command>(Global.GlobalCommandManager.UserCommands ?? []);
 
         // Übersicht zuerst anzeigen
         CurrentCommandView = new CommandListView(this);
 
-        EditCommand = new RelayCommand(command => CurrentCommandView = new EditCommandView((Command)command, this));
-        AddCommand = new RelayCommand(_ => CurrentCommandView = new EditCommandView(new Command(), this));
-        ShowCommandsList = new RelayCommand(_ => CurrentCommandView = new CommandListView(this));
-        DeleteCommand = new RelayCommand(command => Commands.Remove((Command)command));
-        SaveCommand = new AsyncRelayCommand(ExecuteSaveCommand);
+        EditCommand = new RelayCommand(ExecuteEditCommand);
+        AddCommand = new RelayCommand(ExecuteAddCommand);
+        DeleteCommand = new RelayCommand(ExecuteDeleteCommand);
+        SaveCommand = new AsyncRelayCommand(ExecuteSaveCommandAsync);
     }
 
-    private async Task ExecuteSaveCommand(object? obj)
+    private void ExecuteEditCommand(object? obj)
     {
-        Global.GlobalCommandManager.UserCommands.Clear();
-        Global.GlobalCommandManager.UserCommands.AddRange(Commands ?? new());
+        CurrentCommandView = new EditCommandView((Command)obj! ?? throw new AggregateException(), this);
+    }
+
+    private void ExecuteAddCommand(object? obj)
+    {
+        CurrentCommandView = new EditCommandView(new Command(), this);
+    }
+
+    private void ExecuteDeleteCommand(object? obj)
+    {
+        Commands.Remove((Command)obj! ?? throw new AggregateException());
+    }
+
+    private async Task ExecuteSaveCommandAsync(object? obj)
+    {
+        Global.GlobalCommandManager.UserCommands?.Clear();
+        Global.GlobalCommandManager.UserCommands?.AddRange(Commands ?? new ObservableCollection<Command>());
 
         await Global.GlobalCommandManager.SaveCommands();
     }
