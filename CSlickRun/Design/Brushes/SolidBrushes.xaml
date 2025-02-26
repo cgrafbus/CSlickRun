@@ -1,0 +1,21 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <SolidColorBrush x:Key="MainBackgroundBrush" Color="{DynamicResource MainBackgroundColor}" />
+    <SolidColorBrush x:Key="SecondaryBackgroundBrush" Color="{DynamicResource SecondaryBackgroundColor}" />
+    <SolidColorBrush x:Key="TertiaryBackgroundBrush" Color="{DynamicResource TertiaryBackgroundColor}" />
+    <SolidColorBrush x:Key="MainForegroundBrush" Color="{DynamicResource MainForegroundColor}" />
+    <SolidColorBrush x:Key="SecondaryForegroundBrush" Color="{DynamicResource SecondaryForegroundColor}" />
+    <SolidColorBrush x:Key="MainAccentBrush" Color="{DynamicResource MainAccentColor}" />
+    <SolidColorBrush x:Key="SecondaryAccentBrush" Color="{DynamicResource SecondaryAccentColor}" />
+    <SolidColorBrush x:Key="GreenBrush" Color="{DynamicResource GreenColor}" />
+    <SolidColorBrush x:Key="RedBrush" Color="{DynamicResource RedColor}" />
+    <SolidColorBrush
+        x:Key="HoverBrushBasic"
+        Opacity="0.3"
+        Color="{DynamicResource MainForegroundColor}" />
+    <SolidColorBrush x:Key="HoverBrushColored" 
+                     Opacity="0.3" 
+                     Color="{DynamicResource SecondaryAccentColor}"/>
+
+
+</ResourceDictionary>

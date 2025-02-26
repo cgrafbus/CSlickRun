@@ -1,0 +1,17 @@
+﻿<Application
+    x:Class="CSlickRun.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:CSlickRun"
+    StartupUri="UI/Windows/CommandLineWindow.xaml">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Design/Colors/DarkTheme.xaml" />
+                <ResourceDictionary Source="/Design/Brushes/SolidBrushes.xaml" />
+                <ResourceDictionary Source="/Design/Styles.xaml" />
+                <ResourceDictionary Source="/Design/GridStyle.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

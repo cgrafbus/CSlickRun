@@ -1,0 +1,68 @@
+﻿<Window
+    x:Class="CSlickRun.UI.Windows.CommandLineWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:CSlickRun.UI.Windows"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewModels="clr-namespace:CSlickRun.UI.ViewModels"
+    Width="{Binding CommandLineWidth, Mode=TwoWay}"
+    Height="{Binding CommandLineHeight, Mode=TwoWay}"
+    d:Height="22"
+    d:Width="700"
+    AllowsTransparency="True"
+    Background="Transparent"
+    Left="{Binding Left, Mode=TwoWay}"
+    ResizeMode="NoResize"
+    ShowInTaskbar="False"
+    Top="{Binding Top, Mode=TwoWay}"
+    Topmost="{Binding AlwaysOnTop, Mode=TwoWay}"
+    WindowStyle="None"
+    mc:Ignorable="d">
+    <Window.DataContext>
+        <viewModels:CommandLineVm />
+    </Window.DataContext>
+    <Border
+        x:Name="CommandLineHost"
+        Width="{Binding CommandLineWidth, Mode=TwoWay}"
+        Height="{Binding CommandLineHeight, Mode=TwoWay}"
+        VerticalAlignment="Center"
+        Background="{Binding CommandLineBackgroundColor, Mode=TwoWay}"
+        BorderBrush="{Binding BorderColor, Mode=TwoWay}"
+        MouseLeftButtonDown="CommandLineHost_MouseLeftButtonDown"
+        Style="{DynamicResource SlickRunBorderStyle}">
+        <Grid
+            Width="{Binding CommandLineWidth, Mode=TwoWay}"
+            Height="{Binding CommandLineHeight, Mode=TwoWay}"
+            VerticalAlignment="Center"
+            Background="{Binding CommandLineBackgroundColor}">
+            <TextBlock
+                x:Name="PreviewTextBlock"
+                Width="{Binding CommandLineWidth, Mode=TwoWay}"
+                Height="{Binding CommandLineHeight, Mode=TwoWay}"
+                VerticalAlignment="Center" />
+            <TextBlock
+                x:Name="AutoCompleteTextBlock"
+                Width="{Binding CommandLineWidth, Mode=TwoWay}"
+                Height="{Binding CommandLineHeight, Mode=TwoWay}"
+                Margin="3,0,0,0"
+                Panel.ZIndex="1"
+                Foreground="{Binding AutoCompleteForegroundColor, Mode=TwoWay}"
+                Style="{DynamicResource SlickRunCommandLineAutCompleteStyle}" />
+            <TextBox
+                x:Name="CommandTextBox"
+                Width="{Binding CommandLineWidth, Mode=TwoWay}"
+                Height="{Binding CommandLineHeight, Mode=TwoWay}"
+                VerticalAlignment="Center"
+                Panel.ZIndex="2"
+                CaretBrush="{Binding CaretColor}"
+                Foreground="{Binding CommandLineForegroundColor, Mode=TwoWay}"
+                KeyDown="CommandTextBox_KeyDown"
+                LostKeyboardFocus="CommandTextBox_LostKeyboardFocus"
+                MaxLength="20"
+                Style="{DynamicResource SlickRunCommandLineStyle}"
+                TextChanged="CommandTextBox_TextChanged"
+                Visibility="Hidden" />
+        </Grid>
+    </Border>
+</Window>
