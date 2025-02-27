@@ -10,30 +10,90 @@
     Title="Configure CSlickRun"
     Width="1600"
     Height="800"
+    AllowsTransparency="True"
+    Background="Transparent"
     ResizeMode="CanMinimize"
     WindowStartupLocation="CenterScreen"
+    WindowStyle="None"
     mc:Ignorable="d">
     <Window.DataContext>
         <vm:ConfigWindowVm />
     </Window.DataContext>
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="1*" />
-            <ColumnDefinition Width="14*" />
-        </Grid.ColumnDefinitions>
+    <WindowChrome.WindowChrome>
+        <WindowChrome CaptionHeight="30" CornerRadius="4" />
+    </WindowChrome.WindowChrome>
+    <Border
+        Background="Transparent"
+        BorderThickness="1"
+        ClipToBounds="True"
+        RenderOptions.BitmapScalingMode="HighQuality"
+        RenderOptions.ClearTypeHint="Enabled"
+        SnapsToDevicePixels="True"
+        UseLayoutRounding="True">
+        <Border.Clip>
+            <RectangleGeometry
+                RadiusX="12"
+                RadiusY="12"
+                Rect="0,0,1600,800" />
+        </Border.Clip>
         <StackPanel
-            x:Name="NavBar"
-            Grid.Column="0"
-            Background="{DynamicResource SecondaryBackgroundBrush}">
-            <controls:NavigationBarButton
-                x:Name="CommandNavButton"
-                Style="{DynamicResource NavigationBarButtonStyle}"
-                TextContent="Commands" />
-            <controls:NavigationBarButton
-                x:Name="SettingsNavButton"
-                Style="{DynamicResource NavigationBarButtonStyle}"
-                TextContent="Settings" />
+            Height="800"
+            ClipToBounds="True"
+            Orientation="Vertical">
+            <StackPanel
+                Width="1600"
+                Height="30"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Top"
+                Panel.ZIndex="1"
+                Background="{DynamicResource MainAccentBrush}"
+                ClipToBounds="True"
+                FlowDirection="RightToLeft"
+                Orientation="Horizontal">
+                <Button
+                    x:Name="CloseWindowButton"
+                    Width="50"
+                    Height="30"
+                    Background="{DynamicResource MainAccentBrush}"
+                    Click="CloseWindowButton_OnClick"
+                    Content="X"
+                    Style="{DynamicResource ButtonDefault}"
+                    ToolTip="Close"
+                    WindowChrome.IsHitTestVisibleInChrome="True" />
+                <Button
+                    x:Name="MinimizeWindowButton"
+                    Width="50"
+                    Height="30"
+                    Background="{DynamicResource MainAccentBrush}"
+                    Click="MinimizeWindowButton_OnClick"
+                    Content="__"
+                    Style="{DynamicResource ButtonDefault}"
+                    ToolTip="Minimize"
+                    WindowChrome.IsHitTestVisibleInChrome="True" />
+            </StackPanel>
+            <Grid Height="770" ClipToBounds="True">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="14*" />
+                </Grid.ColumnDefinitions>
+                <ContentControl Grid.Column="1" Content="{Binding CurrentView}" />
+                <StackPanel
+                    x:Name="NavBar"
+                    Grid.Column="0"
+                    Background="{DynamicResource SecondaryBackgroundBrush}">
+                    <controls:NavigationBarButton
+                        x:Name="CommandNavButton"
+                        Cursor="Hand"
+                        Style="{DynamicResource NavigationBarButtonStyle}"
+                        TextContent="Commands" />
+                    <controls:NavigationBarButton
+                        x:Name="SettingsNavButton"
+                        Cursor="Hand"
+                        Style="{DynamicResource NavigationBarButtonStyle}"
+                        TextContent="Settings" />
+                </StackPanel>
+            </Grid>
+
         </StackPanel>
-        <ContentControl Grid.Column="1" Content="{Binding CurrentView}" />
-    </Grid>
+    </Border>
 </Window>

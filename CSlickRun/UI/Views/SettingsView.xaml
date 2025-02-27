@@ -159,12 +159,14 @@
                         Width="100"
                         Foreground="{DynamicResource MainForegroundBrush}"
                         InputScope="Number"
+                        PreviewTextInput="UIElement_OnPreviewTextInput"
                         Style="{DynamicResource SlickRunCommandLineStyle}"
                         Text="{Binding CommandLineWidth, Mode=TwoWay}" />
                     <TextBox
                         Width="100"
                         Foreground="{DynamicResource MainForegroundBrush}"
                         InputScope="Number"
+                        PreviewTextInput="UIElement_OnPreviewTextInput"
                         Style="{DynamicResource SlickRunCommandLineStyle}"
                         Text="{Binding CommandLineHeight, Mode=TwoWay}" />
                 </StackPanel>
