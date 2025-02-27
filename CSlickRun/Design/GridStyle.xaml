@@ -35,46 +35,11 @@
                             Grid.ColumnSpan="2"
                             Background="{DynamicResource TertiaryBackgroundBrush}"
                             BorderBrush="{DynamicResource MainAccentBrush}"
-                            BorderThickness="0,1,0,1" />
+                            BorderThickness="1" />
                         <ContentPresenter
                             Grid.Column="0"
                             Margin="6,3,6,3"
                             VerticalAlignment="Center" />
-                        <Path
-                            x:Name="SortArrow"
-                            Grid.Column="1"
-                            Width="8"
-                            Height="6"
-                            Margin="0,0,8,0"
-                            VerticalAlignment="Center"
-                            Data="M0,0 L1,0 0.5,1 z"
-                            Fill="{DynamicResource MainForegroundBrush}"
-                            RenderTransformOrigin="0.5,0.4"
-                            Stretch="Fill"
-                            Visibility="Collapsed" />
-                        <Rectangle
-                            Grid.Column="0"
-                            Grid.ColumnSpan="2"
-                            Width="1"
-                            HorizontalAlignment="Right"
-                            Fill="{DynamicResource SecondaryAccentBrush}" />
-                        <Rectangle
-                            Grid.Column="0"
-                            Grid.ColumnSpan="2"
-                            Width="1"
-                            Margin="0,0,1,0"
-                            HorizontalAlignment="Right"
-                            Fill="{DynamicResource HoverBrushColored}" />
-                        <Thumb
-                            x:Name="PART_LeftHeaderGripper"
-                            Grid.Column="0"
-                            HorizontalAlignment="Left"
-                            Style="{StaticResource Style_HeaderGripper}" />
-                        <Thumb
-                            x:Name="PART_RightHeaderGripper"
-                            Grid.Column="0"
-                            HorizontalAlignment="Right"
-                            Style="{StaticResource Style_HeaderGripper}" />
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="SortDirection" Value="{x:Null}">
@@ -84,20 +49,6 @@
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter TargetName="BackgroundBorder" Property="Background" Value="{StaticResource HoverBrushBasic}" />
                             <Setter TargetName="BackgroundBorder" Property="BorderBrush" Value="{StaticResource HoverBrushBasic}" />
-                        </Trigger>
-                        <Trigger Property="SortDirection" Value="Ascending">
-                            <Setter TargetName="SortArrow" Property="Visibility" Value="Visible" />
-                            <Setter TargetName="SortArrow" Property="RenderTransform">
-                                <Setter.Value>
-                                    <RotateTransform Angle="180" />
-                                </Setter.Value>
-                            </Setter>
-                        </Trigger>
-                        <Trigger Property="SortDirection" Value="Descending">
-                            <Setter TargetName="SortArrow" Property="Visibility" Value="Visible" />
-                        </Trigger>
-                        <Trigger Property="DisplayIndex" Value="0">
-                            <Setter TargetName="PART_LeftHeaderGripper" Property="Visibility" Value="Collapsed" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -109,16 +60,19 @@
 
     <Style TargetType="{x:Type DataGridCell}">
         <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="MinWidth" Value="0" />
+        <Setter Property="Height" Value="28" />
+        <Setter Property="Padding" Value="0" />
         <Setter Property="Foreground" Value="{DynamicResource MainForegroundBrush}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type DataGridCell}">
-                    <Border x:Name="BackgroundBorder" Background="{DynamicResource SecondaryBackgroundBrush}">
-                        <ContentPresenter Margin="4,0,6,0" VerticalAlignment="Center" />
-                    </Border>
+                    <Grid x:Name="BackgroundBorder" Background="{DynamicResource SecondaryBackgroundBrush}">
+                        <ContentPresenter x:Name="Presenter" VerticalAlignment="Center" />
+                    </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsEditing" Value="True">
-                            <Setter TargetName="BackgroundBorder" Property="Background" Value="{DynamicResource MainBackgroundBrush}" />
+                            <Setter Property="Background" Value="{DynamicResource MainAccentBrush}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -130,8 +84,10 @@
     <!--  DataGridRow  -->
 
     <Style x:Key="{x:Type DataGridRow}" TargetType="{x:Type DataGridRow}">
-        <Setter Property="Background" Value="{DynamicResource SecondaryBackgroundBrush}" />
+        <Setter Property="Background" Value="{DynamicResource TertiaryBackgroundBrush}" />
         <Setter Property="SnapsToDevicePixels" Value="true" />
+        <Setter Property="Padding" Value="0" />
+
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type DataGridRow}">
@@ -155,35 +111,17 @@
                                 Grid.Column="1"
                                 ItemsPanel="{TemplateBinding ItemsPanel}"
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-                            <DataGridRowHeader
-                                x:Name="dataGridRowHeader"
-                                Grid.Row="0"
-                                Grid.RowSpan="2"
-                                Grid.Column="0"
-                                SelectiveScrollingGrid.SelectiveScrollingOrientation="Vertical"
-                                Visibility="{Binding RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}, Path=HeadersVisibility, Converter={x:Static DataGrid.HeadersVisibilityConverter}, ConverterParameter={x:Static DataGridHeadersVisibility.Row}}" />
-                            <Grid
-                                Name="Details"
-                                Grid.Row="1"
-                                Grid.Column="1"
-                                Background="{DynamicResource SecondaryBackgroundBrush}"
-                                Visibility="Collapsed">
-                                <DataGridDetailsPresenter x:Name="dataGridDetailsPresenter" />
-                            </Grid>
                         </SelectiveScrollingGrid>
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="DGR_Border" Property="Background" Value="{DynamicResource BlueWindow}" />
-                            <Setter TargetName="dataGridRowHeader" Property="Foreground" Value="White" />
-                            <Setter TargetName="dataGridRowHeader" Property="FontSize" Value="13.333" />
+                            <Setter TargetName="DGR_Border" Property="Background" Value="{DynamicResource MainForegroundBrush}" />
                         </Trigger>
                         <Trigger Property="IsSelected" Value="True">
-                            <Setter TargetName="DGR_Border" Property="TextElement.Foreground" Value="{StaticResource HoverBrushBasic}" />
-                            <Setter TargetName="dataGridDetailsPresenter" Property="Visibility" Value="Hidden" />
-                            <Setter TargetName="dataGridCellsPresenter" Property="FontSize" Value="14.667" />
-                            <Setter TargetName="DGR_Border" Property="Background" Value="{DynamicResource TertiaryBackgroundBrush}" />
-
+                            <Setter TargetName="DGR_Border" Property="TextElement.Foreground" Value="{StaticResource MainForegroundBrush}" />
+                            <Setter TargetName="DGR_Border" Property="TextElement.Background" Value="{StaticResource TertiaryBackgroundBrush}" />
+                            <Setter TargetName="DGR_Border" Property="TextElement.FontFamily" Value="Lucida-Console" />
+                            <Setter TargetName="DGR_Border" Property="Background" Value="{DynamicResource SecondaryBackgroundBrush}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -195,8 +133,9 @@
 
     <Style x:Key="{x:Type DataGrid}" TargetType="{x:Type DataGrid}">
         <Setter Property="ScrollViewer.CanContentScroll" Value="true" />
+        <Setter Property="DataGridTextColumn.EditingElementStyle" Value="{DynamicResource ModernTextBox}" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
-        <Setter Property="AlternatingRowBackground" Value="{StaticResource TertiaryBackgroundBrush}" />
+        <Setter Property="AlternatingRowBackground" Value="{StaticResource SecondaryBackgroundBrush}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type DataGrid}">
@@ -220,42 +159,6 @@
                                             Background="{StaticResource SecondaryBackgroundBrush}"
                                             BorderBrush="{StaticResource MainAccentBrush}"
                                             BorderThickness="0,1" />
-                                        <Button
-                                            Grid.Row="0"
-                                            Grid.Column="0"
-                                            Width="{Binding RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}, Path=RowHeaderActualWidth}"
-                                            Focusable="false"
-                                            OverridesDefaultStyle="True">
-                                            <Button.Template>
-                                                <ControlTemplate TargetType="{x:Type Button}">
-                                                    <Grid>
-                                                        <Border
-                                                            Background="{StaticResource SecondaryBackgroundBrush}"
-                                                            BorderBrush="{StaticResource MainAccentBrush}"
-                                                            BorderThickness="0,1">
-                                                            <Path
-                                                                x:Name="Arrow"
-                                                                Width="11"
-                                                                Height="11"
-                                                                Margin="4"
-                                                                VerticalAlignment="Bottom"
-                                                                Data="M1,0 L1,1 0,1 z"
-                                                                Fill="#3000"
-                                                                Stretch="Fill" />
-                                                        </Border>
-                                                        <Rectangle
-                                                            Width="1"
-                                                            HorizontalAlignment="Right"
-                                                            Fill="{DynamicResource MainAccentBrush}" />
-                                                        <Rectangle
-                                                            Width="1"
-                                                            Margin="0,0,1,0"
-                                                            HorizontalAlignment="Right"
-                                                            Fill="{DynamicResource SecondaryAccentBrush}" />
-                                                    </Grid>
-                                                </ControlTemplate>
-                                            </Button.Template>
-                                        </Button>
                                         <DataGridColumnHeadersPresenter
                                             Grid.Row="0"
                                             Grid.Column="1"
@@ -298,11 +201,6 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-        <Style.Triggers>
-            <Trigger Property="IsGrouping" Value="true">
-                <Setter Property="ScrollViewer.CanContentScroll" Value="false" />
-            </Trigger>
-        </Style.Triggers>
     </Style>
 
 

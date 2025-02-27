@@ -10,6 +10,9 @@
     d:DesignHeight="800"
     d:DesignWidth="1500"
     mc:Ignorable="d">
+    <UserControl.DataContext>
+        <viewModels:EditCommandVm />
+    </UserControl.DataContext>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="73*" />
@@ -35,6 +38,7 @@
                 Width="1500"
                 MinHeight="300"
                 Margin="0,15,0,0"
+                AutoGenerateColumns="True"
                 CanUserDeleteRows="True"
                 CanUserResizeColumns="False"
                 ColumnWidth="500"
