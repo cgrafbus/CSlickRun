@@ -10,19 +10,42 @@ public class CommandManager
 
     public string CreateDefaultCommandsAsJson()
     {
-        var CommandList = new List<Command>();
-        CommandList.Add(new Command("Config", null, null));
+        var CommandList = CreateDefaultCommands();
         return JsonConvert.SerializeObject(CommandList);
+    }
+
+    public List<Command> CreateDefaultCommands()
+    {
+        var CommandList = new List<Command> 
+        { 
+            new(
+            "Config", null, null)
+        };
+        return CommandList;
     }
 
     public async Task LoadCommands()
     {
         var commandsAsJson = await File.ReadAllTextAsync(Global.CommandsFile);
         UserCommands = JsonConvert.DeserializeObject<List<Command>>(commandsAsJson) ?? [];
+        await SaveCommands();
     }
 
     public async Task SaveCommands()
     {
+        var defaultCommands = CreateDefaultCommands();
+        if (UserCommands == null)
+        {
+            UserCommands = defaultCommands;
+        }
+        else
+        {
+            foreach (var defaultCommand in defaultCommands.Where(defaultCommand => UserCommands.All(c => c.Name != defaultCommand.Name)))
+            {
+                UserCommands.Add(defaultCommand);
+            }
+        }
+
         var commandsAsJson = JsonConvert.SerializeObject(UserCommands);
         await File.WriteAllTextAsync(Global.CommandsFile, commandsAsJson);
     }
@@ -50,7 +73,7 @@ public class CommandManager
     {
         try
         {
-            command.Execute();
+            command?.Execute();
         }
         catch (Exception ex)
         {

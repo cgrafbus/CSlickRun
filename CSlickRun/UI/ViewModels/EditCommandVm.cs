@@ -14,31 +14,6 @@ public class EditCommandVm : ViewModelBase
 
     private CommandPath _selectedPath;
 
-    public EditCommandVm()
-    {
-        CommandPaths = new ObservableCollection<CommandPath>
-        {
-            new()
-            {
-                Argument = "testArg",
-                Path = "test",
-                StartupPath = "testPathstart"
-            },
-            new()
-            {
-                Argument = "testArg2",
-                Path = "test2",
-                StartupPath = "testPathstart2"
-            },
-            new()
-            {
-                Argument = "testArg3",
-                Path = "test3",
-                StartupPath = "testPathstart3"
-            }
-        };
-    }
-
     public EditCommandVm(CommandVm parentVm, Command command)
     {
         _parentVm = parentVm;
@@ -84,7 +59,10 @@ public class EditCommandVm : ViewModelBase
             return;
         }
 
-        CurrentCommand.Paths = CommandPaths?.ToList() ?? [];
+        CurrentCommand.Paths = CommandPaths?
+            .Where(path => !string.IsNullOrEmpty(path.Path) 
+                           && !string.IsNullOrWhiteSpace(path.Path))
+            .ToList() ?? [];
         if (!_parentVm.Commands.Contains(CurrentCommand))
         {
             _parentVm.Commands.Add(CurrentCommand);

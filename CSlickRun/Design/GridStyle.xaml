@@ -56,90 +56,48 @@
         </Setter>
     </Style>
 
-
-
-    <Style TargetType="{x:Type DataGridCell}">
-        <Setter Property="OverridesDefaultStyle" Value="True" />
-        <Setter Property="MinWidth" Value="0" />
-        <Setter Property="Height" Value="28" />
-        <Setter Property="Padding" Value="0" />
-        <Setter Property="Foreground" Value="{DynamicResource MainForegroundBrush}" />
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type DataGridCell}">
-                    <Grid x:Name="BackgroundBorder" Background="{DynamicResource SecondaryBackgroundBrush}">
-                        <ContentPresenter x:Name="Presenter" VerticalAlignment="Center" />
-                    </Grid>
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="IsEditing" Value="True">
-                            <Setter Property="Background" Value="{DynamicResource MainAccentBrush}" />
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-        <Setter Property="BorderBrush" Value="{x:Null}" />
-    </Style>
-
     <!--  DataGridRow  -->
-
-    <Style x:Key="{x:Type DataGridRow}" TargetType="{x:Type DataGridRow}">
-        <Setter Property="Background" Value="{DynamicResource TertiaryBackgroundBrush}" />
-        <Setter Property="SnapsToDevicePixels" Value="true" />
-        <Setter Property="Padding" Value="0" />
-
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type DataGridRow}">
-                    <Border
-                        x:Name="DGR_Border"
-                        Background="{TemplateBinding Background}"
-                        BorderBrush="{TemplateBinding BorderBrush}"
-                        BorderThickness="{TemplateBinding BorderThickness}"
-                        SnapsToDevicePixels="True">
-                        <SelectiveScrollingGrid x:Name="selectiveScrollingGrid">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                            </Grid.RowDefinitions>
-                            <DataGridCellsPresenter
-                                x:Name="dataGridCellsPresenter"
-                                Grid.Column="1"
-                                ItemsPanel="{TemplateBinding ItemsPanel}"
-                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-                        </SelectiveScrollingGrid>
-                    </Border>
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="DGR_Border" Property="Background" Value="{DynamicResource MainForegroundBrush}" />
-                        </Trigger>
-                        <Trigger Property="IsSelected" Value="True">
-                            <Setter TargetName="DGR_Border" Property="TextElement.Foreground" Value="{StaticResource MainForegroundBrush}" />
-                            <Setter TargetName="DGR_Border" Property="TextElement.Background" Value="{StaticResource TertiaryBackgroundBrush}" />
-                            <Setter TargetName="DGR_Border" Property="TextElement.FontFamily" Value="Lucida-Console" />
-                            <Setter TargetName="DGR_Border" Property="Background" Value="{DynamicResource SecondaryBackgroundBrush}" />
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
-    <!--  DataGrid  -->
 
     <Style x:Key="{x:Type DataGrid}" TargetType="{x:Type DataGrid}">
         <Setter Property="ScrollViewer.CanContentScroll" Value="true" />
-        <Setter Property="DataGridTextColumn.EditingElementStyle" Value="{DynamicResource ModernTextBox}" />
+        <Setter Property="DataGridTextColumn.EditingElementStyle" Value="{StaticResource ModernTextBox}" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="AlternatingRowBackground" Value="{StaticResource SecondaryBackgroundBrush}" />
+        <Setter Property="GridLinesVisibility" Value="None" />
+        <Setter Property="RowBackground" Value="{StaticResource TertiaryBackgroundBrush}" />
+        <Setter Property="BorderBrush" Value="{StaticResource MainAccentBrush}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="CellStyle">
+            <Setter.Value>
+                <Style TargetType="{x:Type DataGridCell}">
+                    <Setter Property="Foreground" Value="{DynamicResource MainForegroundBrush}" />
+                    <Setter Property="Background" Value="{DynamicResource SecondaryBackgroundBrush}" />
+                    <Setter Property="BorderBrush" Value="{x:Null}" />
+                    <Setter Property="Height" Value="30" />
+                    <Setter Property="FontSize" Value="16" />
+                    <Setter Property="FontFamily" Value="Lucida Console" />
+                    <Setter Property="VerticalContentAlignment" Value="Center" />
+                    <Setter Property="VerticalAlignment" Value="Center" />
+                    <Setter Property="Padding" Value="4" />
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type DataGridCell}">
+                                <Border Background="{TemplateBinding Background}">
+                                    <ContentPresenter Height="30" VerticalAlignment="Center" />
+                                </Border>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </Setter.Value>
+        </Setter>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type DataGrid}">
-                    <Border Background="{TemplateBinding Background}">
+                    <Border
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}">
                         <ScrollViewer Name="DG_ScrollViewer" Focusable="false">
                             <ScrollViewer.Template>
                                 <ControlTemplate TargetType="{x:Type ScrollViewer}">
@@ -198,6 +156,54 @@
                             <ItemsPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                         </ScrollViewer>
                     </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  DataGridRow Style with Hover Effect and Separation  -->
+    <Style x:Key="{x:Type DataGridRow}" TargetType="{x:Type DataGridRow}">
+        <Setter Property="Background" Value="{DynamicResource TertiaryBackgroundBrush}" />
+        <Setter Property="SnapsToDevicePixels" Value="true" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="BorderBrush" Value="{DynamicResource MainAccentBrush}" />
+        <Setter Property="BorderThickness" Value="0,0,0,1" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type DataGridRow}">
+                    <Border
+                        x:Name="DGR_Border"
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        SnapsToDevicePixels="True">
+                        <SelectiveScrollingGrid x:Name="selectiveScrollingGrid">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <DataGridCellsPresenter
+                                x:Name="dataGridCellsPresenter"
+                                Grid.Column="1"
+                                ItemsPanel="{TemplateBinding ItemsPanel}"
+                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                        </SelectiveScrollingGrid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="DGR_Border" Property="Background" Value="{DynamicResource HoverBrushBasic}" />
+                        </Trigger>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter TargetName="DGR_Border" Property="TextElement.Foreground" Value="{StaticResource MainForegroundBrush}" />
+                            <Setter TargetName="DGR_Border" Property="TextElement.Background" Value="{StaticResource TertiaryBackgroundBrush}" />
+                            <Setter TargetName="DGR_Border" Property="TextElement.FontFamily" Value="Lucida-Console" />
+                            <Setter TargetName="DGR_Border" Property="Background" Value="{DynamicResource SecondaryBackgroundBrush}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

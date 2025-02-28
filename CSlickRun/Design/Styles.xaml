@@ -147,6 +147,23 @@
         <Setter Property="CaretBrush" Value="{DynamicResource SecondaryAccentBrush}" />
     </Style>
 
+    <Style x:Key="ModernTextBoxDataGridCell" TargetType="{x:Type TextBox}">
+        <Setter Property="UseLayoutRounding" Value="True" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="FontSize" Value="16" />
+        <Setter Property="Padding" Value="0,3,0,0" />
+        <Setter Property="RenderOptions.BitmapScalingMode" Value="HighQuality" />
+        <Setter Property="RenderOptions.ClearTypeHint" Value="Enabled" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="FontFamily" Value="Lucida Console" />
+        <Setter Property="VerticalContentAlignment" Value="Top" />
+        <Setter Property="Height" Value="30" />
+        <Setter Property="SelectionBrush" Value="{DynamicResource HoverBrushColored}" />
+        <Setter Property="Background" Value="{DynamicResource SecondaryBackgroundBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource MainForegroundBrush}" />
+        <Setter Property="CaretBrush" Value="{DynamicResource SecondaryAccentBrush}" />
+    </Style>
+
     <Style x:Key="ModernTextBlock" TargetType="{x:Type TextBlock}">
         <Setter Property="UseLayoutRounding" Value="True" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
