@@ -1,21 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace CSlickRun.Logic;
 
-namespace CSlickRun.Logic
+/// <summary>
+///    Klasse zu den Befehlspfaden
+/// </summary>
+public class CommandPath
 {
-    public class CommandPath
+    public CommandPath()
     {
-        public CommandPath()
-        {
-            
-        }
-        public string Path { get; set; }
-
-        public string Argument { get; set; }
-
-        public string StartupPath { get; set; }
+        // Durch DataGrid wird ein Parameterloser Konstruktor benötigt
+#
     }
+
+    /// <summary>
+    /// Pfad des Befehls
+    /// </summary>
+    public string Path { get; set; }
+
+    /// <summary>
+    /// Argument des Befehls
+    /// </summary>
+    public string Argument { get; set; }
+
+    /// <summary>
+    /// Startpfad des Befehls
+    /// </summary>
+    public string StartupPath { get; set; }
 }

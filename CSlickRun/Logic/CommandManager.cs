@@ -4,16 +4,30 @@ using Newtonsoft.Json;
 
 namespace CSlickRun.Logic;
 
+/// <summary>
+///    Klasse zum Verwalten der Commands
+/// </summary>
 public class CommandManager
 {
-    public List<Command>? UserCommands = new();
+    /// <summary>
+    /// Alle Commands
+    /// </summary>
+    public List<Command> UserCommands = new();
 
+    /// <summary>
+    /// Erstellt die Default Commands als Json
+    /// </summary>
+    /// <returns>Json string</returns>
     public string CreateDefaultCommandsAsJson()
     {
         var CommandList = CreateDefaultCommands();
         return JsonConvert.SerializeObject(CommandList);
     }
 
+    /// <summary>
+    /// Erstellt die Default Commands
+    /// </summary>
+    /// <returns>Liste an Default Commands</returns>
     public List<Command> CreateDefaultCommands()
     {
         var CommandList = new List<Command> 
@@ -24,6 +38,9 @@ public class CommandManager
         return CommandList;
     }
 
+    /// <summary>
+    /// Lädt die Commands und speichert sie danach
+    /// </summary>
     public async Task LoadCommands()
     {
         var commandsAsJson = await File.ReadAllTextAsync(Global.CommandsFile);
@@ -31,44 +48,25 @@ public class CommandManager
         await SaveCommands();
     }
 
+    /// <summary>
+    /// Speichert die Commands
+    /// </summary>
     public async Task SaveCommands()
     {
         var defaultCommands = CreateDefaultCommands();
-        if (UserCommands == null)
+        foreach (var defaultCommand in defaultCommands.Where(defaultCommand => UserCommands.All(c => c.Name != defaultCommand.Name)))
         {
-            UserCommands = defaultCommands;
-        }
-        else
-        {
-            foreach (var defaultCommand in defaultCommands.Where(defaultCommand => UserCommands.All(c => c.Name != defaultCommand.Name)))
-            {
-                UserCommands.Add(defaultCommand);
-            }
+            UserCommands.Add(defaultCommand);
         }
 
         var commandsAsJson = JsonConvert.SerializeObject(UserCommands);
         await File.WriteAllTextAsync(Global.CommandsFile, commandsAsJson);
     }
 
-    public void AddCommand(Command command)
-    {
-        UserCommands?.Add(command);
-    }
-
-    public void RemoveCommand(Command command)
-    {
-        UserCommands?.Remove(command);
-    }
-
-    public void UpdateCommand(Command command)
-    {
-        var index = UserCommands?.FindIndex(c => c.Name == command.Name);
-        if (index != null)
-        {
-            UserCommands![index.Value] = command;
-        }
-    }
-
+    /// <summary>
+    /// Führt einen Command aus
+    /// </summary>
+    /// <param name="command">Auszuführender Command</param>
     public void ExecuteCommand(Command? command)
     {
         try

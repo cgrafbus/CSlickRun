@@ -1,27 +1,81 @@
-﻿using CSlickRun.UI.Windows;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Windows;
+using CSlickRun.UI.Windows;
 
 namespace CSlickRun.Logic;
 
+/// <summary>
+///     Klasse zu den Commands
+/// </summary>
 public class Command
 {
-    public Command(string name, List<CommandPath> paths, string note)
+    /// <summary>
+    ///     Konstuktor
+    /// </summary>
+    /// <param name="name">
+    ///     <see cref="Name" />
+    /// </param>
+    /// <param name="paths">
+    ///     <see cref="Paths" />
+    /// </param>
+    /// <param name="note">
+    ///     <see cref="Note" />
+    /// </param>
+    public Command(string name, List<CommandPath>? paths, string? note)
     {
         Name = name;
         Paths = paths;
         Note = note;
     }
 
+
+    /// <summary>
+    ///     Konstruktor
+    /// </summary>
     public Command()
     {
     }
 
+    /// <summary>
+    ///     Name des Befehls
+    /// </summary>
     public string Name { get; set; }
-    public List<CommandPath>? Paths { get; set; }
-    public string Note { get; set; }
 
+    /// <summary>
+    ///     Commands, die ausgeführt werden sollen
+    /// </summary>
+    public List<CommandPath>? Paths { get; set; }
+
+    /// <summary>
+    ///     Notiz zum Befehl
+    /// </summary>
+    public string? Note { get; set; }
+
+    /// <summary>
+    ///     Führt den Befehl aus
+    /// </summary>
     public void Execute()
+    {
+        if (CheckAndExecuteDefaultCommands()) return;
+
+        if (Paths == null) return;
+        foreach (var path in Paths)
+        {
+            var process = new Process();
+            var info = new ProcessStartInfo();
+            info.FileName = path.Path;
+            info.Arguments = path.Argument;
+            info.UseShellExecute = true;
+            process.StartInfo = info;
+            process.Start();
+        }
+    }
+
+    /// <summary>
+    ///     Überprüft, ob es sich um einen Standardbefehl handelt und führt diesen aus
+    /// </summary>
+    /// <returns>true, falls es ein Standardcommand war, ansonsten false</returns>
+    private bool CheckAndExecuteDefaultCommands()
     {
         if (Name == "Config")
         {
@@ -32,27 +86,14 @@ public class Command
             if (confWindow != null)
             {
                 confWindow.Activate();
-                return;
+                return true;
             }
+
             var configWindow = new ConfigWindow();
             configWindow.Show();
-            return;
+            return true;
         }
 
-        if (Paths != null)
-        {
-            foreach (var path in Paths)
-            {
-                var process = new Process();
-                var info = new ProcessStartInfo();
-                info.FileName = path.Path;
-                info.Arguments = path.Argument;
-                info.UseShellExecute = true;
-
-                process.StartInfo = info;
-                process.Start();
-            }
-        }
+        return false;
     }
-
 }
