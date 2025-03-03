@@ -151,15 +151,16 @@
         <Setter Property="UseLayoutRounding" Value="True" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="FontSize" Value="16" />
+        <Setter Property="AcceptsReturn" Value="True" />
+        <Setter Property="VerticalAlignment" Value="Stretch" />
         <Setter Property="Padding" Value="0,3,0,0" />
         <Setter Property="RenderOptions.BitmapScalingMode" Value="HighQuality" />
         <Setter Property="RenderOptions.ClearTypeHint" Value="Enabled" />
         <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="TextWrapping" Value="Wrap" />
         <Setter Property="FontFamily" Value="Lucida Console" />
-        <Setter Property="VerticalContentAlignment" Value="Top" />
-        <Setter Property="Height" Value="30" />
         <Setter Property="SelectionBrush" Value="{DynamicResource HoverBrushColored}" />
-        <Setter Property="Background" Value="{DynamicResource SecondaryBackgroundBrush}" />
+        <Setter Property="Background" Value="{DynamicResource TertiaryBackgroundBrush}" />
         <Setter Property="Foreground" Value="{DynamicResource MainForegroundBrush}" />
         <Setter Property="CaretBrush" Value="{DynamicResource SecondaryAccentBrush}" />
     </Style>
@@ -259,6 +260,26 @@
         <Setter Property="Foreground" Value="{DynamicResource MainForegroundBrush}" />
     </Style>
 
+    <Style x:Key="ListBoxItemStyle" TargetType="{x:Type ListBoxItem}">
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="UseLayoutRounding" Value="True" />
+        <Setter Property="ClipToBounds" Value="True" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="FontFamily" Value="Lucida Console" />
+        <Setter Property="Foreground" Value="{DynamicResource MainForegroundBrush}" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ListBoxItem">
+                    <Grid>
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </Grid>
+                </ControlTemplate>
+
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <Style x:Key="RectanglePanelHeader" TargetType="{x:Type Rectangle}">
         <Setter Property="UseLayoutRounding" Value="True" />
         <Setter Property="ClipToBounds" Value="True" />
@@ -298,11 +319,12 @@
         <Setter Property="UseLayoutRounding" Value="True" />
         <Setter Property="ClipToBounds" Value="True" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="Background" Value="Transparent" />
         <Setter Property="HorizontalScrollBarVisibility" Value="Auto" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ScrollViewer">
-                    <Grid Margin="0">
+                    <Grid Margin="0" Background="Transparent">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*" />
                             <RowDefinition Height="Auto" />
