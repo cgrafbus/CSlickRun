@@ -101,6 +101,11 @@ public class Command
             configWindow.Show();
             return true;
         }
+        if (Name == "Exit")
+        {
+            Application.Current.Shutdown();
+            return true;
+        }
 
         return false;
     }

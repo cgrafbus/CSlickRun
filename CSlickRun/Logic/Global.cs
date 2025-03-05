@@ -30,7 +30,8 @@ public class Global
     /// </summary>
     public static List<Command> DefaultCommands = new()
     {
-        new ("Config", null, null)
+        new ("Config", null, null),
+        new ("Exit", null, null),
     };
 
     /// <summary>

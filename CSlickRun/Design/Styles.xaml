@@ -15,6 +15,15 @@
         <Setter Property="Foreground" Value="{DynamicResource MainForegroundBrush}" />
     </Style>
 
+    <Style TargetType="{x:Type ToolTip}">
+        <Setter Property="UseLayoutRounding" Value="True" />
+        <Setter Property="RenderOptions.BitmapScalingMode" Value="HighQuality" />
+        <Setter Property="RenderOptions.ClearTypeHint" Value="Enabled" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="Background" Value="{DynamicResource MainBackgroundBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource MainForegroundBrush}" />
+    </Style>
+
     <Style TargetType="{x:Type Grid}">
         <Setter Property="UseLayoutRounding" Value="True" />
         <Setter Property="RenderOptions.BitmapScalingMode" Value="HighQuality" />

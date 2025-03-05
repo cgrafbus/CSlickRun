@@ -1,7 +1,10 @@
-﻿using System.Windows;
+﻿using System.IO;
+using System.Windows;
 using CSlickRun.Logic;
 using CSlickRun.UI.Windows;
+using IWshRuntimeLibrary;
 using Microsoft.Win32;
+using File = System.IO.File;
 
 namespace CSlickRun.UI.ViewModels;
 
@@ -11,7 +14,7 @@ namespace CSlickRun.UI.ViewModels;
 public class SettingsVm : SettingsVm_Base
 {
     private const string AppName = "CSlickRun";
-    private const string RunRegistryKey = @"SOFTWARE\Microsoft\Windows\CurrentVersion\Run";
+    private static readonly string StartupFolderPath = Environment.GetFolderPath(Environment.SpecialFolder.Startup);
 
     /// <summary>
     /// Kontruktor
@@ -84,36 +87,46 @@ public class SettingsVm : SettingsVm_Base
     }
 
     /// <summary>
-    /// Setzt oder entfernt den Autostart-Eintrag in der Registry basierend auf der AutoStartup-Eigenschaft.
+    /// Setzt oder entfernt den Autostart-Eintrag im Startup-Folder von Windows
     /// </summary>
     private void ApplyAutoStartup()
     {
         if (AutoStartup)
         {
-            SetAutoStartup();
+            CreateShortcutInStartupFolder();
         }
         else
         {
-            RemoveAutoStartup();
+            RemoveShortcutFromStartupFolder();
         }
     }
 
     /// <summary>
-    /// Fügt den Autostart-Eintrag in der Registry hinzu.
+    /// Erstellt eine Verknüpfung im Startup-Ordner.
     /// </summary>
-    private void SetAutoStartup()
+    private void CreateShortcutInStartupFolder()
     {
-        using var key = Registry.CurrentUser.OpenSubKey(RunRegistryKey, true) ?? Registry.CurrentUser.CreateSubKey(RunRegistryKey);
-        key?.SetValue(AppName, $"\"{System.Reflection.Assembly.GetExecutingAssembly().Location}\"");
+        var shortcutPath = Path.Combine(StartupFolderPath, $"{AppName}.lnk");
+        var exeName = System.Reflection.Assembly.GetExecutingAssembly().GetName().Name + ".exe";
+        var targetPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, exeName);
+
+        var shell = new WshShell();
+        var shortcut = (IWshShortcut)shell.CreateShortcut(shortcutPath);
+        shortcut.Description = "Launch CSlickRun";
+        shortcut.TargetPath = targetPath;
+        shortcut.Save();
     }
 
     /// <summary>
-    /// Entfernt den Autostart-Eintrag aus der Registry.
+    /// Entfernt die Verknüpfung aus dem Startup-Ordner.
     /// </summary>
-    private void RemoveAutoStartup()
+    private void RemoveShortcutFromStartupFolder()
     {
-        using var key = Registry.CurrentUser.OpenSubKey(RunRegistryKey, true);
-        key?.DeleteValue(AppName, false);
+        var shortcutPath = Path.Combine(StartupFolderPath, $"{AppName}.lnk");
+        if (File.Exists(shortcutPath))
+        {
+            File.Delete(shortcutPath);
+        }
     }
 
     /// <summary>
