@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using CSlickRun.Logic;
 using CSlickRun.UI.Windows;
+using Microsoft.Win32;
 
 namespace CSlickRun.UI.ViewModels;
 
@@ -9,6 +10,9 @@ namespace CSlickRun.UI.ViewModels;
 /// </summary>
 public class SettingsVm : SettingsVm_Base
 {
+    private const string AppName = "CSlickRun";
+    private const string RunRegistryKey = @"SOFTWARE\Microsoft\Windows\CurrentVersion\Run";
+
     /// <summary>
     /// Kontruktor
     /// </summary>
@@ -75,6 +79,41 @@ public class SettingsVm : SettingsVm_Base
         await Global.GlobalSettings.SaveAsync();
         ((CommandLineVm)(((CommandLineWindow)(Application.Current.MainWindow!)).DataContext)).InitUI();
         Global.ResetGlobalHotkey();
+        ApplyAutoStartup();
+
+    }
+
+    /// <summary>
+    /// Setzt oder entfernt den Autostart-Eintrag in der Registry basierend auf der AutoStartup-Eigenschaft.
+    /// </summary>
+    private void ApplyAutoStartup()
+    {
+        if (AutoStartup)
+        {
+            SetAutoStartup();
+        }
+        else
+        {
+            RemoveAutoStartup();
+        }
+    }
+
+    /// <summary>
+    /// Fügt den Autostart-Eintrag in der Registry hinzu.
+    /// </summary>
+    private void SetAutoStartup()
+    {
+        using var key = Registry.CurrentUser.OpenSubKey(RunRegistryKey, true) ?? Registry.CurrentUser.CreateSubKey(RunRegistryKey);
+        key?.SetValue(AppName, $"\"{System.Reflection.Assembly.GetExecutingAssembly().Location}\"");
+    }
+
+    /// <summary>
+    /// Entfernt den Autostart-Eintrag aus der Registry.
+    /// </summary>
+    private void RemoveAutoStartup()
+    {
+        using var key = Registry.CurrentUser.OpenSubKey(RunRegistryKey, true);
+        key?.DeleteValue(AppName, false);
     }
 
     /// <summary>

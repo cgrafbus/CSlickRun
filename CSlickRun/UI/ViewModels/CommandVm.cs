@@ -49,7 +49,7 @@ public class CommandVm : CommandVm_Base
     /// <exception cref="AggregateException"></exception>
     private void ExecuteDeleteCommand(object? obj)
     {
-        Commands?.Remove((Command)obj! ?? throw new AggregateException());
+        Commands?.Remove((Command)obj! ?? throw new ArgumentNullException());
     }
 
     /// <summary>
