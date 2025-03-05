@@ -8,7 +8,6 @@ public class CommandPath
     public CommandPath()
     {
         // Durch DataGrid wird ein Parameterloser Konstruktor benötigt
-#
     }
 
     /// <summary>

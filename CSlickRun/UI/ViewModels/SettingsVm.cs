@@ -1,21 +1,26 @@
-﻿using System.Drawing;
-using System.Windows;
+﻿using System.Windows;
 using CSlickRun.Logic;
-using CSlickRun.UI.ViewModels.Base;
 using CSlickRun.UI.Windows;
 
 namespace CSlickRun.UI.ViewModels;
 
+/// <summary>
+/// Settings-ViewModel
+/// </summary>
 public class SettingsVm : SettingsVm_Base
 {
-    
-
+    /// <summary>
+    /// Kontruktor
+    /// </summary>
     public SettingsVm()
     {
         SaveCommand = new(ExecuteSaveAsync);
         Load();
     }
 
+    /// <summary>
+    /// Mappt die Globalen Settings in das ViewModel
+    /// </summary>
     private void Load()
     {
         Mapper.MapClasses(Global.GlobalSettings, this);
@@ -45,6 +50,11 @@ public class SettingsVm : SettingsVm_Base
 
     
 
+    /// <summary>
+    /// Speichert die Settings, aktualisiert die UI und ggf. den globalen Hotkey
+    /// </summary>
+    /// <param name="arg"></param>
+    /// <returns></returns>
     private async Task ExecuteSaveAsync(object? arg)
     {
         if (!CheckIfShortCutValid())
@@ -64,9 +74,14 @@ public class SettingsVm : SettingsVm_Base
 
         await Global.GlobalSettings.SaveAsync();
         ((CommandLineVm)(((CommandLineWindow)(Application.Current.MainWindow)).DataContext)).InitUI();
+        Global.ResetGlobalHotkey();
     }
 
-    public List<string> BuildShortCodeList()
+    /// <summary>
+    /// Baut den ShortcutCode zusammen
+    /// </summary>
+    /// <returns>Zusammengebauter ShortcutCode</returns>
+    private List<string> BuildShortCodeList()
     {
         List<string> codeList = new();
         if  (string.IsNullOrEmpty(Shortcut))
@@ -95,11 +110,19 @@ public class SettingsVm : SettingsVm_Base
         return codeList;
     }
 
+    /// <summary>
+    /// Prüft, ob der ShortCut valide ist
+    /// </summary>
+    /// <returns>true, falls valide, ansonsten false</returns>
     private bool CheckIfShortCutValid()
     {
         return Shortcut != null && VirtualKeyCodes.KeyCodes.Keys.Contains(Shortcut);
     }
 
+    /// <summary>
+    /// Prüft, ob alle wichtigen Felder valide sind
+    /// </summary>
+    /// <returns>true, falls valide, ansonsten false</returns>
     private bool CheckIfFieldsValid()
     {
         return !string.IsNullOrEmpty(CommandLineBackgroundColor) && 

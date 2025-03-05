@@ -13,8 +13,9 @@ namespace CSlickRun.UI.Windows;
 /// </summary>
 public partial class CommandLineWindow : Window
 {
-    private readonly KeyboardHook _keyboardHook = new();
-
+    /// <summary>
+    /// Konstruktor
+    /// </summary>
     public CommandLineWindow()
     {
         InitializeComponent();
@@ -22,14 +23,19 @@ public partial class CommandLineWindow : Window
         Closed += OnClosed;
     }
 
+    /// <summary>
+    /// OnClosed-EventHandler
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void OnClosed(object? sender, EventArgs e)
     {
-        Global.GlobalHook.UnregisterHotkey();
+        Global.UnRegisterGlobalHotkey();
     }
 
     private void OnLoaded(object sender, RoutedEventArgs e)
     {
-        Global.GlobalHook.RegisterHotkey(this, Global.GlobalSettings.ShortCutCodes ?? throw new AggregateException());
+        Global.RegisterGlobalHotkey();
         Global.GlobalHook.HotkeyPressed += SetCommandStatusAvailable;
     }
 
@@ -43,6 +49,7 @@ public partial class CommandLineWindow : Window
     {
         Application.Current.Dispatcher.Invoke(() =>
         {
+            Activate();
             CommandLineHost.BorderBrush = UIHelper.ConvertHexToBrush(((CommandLineVm)DataContext).BorderColor) ??
                                           throw new InvalidOperationException();
             PreviewTextBlock.Visibility = Visibility.Collapsed;

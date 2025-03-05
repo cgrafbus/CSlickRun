@@ -55,7 +55,7 @@ public class EditCommandVm : ViewModelBase
     {
         if (string.IsNullOrWhiteSpace(CurrentCommand.Name) || string.IsNullOrEmpty(CurrentCommand.Name))
         {
-            MessageBox.Show("Invalid Name");
+            MessageBox.Show("Invalid Name", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             return;
         }
 

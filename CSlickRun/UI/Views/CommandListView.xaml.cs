@@ -1,30 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+﻿using System.Windows.Controls;
 using CSlickRun.UI.ViewModels;
 
-namespace CSlickRun.UI.Views
+namespace CSlickRun.UI.Views;
+
+/// <summary>
+///     Interaction logic for CommandListView.xaml
+/// </summary>
+public partial class CommandListView : UserControl
 {
     /// <summary>
-    /// Interaction logic for CommandListView.xaml
+    /// Konstruktor
     /// </summary>
-    public partial class CommandListView : UserControl
+    /// <param name="viewModel">Überliegendes ViewModel</param>
+    public CommandListView(CommandVm viewModel)
     {
-        public CommandListView(CommandVm viewModel)
-        {
-            InitializeComponent();
-            DataContext = new CommandListVm(viewModel);
-        }
+        InitializeComponent();
+        DataContext = new CommandListVm(viewModel);
     }
 }
