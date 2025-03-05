@@ -73,14 +73,18 @@
                 Background="{DynamicResource MainBackgroundBrush}"
                 Command="{Binding SaveCommand}"
                 Content="Save"
-                Cursor="Hand"
                 Style="{DynamicResource ButtonDefault}" />
             <Button
                 Width="200"
                 Background="{DynamicResource MainBackgroundBrush}"
                 Command="{Binding GoBackCommand}"
                 Content="Cancel"
-                Cursor="Hand"
+                Style="{DynamicResource ButtonDefault}" />
+            <Button
+                Width="200"
+                Background="{DynamicResource MainBackgroundBrush}"
+                Command="{Binding TestCommandCommand}"
+                Content="Test Command"
                 Style="{DynamicResource ButtonDefault}" />
         </StackPanel>
     </Grid>

@@ -6,15 +6,14 @@ using System.Windows.Media;
 namespace CSlickRun.UI.Controls;
 
 /// <summary>
-///     Interaction logic for NavigationBarButton.xaml
+/// Interaction logic for NavigationBarButton.xaml
 /// </summary>
-public partial class NavigationBarButton
+public partial class NavigationBarButton : UserControl
 {
     public static readonly DependencyProperty GroupProperty = DependencyProperty.Register(
         nameof(Group),
         typeof(string),
         typeof(NavigationBarButton));
-
 
     public static readonly DependencyProperty CommandParameterProperty = DependencyProperty.Register(
         nameof(CommandParameter),
@@ -46,10 +45,8 @@ public partial class NavigationBarButton
         typeof(SolidColorBrush),
         typeof(NavigationBarButton));
 
-
-
     /// <summary>
-    ///     Konstruktor
+    /// Konstruktor
     /// </summary>
     public NavigationBarButton()
     {
@@ -57,9 +54,8 @@ public partial class NavigationBarButton
         DataContext = this;
     }
 
-
     /// <summary>
-    ///     Text des Buttons
+    /// Text des Buttons
     /// </summary>
     public string TextContent
     {
@@ -68,7 +64,7 @@ public partial class NavigationBarButton
     }
 
     /// <summary>
-    ///     Gruppe des Buttons
+    /// Gruppe des Buttons
     /// </summary>
     public string Group
     {
@@ -77,7 +73,7 @@ public partial class NavigationBarButton
     }
 
     /// <summary>
-    ///     Ist der Button Aktiv
+    /// Gibt an, ob der Button aktiv ist.
     /// </summary>
     public bool Active
     {
@@ -89,31 +85,46 @@ public partial class NavigationBarButton
         }
     }
 
+    /// <summary>
+    /// Die Farbe des Buttons, wenn er aktiv ist.
+    /// </summary>
     public SolidColorBrush ActiveColor
     {
         get => (SolidColorBrush)GetValue(ActiveColorProperty);
         set => SetValue(ActiveColorProperty, value);
     }
 
+    /// <summary>
+    /// Die Hintergrundfarbe des Buttons.
+    /// </summary>
     public SolidColorBrush BackgroundColor
     {
         get => (SolidColorBrush)GetValue(BackgroundColorProperty);
         set => SetValue(BackgroundColorProperty, value);
     }
 
+    /// <summary>
+    /// Der Befehl, der ausgeführt wird, wenn der Button geklickt wird.
+    /// </summary>
     public ICommand Command
     {
         get => (ICommand)GetValue(CommandProperty);
         set => SetValue(CommandProperty, value);
     }
 
+    /// <summary>
+    /// Das Parameter des Befehls.
+    /// </summary>
     public Func<UserControl> CommandParameter
     {
         get => (Func<UserControl>)GetValue(CommandParameterProperty);
         set => SetValue(CommandParameterProperty, value);
     }
 
-
+    /// <summary>
+    /// Event-Handler für das MouseLeftButtonDown-Ereignis.
+    /// </summary>
+    /// <param name="e">Die Ereignis-Daten.</param>
     protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
     {
         base.OnMouseLeftButtonDown(e);
@@ -156,3 +167,4 @@ public partial class NavigationBarButton
         }
     }
 }
+

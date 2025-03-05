@@ -159,7 +159,7 @@ public class SettingsVm_Base : ViewModelBase
     /// <summary>
     /// Speicher-Command
     /// </summary>
-    public AsyncRelayCommand SaveCommand { get; set; }
+    public AsyncRelayCommand? SaveCommand { get; set; }
 
     /// <summary>
     /// Shortcut-Key

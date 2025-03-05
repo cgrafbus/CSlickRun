@@ -31,40 +31,28 @@ public static class UIHelper
         }
     }
 
-    public static void UpdateCommandLineUI()
+    public static SolidColorBrush ConvertHexToBrush(string? hex)
     {
-
+        var converter = new BrushConverter();
+        return (SolidColorBrush?)converter.ConvertFromString(hex) ?? new SolidColorBrush();
     }
-
-    public static String ConvertColorToHex(System.Drawing.Color c)
-        => $"#{c.R:X2}{c.G:X2}{c.B:X2}";
-
-    public static SolidColorBrush ConvertHexToBrush(string hex)
-    {
-        BrushConverter converter = new BrushConverter();
-        return (SolidColorBrush)converter.ConvertFromString(hex) ?? new SolidColorBrush();
-    }
-
-
-    public static String ConvertColorToRgb(System.Drawing.Color c)
-        => $"RGB({c.R},{c.G},{c.B})";
 
     /// <summary>
-    ///     TODO
+    ///     Gibt alle direkten Children der übergebenen Control zurück
     /// </summary>
-    /// <param name="parent"></param>
-    /// <returns></returns>
+    /// <param name="parent">Parent-Control</param>
+    /// <returns>Liste der Children</returns>
     public static List<UIElement?> FindDirectChildren(DependencyObject? parent)
     {
         return FindAllChildrenWithType<UIElement>(parent);
     }
 
     /// <summary>
-    ///     TODO
+    ///     Gibt alle Children des übergebenen Typen T der übergebenen Control zurück
     /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="parent"></param>
-    /// <returns></returns>
+    /// <param name="parent">Parent-Control</param>
+    /// <typeparam name="T">Typ der Children</typeparam>
+    /// <returns>Liste der Children</returns>
     public static List<T?> FindAllChildrenWithType<T>(DependencyObject? parent)
     {
         var children = new List<T?>();
@@ -83,6 +71,11 @@ public static class UIHelper
         return children;
     }
 
+    /// <summary>
+    ///    Gibt ein Bild aus einem Pfad zurück
+    /// </summary>
+    /// <param name="path">Pfad</param>
+    /// <returns>Bild</returns>
     public static BitmapImage GetImageFromPath(string? path)
     {
         if (path == null) return new BitmapImage();
@@ -93,6 +86,11 @@ public static class UIHelper
         return image;
     }
 
+    /// <summary>
+    ///    Gibt ein Bild aus einem Byte-Array zurück
+    /// </summary>
+    /// <param name="imagedata">Image-Daten</param>
+    /// <returns>Bild</returns>
     public static BitmapImage GetImageFromBytes(byte[] imagedata)
     {
         using (var ms = new System.IO.MemoryStream(imagedata))

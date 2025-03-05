@@ -20,8 +20,7 @@ public class CommandManager
     /// <returns>Json string</returns>
     public string CreateDefaultCommandsAsJson()
     {
-        var CommandList = CreateDefaultCommands();
-        return JsonConvert.SerializeObject(CommandList);
+        return JsonConvert.SerializeObject(Global.DefaultCommands);
     }
 
     /// <summary>
@@ -30,12 +29,7 @@ public class CommandManager
     /// <returns>Liste an Default Commands</returns>
     public List<Command> CreateDefaultCommands()
     {
-        var CommandList = new List<Command> 
-        { 
-            new(
-            "Config", null, null)
-        };
-        return CommandList;
+        return Global.DefaultCommands;
     }
 
     /// <summary>

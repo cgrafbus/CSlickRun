@@ -2,6 +2,11 @@
 
 public static class Mapper
 {
+    /// <summary>
+    /// Mappt die Werte der Properties einer Klasse zu einer anderen
+    /// </summary>
+    /// <param name="source">Ursprungsklasse</param>
+    /// <param name="destination">Zielklasse</param>
     public static void MapClasses(object source, object destination)
     {
         var sourceProperties = source.GetType().GetProperties();

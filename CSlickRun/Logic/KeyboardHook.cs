@@ -5,6 +5,9 @@ using System.Windows.Interop;
 
 namespace CSlickRun.Logic;
 
+/// <summary>
+/// Klasse zur Verwaltung von globalen Hotkeys.
+/// </summary>
 public class KeyboardHook
 {
     private const int HOTKEY_ID = 9000;
@@ -20,8 +23,18 @@ public class KeyboardHook
     [DllImport("user32.dll")]
     private static extern bool UnregisterHotKey(IntPtr hWnd, int id);
 
+    /// <summary>
+    /// Ereignis, das ausgelöst wird, wenn der Hotkey gedrückt wird.
+    /// </summary>
     public event Action HotkeyPressed;
 
+    /// <summary>
+    /// Registriert einen globalen Hotkey.
+    /// </summary>
+    /// <param name="window">Das Fenster, das den Hotkey registriert.</param>
+    /// <param name="keys">Die Liste der Tasten, die den Hotkey bilden.</param>
+    /// <exception cref="InvalidOperationException">Wird ausgelöst, wenn das Fensterhandle ungültig ist.</exception>
+    /// <exception cref="Win32Exception">Wird ausgelöst, wenn die Registrierung des Hotkeys fehlschlägt.</exception>
     public void RegisterHotkey(Window window, List<string> keys)
     {
         if (keys.Count == 0)
@@ -40,7 +53,6 @@ public class KeyboardHook
 
         var charKey = keyCodes.Last();
         keyCodes.RemoveAt(keyCodes.Count - 1);
-
 
         uint modifiers = 0;
 
@@ -84,12 +96,20 @@ public class KeyboardHook
         ComponentDispatcher.ThreadFilterMessage += OnHotkeyPressed;
     }
 
+    /// <summary>
+    /// Hebt die Registrierung des globalen Hotkeys auf.
+    /// </summary>
     public void UnregisterHotkey()
     {
         UnregisterHotKey(_windowHandle, HOTKEY_ID);
         ComponentDispatcher.ThreadFilterMessage -= OnHotkeyPressed;
     }
 
+    /// <summary>
+    /// Event-Handler, der aufgerufen wird, wenn der Hotkey gedrückt wird.
+    /// </summary>
+    /// <param name="msg">Die Nachricht.</param>
+    /// <param name="handled">Gibt an, ob die Nachricht behandelt wurde.</param>
     private void OnHotkeyPressed(ref MSG msg, ref bool handled)
     {
         if (msg.message == 0x0312 && msg.wParam.ToInt32() == HOTKEY_ID)
@@ -99,3 +119,4 @@ public class KeyboardHook
         }
     }
 }
+

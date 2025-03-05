@@ -15,7 +15,7 @@ public class CommandListVm : ViewModelBase
     /// <summary>
     /// Momentan ausgewählter Befehl
     /// </summary>
-    private Command _selectedCommand;
+    private Command? _selectedCommand;
 
 
     /// <summary>
@@ -25,7 +25,7 @@ public class CommandListVm : ViewModelBase
     public CommandListVm(CommandVm parentVm)
     {
         _parentVm = parentVm;
-        SelectedCommand = Commands.FirstOrDefault();
+        _selectedCommand = Commands.FirstOrDefault();
     }
 
     /// <summary>

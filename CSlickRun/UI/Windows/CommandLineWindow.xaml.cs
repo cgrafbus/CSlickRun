@@ -9,7 +9,7 @@ using CSlickRun.UI.ViewModels;
 namespace CSlickRun.UI.Windows;
 
 /// <summary>
-///     Interaction logic for CommandLineWindow.xaml
+/// Interaction logic for CommandLineWindow.xaml
 /// </summary>
 public partial class CommandLineWindow : Window
 {
@@ -24,27 +24,39 @@ public partial class CommandLineWindow : Window
     }
 
     /// <summary>
-    /// OnClosed-EventHandler
+    /// Event-Handler für das Closed-Ereignis.
     /// </summary>
-    /// <param name="sender"></param>
-    /// <param name="e"></param>
+    /// <param name="sender">Der Ereignis-Sender.</param>
+    /// <param name="e">Die Ereignis-Daten.</param>
     private void OnClosed(object? sender, EventArgs e)
     {
         Global.UnRegisterGlobalHotkey();
     }
 
+    /// <summary>
+    /// Event-Handler für das Loaded-Ereignis.
+    /// </summary>
+    /// <param name="sender">Der Ereignis-Sender.</param>
+    /// <param name="e">Die Ereignis-Daten.</param>
     private void OnLoaded(object sender, RoutedEventArgs e)
     {
         Global.RegisterGlobalHotkey();
         Global.GlobalHook.HotkeyPressed += SetCommandStatusAvailable;
     }
 
-
+    /// <summary>
+    /// Event-Handler für das MouseLeftButtonDown-Ereignis des CommandLineHost.
+    /// </summary>
+    /// <param name="sender">Der Ereignis-Sender.</param>
+    /// <param name="e">Die Ereignis-Daten.</param>
     private void CommandLineHost_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
     {
         SetCommandStatusAvailable();
     }
 
+    /// <summary>
+    /// Setzt den Status des Befehls auf verfügbar.
+    /// </summary>
     private void SetCommandStatusAvailable()
     {
         Application.Current.Dispatcher.Invoke(() =>
@@ -62,25 +74,30 @@ public partial class CommandLineWindow : Window
         });
     }
 
+    /// <summary>
+    /// Setzt den Status des Befehls auf nicht verfügbar.
+    /// </summary>
     private void SetCommandStatusUnAvailable()
     {
         CommandLineHost.BorderBrush = UIHelper.ConvertHexToBrush(((CommandLineVm)DataContext).BorderColor) ??
                                       throw new InvalidOperationException();
         PreviewTextBlock.Visibility = Visibility.Visible;
-
-
         CommandTextBox.Visibility = Visibility.Collapsed;
         CommandTextBox.Text = string.Empty;
-
         AutoCompleteTextBlock.Visibility = Visibility.Collapsed;
         AutoCompleteTextBlock.Text = string.Empty;
     }
 
+    /// <summary>
+    /// Event-Handler für das TextChanged-Ereignis des CommandTextBox.
+    /// </summary>
+    /// <param name="sender">Der Ereignis-Sender.</param>
+    /// <param name="e">Die Ereignis-Daten.</param>
     private void CommandTextBox_TextChanged(object sender, TextChangedEventArgs e)
     {
         var preview = Global.GlobalCommandManager.UserCommands
             .FirstOrDefault(c => c.Name.StartsWith(CommandTextBox.Text, StringComparison.OrdinalIgnoreCase));
-        if (CommandTextBox.Text == string.Empty || string.IsNullOrWhiteSpace(CommandTextBox.Text))
+        if (string.IsNullOrEmpty(CommandTextBox.Text) || string.IsNullOrWhiteSpace(CommandTextBox.Text))
         {
             preview = null;
         }
@@ -95,13 +112,10 @@ public partial class CommandLineWindow : Window
                 Foreground = new SolidColorBrush(Colors.Transparent)
             });
 
-
             var suggestionRun = new Run(preview.Name[CommandTextBox.Text.Length..])
             {
                 Foreground = UIHelper.ConvertHexToBrush(((CommandLineVm)DataContext).AutoCompleteForegroundColor),
-                Background =
-                    UIHelper.ConvertHexToBrush(((CommandLineVm)DataContext)
-                        .AutoCompleteBackgroundColor) // Hintergrund setzen
+                Background = UIHelper.ConvertHexToBrush(((CommandLineVm)DataContext).AutoCompleteBackgroundColor)
             };
 
             AutoCompleteTextBlock.Inlines.Add(suggestionRun);
@@ -112,11 +126,21 @@ public partial class CommandLineWindow : Window
         }
     }
 
+    /// <summary>
+    /// Event-Handler für das LostKeyboardFocus-Ereignis des CommandTextBox.
+    /// </summary>
+    /// <param name="sender">Der Ereignis-Sender.</param>
+    /// <param name="e">Die Ereignis-Daten.</param>
     private void CommandTextBox_LostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
     {
         SetCommandStatusUnAvailable();
     }
 
+    /// <summary>
+    /// Event-Handler für das KeyDown-Ereignis des CommandTextBox.
+    /// </summary>
+    /// <param name="sender">Der Ereignis-Sender.</param>
+    /// <param name="e">Die Ereignis-Daten.</param>
     private void CommandTextBox_KeyDown(object sender, KeyEventArgs e)
     {
         if (e.Key != Key.Enter)
