@@ -31,10 +31,15 @@ public static class UIHelper
         }
     }
 
+    /// <summary>
+    /// Konvertiert einen Hex-String in eine SolidColorBrush
+    /// </summary>
+    /// <param name="hex">Hex-String</param>
+    /// <returns>Ergebener SolidColorBrush</returns>
     public static SolidColorBrush ConvertHexToBrush(string? hex)
     {
         var converter = new BrushConverter();
-        return (SolidColorBrush?)converter.ConvertFromString(hex) ?? new SolidColorBrush();
+        return (SolidColorBrush?)converter.ConvertFromString(hex ?? string.Empty) ?? new SolidColorBrush();
     }
 
     /// <summary>

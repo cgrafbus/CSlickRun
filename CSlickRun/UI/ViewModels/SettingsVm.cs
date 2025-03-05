@@ -73,7 +73,7 @@ public class SettingsVm : SettingsVm_Base
         Global.GlobalSettings.ShortCutCodes = codeList;
 
         await Global.GlobalSettings.SaveAsync();
-        ((CommandLineVm)(((CommandLineWindow)(Application.Current.MainWindow)).DataContext)).InitUI();
+        ((CommandLineVm)(((CommandLineWindow)(Application.Current.MainWindow!)).DataContext)).InitUI();
         Global.ResetGlobalHotkey();
     }
 

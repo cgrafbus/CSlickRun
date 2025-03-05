@@ -51,7 +51,7 @@ public class Global
     /// <summary>
     /// Entfernt den momentan registrierten Shortcut
     /// </summary>
-    public static void UnRegisterGlobalHotkey()
+    public static void UnregisterGlobalHotkey()
     {
         GlobalHook.UnregisterHotkey();
     }
@@ -61,7 +61,7 @@ public class Global
     /// </summary>
     public static void ResetGlobalHotkey()
     {
-       UnRegisterGlobalHotkey();
+       UnregisterGlobalHotkey();
        RegisterGlobalHotkey();
     }
 }

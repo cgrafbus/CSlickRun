@@ -30,7 +30,7 @@ public partial class CommandLineWindow : Window
     /// <param name="e">Die Ereignis-Daten.</param>
     private void OnClosed(object? sender, EventArgs e)
     {
-        Global.UnRegisterGlobalHotkey();
+        Global.UnregisterGlobalHotkey();
     }
 
     /// <summary>
@@ -55,7 +55,7 @@ public partial class CommandLineWindow : Window
     }
 
     /// <summary>
-    /// Setzt den Status des Befehls auf verfügbar.
+    /// Setzt den Status der Befehlszeile auf verfügbar.
     /// </summary>
     private void SetCommandStatusAvailable()
     {
@@ -75,9 +75,9 @@ public partial class CommandLineWindow : Window
     }
 
     /// <summary>
-    /// Setzt den Status des Befehls auf nicht verfügbar.
+    /// Setzt den Status der Befehlszeile auf nicht verfügbar.
     /// </summary>
-    private void SetCommandStatusUnAvailable()
+    private void SetCommandStatusUnavailable()
     {
         CommandLineHost.BorderBrush = UIHelper.ConvertHexToBrush(((CommandLineVm)DataContext).BorderColor) ??
                                       throw new InvalidOperationException();
@@ -133,7 +133,7 @@ public partial class CommandLineWindow : Window
     /// <param name="e">Die Ereignis-Daten.</param>
     private void CommandTextBox_LostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
     {
-        SetCommandStatusUnAvailable();
+        SetCommandStatusUnavailable();
     }
 
     /// <summary>
@@ -150,6 +150,6 @@ public partial class CommandLineWindow : Window
 
         Global.GlobalCommandManager.ExecuteCommand(Global.GlobalCommandManager.UserCommands.FirstOrDefault(c =>
             c.Name.Contains(CommandTextBox.Text, StringComparison.OrdinalIgnoreCase)));
-        SetCommandStatusUnAvailable();
+        SetCommandStatusUnavailable();
     }
 }
