@@ -23,7 +23,6 @@
         <viewModels:CommandLineVm />
     </Window.DataContext>
     <Border
-        x:Name="CommandLineHost"
         Width="{Binding CommandLineWidth, Mode=TwoWay}"
         Height="{Binding CommandLineHeight, Mode=TwoWay}"
         VerticalAlignment="Center"

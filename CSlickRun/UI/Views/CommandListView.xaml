@@ -65,6 +65,7 @@
                                     CommandParameter="{Binding}"
                                     Content="Edit (e)"
                                     FontSize="22"
+                                    IsHitTestVisible="False"
                                     Style="{DynamicResource ButtonDefault}" />
                                 <Button
                                     Grid.Column="2"
@@ -73,6 +74,7 @@
                                     CommandParameter="{Binding}"
                                     Content="Delete (q)"
                                     FontSize="22"
+                                    IsHitTestVisible="False"
                                     Style="{DynamicResource ButtonDefault}" />
                             </Grid>
                             <DataTemplate.Triggers>

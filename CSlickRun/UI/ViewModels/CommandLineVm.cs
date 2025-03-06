@@ -1,6 +1,5 @@
 ﻿using System.Windows;
 using CSlickRun.Logic;
-using CSlickRun.UI.ViewModels.Base;
 
 namespace CSlickRun.UI.ViewModels;
 

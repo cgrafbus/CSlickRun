@@ -1,50 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+﻿using System.Windows.Controls;
 using CSlickRun.Logic;
 using CSlickRun.UI.ViewModels;
 
-namespace CSlickRun.UI.Views
+namespace CSlickRun.UI.Views;
+
+/// <summary>
+/// Interaction logic for EditCommandView.xaml
+/// </summary>
+public partial class EditCommandView : UserControl
 {
-    /// <summary>
-    /// Interaction logic for EditCommandView.xaml
-    /// </summary>
-    public partial class EditCommandView : UserControl
+    private readonly Command _command;
+    private readonly EditCommandVm _currentVm;
+    private readonly CommandVm _parentVm;
+
+    public EditCommandView(Command command, CommandVm parentVm)
     {
-        public EditCommandView(Command command, CommandVm parentVm)
-        {
-            InitializeComponent();
-            DataContext = new EditCommandVm(parentVm, command);
-        }
-
-        private void UserControl_KeyDown(object sender, KeyEventArgs e)
-        {
-            var noTextboxFocused = !TextBoxName.IsFocused && !TextBoxNote.IsFocused && !DataGridCommands.IsFocused;
-            if (!noTextboxFocused)
-            {
-                return;
-            }
-
-            switch (e.Key)
-            {
-                case Key.Q:
-                    break;
-                case Key.F:
-                    break;
-                case Key.E:
-                    break;
-            }
-        }
+        InitializeComponent();
+        _command = command;
+        _parentVm = parentVm;
+        DataContext = new EditCommandVm(_parentVm, _command);
+        _currentVm = DataContext as EditCommandVm ?? throw new InvalidOperationException();
     }
 }

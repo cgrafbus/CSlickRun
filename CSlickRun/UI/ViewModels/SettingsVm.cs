@@ -1,5 +1,7 @@
 ﻿using System.IO;
+using System.Reflection;
 using System.Windows;
+using CommunityToolkit.Mvvm.Input;
 using CSlickRun.Logic;
 using CSlickRun.UI.Windows;
 using IWshRuntimeLibrary;
@@ -10,7 +12,7 @@ namespace CSlickRun.UI.ViewModels;
 /// <summary>
 /// Settings-ViewModel
 /// </summary>
-public class SettingsVm : SettingsVm_Base
+public partial class SettingsVm : SettingsVm_Base
 {
     private const string AppName = "CSlickRun";
     private static readonly string StartupFolderPath = Environment.GetFolderPath(Environment.SpecialFolder.Startup);
@@ -20,7 +22,6 @@ public class SettingsVm : SettingsVm_Base
     /// </summary>
     public SettingsVm()
     {
-        SaveCommand = new(ExecuteSaveAsync);
         Load();
     }
 
@@ -35,45 +36,46 @@ public class SettingsVm : SettingsVm_Base
         {
             return;
         }
+
         if (shortcut.Contains(VirtualKeyCodes.ALTKEY))
         {
             AltBool = true;
         }
+
         if (shortcut.Contains(VirtualKeyCodes.WINKEY))
         {
             WinBool = true;
         }
+
         if (shortcut.Contains(VirtualKeyCodes.SHIFTKEY))
         {
             ShiftBool = true;
         }
+
         if (shortcut.Contains(VirtualKeyCodes.CTRLKEY))
         {
             StrgBool = true;
         }
+
         Shortcut = shortcut.Last();
     }
 
-    
-
-    /// <summary>
-    /// Speichert die Settings, aktualisiert die UI und ggf. den globalen Hotkey
-    /// </summary>
-    /// <param name="arg"></param>
-    /// <returns></returns>
-    private async Task ExecuteSaveAsync(object? arg)
+    [RelayCommand]
+    private async Task Save()
     {
         if (!CheckIfShortCutValid())
         {
-            MessageBox.Show($"Shortcut {Shortcut} not valid, save failed.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            MessageBox.Show($"Shortcut {Shortcut} not valid, save failed.", "Error", MessageBoxButton.OK,
+                MessageBoxImage.Error);
             return;
         }
 
         if (!CheckIfFieldsValid())
         {
-            MessageBox.Show($"Fields not valid, save failed.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            MessageBox.Show("Fields not valid, save failed.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             return;
         }
+
         Mapper.MapClasses(this, Global.GlobalSettings);
         var codeList = BuildShortCodeList();
         Global.GlobalSettings.ShortCutCodes = codeList;
@@ -82,8 +84,8 @@ public class SettingsVm : SettingsVm_Base
         ((CommandLineVm)(((CommandLineWindow)(Application.Current.MainWindow!)).DataContext)).InitUI();
         Global.ResetGlobalHotkey();
         ApplyAutoStartup();
-
     }
+
 
     /// <summary>
     /// Setzt oder entfernt den Autostart-Eintrag im Startup-Folder von Windows
@@ -106,7 +108,7 @@ public class SettingsVm : SettingsVm_Base
     private void CreateShortcutInStartupFolder()
     {
         var shortcutPath = Path.Combine(StartupFolderPath, $"{AppName}.lnk");
-        var exeName = System.Reflection.Assembly.GetExecutingAssembly().GetName().Name + ".exe";
+        var exeName = Assembly.GetExecutingAssembly().GetName().Name + ".exe";
         var targetPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, exeName);
 
         var shell = new WshShell();
@@ -136,18 +138,21 @@ public class SettingsVm : SettingsVm_Base
     private List<string> BuildShortCodeList()
     {
         List<string> codeList = new();
-        if  (string.IsNullOrEmpty(Shortcut))
+        if (string.IsNullOrEmpty(Shortcut))
         {
             return new List<string>();
         }
+
         if (AltBool)
         {
             codeList.Add(VirtualKeyCodes.ALTKEY);
         }
+
         if (StrgBool)
         {
             codeList.Add(VirtualKeyCodes.CTRLKEY);
         }
+
         if (ShiftBool)
         {
             codeList.Add(VirtualKeyCodes.SHIFTKEY);
@@ -157,6 +162,7 @@ public class SettingsVm : SettingsVm_Base
         {
             codeList.Add(VirtualKeyCodes.WINKEY);
         }
+
         codeList.Add(Shortcut.ToLower());
 
         return codeList;
@@ -177,14 +183,14 @@ public class SettingsVm : SettingsVm_Base
     /// <returns>true, falls valide, ansonsten false</returns>
     private bool CheckIfFieldsValid()
     {
-        return !string.IsNullOrEmpty(CommandLineBackgroundColor) && 
-               !string.IsNullOrEmpty(CommandLineForegroundColor) && 
-               !string.IsNullOrEmpty(CaretColor) && 
-               !string.IsNullOrEmpty(AutoCompleteForegroundColor) && 
-               !string.IsNullOrEmpty(CommandLineInactiveBackgroundColor) && 
-               !string.IsNullOrEmpty(SelectionColor) && 
-               !string.IsNullOrEmpty(BorderInactiveColor) && 
-               !string.IsNullOrEmpty(CommandLineWidth) && 
+        return !string.IsNullOrEmpty(CommandLineBackgroundColor) &&
+               !string.IsNullOrEmpty(CommandLineForegroundColor) &&
+               !string.IsNullOrEmpty(CaretColor) &&
+               !string.IsNullOrEmpty(AutoCompleteForegroundColor) &&
+               !string.IsNullOrEmpty(CommandLineInactiveBackgroundColor) &&
+               !string.IsNullOrEmpty(SelectionColor) &&
+               !string.IsNullOrEmpty(BorderInactiveColor) &&
+               !string.IsNullOrEmpty(CommandLineWidth) &&
                !string.IsNullOrEmpty(CommandLineHeight);
     }
 }

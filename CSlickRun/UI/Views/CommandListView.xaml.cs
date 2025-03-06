@@ -1,6 +1,6 @@
-﻿using System.Windows.Controls;
+﻿using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
-using CSlickRun.Logic;
 using CSlickRun.UI.ViewModels;
 
 namespace CSlickRun.UI.Views;
@@ -10,7 +10,7 @@ namespace CSlickRun.UI.Views;
 /// </summary>
 public partial class CommandListView : UserControl
 {
-    private CommandVm _currentVm;
+    private readonly CommandVm _currentVm;
 
     /// <summary>
     /// Konstruktor
@@ -21,39 +21,50 @@ public partial class CommandListView : UserControl
         InitializeComponent();
         _currentVm = viewModel;
         DataContext = new CommandListVm(_currentVm);
+        Loaded += OnLoaded;
+    }
+
+    private void OnLoaded(object sender, RoutedEventArgs e)
+    {
+        Keyboard.ClearFocus();
+        Keyboard.Focus(this);
+        Focus();
     }
 
     private void SearchTextBox_TextChanged(object sender, TextChangedEventArgs e)
     {
         var itemssource = ((CommandListVm)DataContext).Commands;
-        CommandHost.ItemsSource = itemssource.Where(x => x.Name.Contains(SearchTermTextBox.Text, StringComparison.OrdinalIgnoreCase)).ToList();
+        CommandHost.ItemsSource = itemssource
+            .Where(x => x.Name.Contains(SearchTermTextBox.Text, StringComparison.OrdinalIgnoreCase)).ToList();
     }
 
-    private void UserControl_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+    private void UserControl_KeyDown(object sender, KeyEventArgs e)
     {
         var textBoxFocused = SearchTermTextBox.IsFocused;
         if (textBoxFocused)
         {
             return;
         }
-        if (e.Key == Key.X)
-        {
-            SearchTermTextBox.Focus();
-            e.Handled = true;
-            return;
-        }
 
-        if (e.Key == Key.S)
+        switch (e.Key)
         {
-            CommandHost.Focus();
-            CommandHost.SelectedIndex += 1;
-        }
-        if (e.Key == Key.W)
-        {
-            CommandHost.Focus();
-            if (CommandHost.SelectedIndex > -1)
+            case Key.X:
+                SearchTermTextBox.Focus();
+                e.Handled = true;
+                return;
+            case Key.S:
+                CommandHost.Focus();
+                CommandHost.SelectedIndex += 1;
+                break;
+            case Key.W:
             {
-                CommandHost.SelectedIndex -= 1;
+                CommandHost.Focus();
+                if (CommandHost.SelectedIndex > -1)
+                {
+                    CommandHost.SelectedIndex -= 1;
+                }
+
+                break;
             }
         }
     }
@@ -65,6 +76,7 @@ public partial class CommandListView : UserControl
         {
             _currentVm.EditCommand.Execute(selectedItem);
         }
+
         if (e.Key == Key.Q)
         {
             _currentVm.DeleteCommand.Execute(selectedItem);

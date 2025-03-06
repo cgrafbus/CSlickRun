@@ -1,6 +1,6 @@
 ﻿using System.Collections.ObjectModel;
+using CommunityToolkit.Mvvm.Input;
 using CSlickRun.Logic;
-using CSlickRun.UI.ViewModels.Base;
 using CSlickRun.UI.Views;
 
 namespace CSlickRun.UI.ViewModels;
@@ -8,7 +8,7 @@ namespace CSlickRun.UI.ViewModels;
 /// <summary>
 /// Überliegendes ViewModel zu den Commands
 /// </summary>
-public class CommandVm : CommandVm_Base
+public partial class CommandVm : CommandVm_Base
 {
     /// <summary>
     /// Konstruktor
@@ -19,18 +19,14 @@ public class CommandVm : CommandVm_Base
 
         // Übersicht der Commands anzeigen
         CurrentCommandView = new CommandListView(this);
-
-        EditCommand = new RelayCommand(ExecuteEditCommand);
-        AddCommand = new RelayCommand(ExecuteAddCommand);
-        DeleteCommand = new RelayCommand(ExecuteDeleteCommand);
-        SaveCommand = new AsyncRelayCommand(ExecuteSaveCommandAsync);
     }
 
     /// <summary>
     /// Zeigt die Editieransicht für einen Befehl an
     /// </summary>
     /// <exception cref="AggregateException"></exception>
-    private void ExecuteEditCommand(object? obj)
+    [RelayCommand]
+    private void Edit(object? obj)
     {
         CurrentCommandView = new EditCommandView((Command)obj! ?? throw new AggregateException(), this);
     }
@@ -38,7 +34,8 @@ public class CommandVm : CommandVm_Base
     /// <summary>
     /// Zeigt die Editieransicht für einen neuen Befehl an
     /// </summary>
-    private void ExecuteAddCommand(object? obj)
+    [RelayCommand]
+    private void Add(object? obj)
     {
         CurrentCommandView = new EditCommandView(new Command(), this);
     }
@@ -47,7 +44,8 @@ public class CommandVm : CommandVm_Base
     /// Löscht einen Befehl
     /// </summary>
     /// <exception cref="AggregateException"></exception>
-    private void ExecuteDeleteCommand(object? obj)
+    [RelayCommand]
+    private void Delete(object? obj)
     {
         Commands?.Remove((Command)obj! ?? throw new ArgumentNullException());
     }
@@ -55,9 +53,10 @@ public class CommandVm : CommandVm_Base
     /// <summary>
     /// Speichert die Befehle
     /// </summary>
-    private async Task ExecuteSaveCommandAsync(object? obj)
+    [RelayCommand]
+    private async Task Save(object? obj)
     {
-        Global.GlobalCommandManager.SetCommands(Commands ?? new());
+        Global.GlobalCommandManager.SetCommands(Commands ?? []);
 
         await Global.GlobalCommandManager.SaveCommands();
     }

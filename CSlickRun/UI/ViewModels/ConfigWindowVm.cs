@@ -1,4 +1,6 @@
 ﻿using System.Windows.Controls;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using CSlickRun.UI.ViewModels.Base;
 using CSlickRun.UI.Views;
 
@@ -7,35 +9,25 @@ namespace CSlickRun.UI.ViewModels;
 /// <summary>
 /// ConfigWindow-ViewModel
 /// </summary>
-public class ConfigWindowVm : ViewModelBase
+public partial class ConfigWindowVm : ViewModelBase
 {
-    private UserControl _currentView;
+    [ObservableProperty] private UserControl currentView;
 
     /// <summary>
     /// Konstruktor
     /// </summary>
     public ConfigWindowVm()
     {
-        NavigationCommand = new RelayCommand(ExecuteNavigation);
-        _currentView = new CommandView();
+        CurrentView = new CommandView();
     }
 
-    /// <summary>
-    /// Momentane View
-    /// </summary>
-    public UserControl CurrentView
+    [RelayCommand]
+    private void Navigation(object? obj)
     {
-        get => _currentView;
-        set => SetField(ref _currentView, value);
-    }
-
-    public RelayCommand NavigationCommand { get; set; }
-
-    /// <summary>
-    /// Navigiert zwischen den Views
-    /// </summary>
-    private void ExecuteNavigation(object? obj)
-    {
-        if (obj is Func<UserControl> viewFactory) CurrentView = viewFactory();
+        if (obj is Func<UserControl> viewFactory)
+        {
+            CurrentView = viewFactory();
+            CurrentView.Focus();
+        }
     }
 }

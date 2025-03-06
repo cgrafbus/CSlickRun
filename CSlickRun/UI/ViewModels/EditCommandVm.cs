@@ -1,5 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.Windows;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using CSlickRun.Logic;
 using CSlickRun.UI.ViewModels.Base;
 using CSlickRun.UI.Views;
@@ -9,20 +11,21 @@ namespace CSlickRun.UI.ViewModels;
 /// <summary>
 /// ViewModel für die Bearbeitung von Befehlen.
 /// </summary>
-public class EditCommandVm : ViewModelBase
+public partial class EditCommandVm : ViewModelBase
 {
-    private readonly CommandVm _parentVm;
-    private ObservableCollection<CommandPath>? _commandPaths;
-    private CommandPath? _selectedPath;
+    [ObservableProperty] private ObservableCollection<CommandPath>? commandPaths;
+    [ObservableProperty] private Command currentCommand;
+    [ObservableProperty] private CommandVm parentVm;
+    [ObservableProperty] private CommandPath? selectedPath;
 
     /// <summary>
     /// Initialisiert eine neue Instanz der <see cref="EditCommandVm"/> Klasse.
     /// </summary>
-    /// <param name="parentVm">Das übergeordnete ViewModel.</param>
+    /// <param name="parentvm">Das übergeordnete ViewModel.</param>
     /// <param name="command">Der zu bearbeitende Befehl.</param>
-    public EditCommandVm(CommandVm parentVm, Command command)
+    public EditCommandVm(CommandVm parentvm, Command command)
     {
-        _parentVm = parentVm;
+        parentVm = parentvm;
         CurrentCommand = command;
         CommandPaths = [];
 
@@ -33,61 +36,11 @@ public class EditCommandVm : ViewModelBase
                 CommandPaths.Add(path);
             }
         }
-
-        SaveCommand = new RelayCommand(ExecuteSaveCommand);
-        GoBackCommand = new RelayCommand(_ => _parentVm.CurrentCommandView = new CommandListView(_parentVm));
-        DeletePathCommand = new RelayCommand(_ => CommandPaths?.Remove(SelectedPath!));
-        TestCommandCommand = new RelayCommand(ExecuteTestCommand);
     }
 
-    /// <summary>
-    /// Der aktuelle Befehl.
-    /// </summary>
-    public Command CurrentCommand { get; set; }
 
-    /// <summary>
-    /// Die Sammlung der Befehlspfade.
-    /// </summary>
-    public ObservableCollection<CommandPath>? CommandPaths
-    {
-        get => _commandPaths;
-        set => SetField(ref _commandPaths, value);
-    }
-
-    /// <summary>
-    /// Der ausgewählte Befehlspfad.
-    /// </summary>
-    public CommandPath? SelectedPath
-    {
-        get => _selectedPath;
-        set => SetField(ref _selectedPath, value);
-    }
-
-    /// <summary>
-    /// Befehl zum Löschen eines Pfades.
-    /// </summary>
-    public RelayCommand DeletePathCommand { get; }
-
-    /// <summary>
-    /// Befehl zum Speichern des aktuellen Befehls.
-    /// </summary>
-    public RelayCommand SaveCommand { get; }
-
-    /// <summary>
-    /// Befehl zum Zurückkehren zur Befehlsliste.
-    /// </summary>
-    public RelayCommand GoBackCommand { get; }
-
-    /// <summary>
-    /// Befehl zum Testen des aktuellen Befehls.
-    /// </summary>
-    public RelayCommand TestCommandCommand { get; }
-
-    /// <summary>
-    /// Führt den Speichern-Befehl aus.
-    /// </summary>
-    /// <param name="obj">Das Befehlsparameter.</param>
-    private void ExecuteSaveCommand(object? obj)
+    [RelayCommand]
+    private void Save(object? obj)
     {
         if (string.IsNullOrWhiteSpace(CurrentCommand.Name) || string.IsNullOrEmpty(CurrentCommand.Name))
         {
@@ -98,22 +51,31 @@ public class EditCommandVm : ViewModelBase
         CurrentCommand.Paths = CommandPaths?
             .Where(path => !string.IsNullOrEmpty(path.Path)
                            && !string.IsNullOrWhiteSpace(path.Path))
-            .ToList() ?? new List<CommandPath>();
+            .ToList() ?? [];
 
-        if (_parentVm.Commands != null && !_parentVm.Commands.Contains(CurrentCommand))
+        if (parentVm.Commands != null && !parentVm.Commands.Contains(CurrentCommand))
         {
-            _parentVm.Commands.Add(CurrentCommand);
+            parentVm.Commands.Add(CurrentCommand);
         }
 
-        _parentVm.CurrentCommandView = new CommandListView(_parentVm);
-        _parentVm.SaveCommand.Execute(this);
+        parentVm.CurrentCommandView = new CommandListView(parentVm);
+        parentVm.SaveCommand.Execute(this);
     }
 
-    /// <summary>
-    /// Führt den Test-Befehl aus.
-    /// </summary>
-    /// <param name="obj">Das Befehlsparameter.</param>
-    private void ExecuteTestCommand(object? obj)
+    [RelayCommand]
+    private void DeletePath(object? obj)
+    {
+        CommandPaths?.Remove(SelectedPath!);
+    }
+
+    [RelayCommand]
+    private void GoBack(object? obj)
+    {
+        parentVm.CurrentCommandView = new CommandListView(parentVm);
+    }
+
+    [RelayCommand]
+    private void TestCommand(object? obj)
     {
         var testCommand = new Command
         {

@@ -4,13 +4,19 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="clr-namespace:CSlickRun.UI.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
     xmlns:local="clr-namespace:CSlickRun.UI.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ui="clr-namespace:CSlickRun.UI"
     xmlns:viewModels="clr-namespace:CSlickRun.UI.ViewModels"
     d:DesignHeight="800"
     d:DesignWidth="1500"
-    KeyDown="UserControl_KeyDown"
     mc:Ignorable="d">
+    <i:Interaction.Behaviors>
+        <ui:KeyPressBehavior Key="Q" Command="{Binding GoBackCommand}" />
+        <ui:KeyPressBehavior Key="F" Command="{Binding SaveCommand}" />
+        <ui:KeyPressBehavior Key="E" Command="{Binding TestCommandCommand}" />
+    </i:Interaction.Behaviors>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="73*" />

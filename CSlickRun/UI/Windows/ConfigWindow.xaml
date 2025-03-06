@@ -77,7 +77,10 @@
                     <ColumnDefinition Width="1*" />
                     <ColumnDefinition Width="14*" />
                 </Grid.ColumnDefinitions>
-                <ContentControl Grid.Column="1" Content="{Binding CurrentView}" />
+                <ContentControl
+                    Grid.Column="1"
+                    Content="{Binding CurrentView}"
+                    Focusable="True" />
                 <StackPanel
                     x:Name="NavBar"
                     Grid.Column="0"
