@@ -211,6 +211,100 @@
         <Setter Property="CaretBrush" Value="{DynamicResource SecondaryAccentBrush}" />
     </Style>
 
+    <Style x:Key="SwitchToggleButton" TargetType="ToggleButton">
+        <Setter Property="Width" Value="200" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ToggleButton">
+                    <StackPanel HorizontalAlignment="Center" Orientation="Vertical">
+                        <!--  Label/Text über dem Switch  -->
+                        <TextBlock
+                            x:Name="LabelText"
+                            Margin="0,0,0,5"
+                            HorizontalAlignment="Center"
+                            FontSize="14"
+                            Foreground="{DynamicResource MainForegroundBrush}"
+                            Text="{TemplateBinding Content}" />
+
+                        <Grid>
+                            <!--  Äußere Schiene  -->
+                            <Border
+                                x:Name="Track"
+                                Width="50"
+                                Height="25"
+                                Background="{DynamicResource SecondaryBackgroundBrush}"
+                                BorderBrush="{DynamicResource TertiaryBackgroundBrush}"
+                                BorderThickness="2"
+                                ClipToBounds="False"
+                                CornerRadius="12">
+                                <Border.Effect>
+                                    <DropShadowEffect
+                                        BlurRadius="15"
+                                        Opacity="0"
+                                        ShadowDepth="0"
+                                        Color="{DynamicResource SecondaryAccentColor}" />
+                                </Border.Effect>
+                            </Border>
+
+                            <!--  Knopf  -->
+                            <Ellipse
+                                x:Name="Knob"
+                                Width="20"
+                                Height="20"
+                                Margin="3,0,0,0"
+                                HorizontalAlignment="Left"
+                                Fill="{DynamicResource MainForegroundBrush}">
+                                <Ellipse.Effect>
+                                    <DropShadowEffect
+                                        BlurRadius="6"
+                                        Opacity="0.4"
+                                        ShadowDepth="0"
+                                        Color="{DynamicResource SecondaryForegroundColor}" />
+                                </Ellipse.Effect>
+                            </Ellipse>
+                        </Grid>
+                    </StackPanel>
+
+                    <ControlTemplate.Triggers>
+                        <!--  Checked-State  -->
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter TargetName="Track" Property="Background" Value="{DynamicResource MainAccentBrush}" />
+                            <Setter TargetName="Track" Property="BorderBrush" Value="{DynamicResource SecondaryAccentBrush}" />
+                            <Setter TargetName="Knob" Property="Margin" Value="27,0,0,0" />
+                            <Setter TargetName="Track" Property="Effect">
+                                <Setter.Value>
+                                    <DropShadowEffect
+                                        BlurRadius="20"
+                                        Opacity="0.9"
+                                        ShadowDepth="0"
+                                        Color="{DynamicResource SecondaryAccentColor}" />
+                                </Setter.Value>
+                            </Setter>
+                            <Setter TargetName="Knob" Property="Effect">
+                                <Setter.Value>
+                                    <DropShadowEffect
+                                        BlurRadius="12"
+                                        Opacity="1"
+                                        ShadowDepth="0"
+                                        Color="{DynamicResource SecondaryAccentColor}" />
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+
+                        <!--  Disabled State  -->
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="Track" Property="Background" Value="{DynamicResource TertiaryBackgroundBrush}" />
+                            <Setter TargetName="Knob" Property="Fill" Value="{DynamicResource SecondaryForegroundBrush}" />
+                            <Setter TargetName="LabelText" Property="Foreground" Value="{DynamicResource SecondaryForegroundBrush}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <Style x:Key="ModernTextBlock" TargetType="{x:Type TextBlock}">
         <Setter Property="UseLayoutRounding" Value="True" />
         <Setter Property="SnapsToDevicePixels" Value="True" />

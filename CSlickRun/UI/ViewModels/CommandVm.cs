@@ -15,7 +15,7 @@ public class CommandVm : CommandVm_Base
     /// </summary>
     public CommandVm()
     {
-        Commands = new ObservableCollection<Command>(Global.GlobalCommandManager.UserCommands ?? []);
+        Commands = new ObservableCollection<Command>(Global.GlobalCommandManager.GetCommands() ?? []);
 
         // Übersicht der Commands anzeigen
         CurrentCommandView = new CommandListView(this);
@@ -57,8 +57,7 @@ public class CommandVm : CommandVm_Base
     /// </summary>
     private async Task ExecuteSaveCommandAsync(object? obj)
     {
-        Global.GlobalCommandManager.UserCommands?.Clear();
-        Global.GlobalCommandManager.UserCommands?.AddRange(Commands ?? new ObservableCollection<Command>());
+        Global.GlobalCommandManager.SetCommands(Commands ?? new());
 
         await Global.GlobalCommandManager.SaveCommands();
     }

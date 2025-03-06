@@ -9,6 +9,7 @@
     xmlns:viewModels="clr-namespace:CSlickRun.UI.ViewModels"
     d:DesignHeight="800"
     d:DesignWidth="1500"
+    KeyDown="UserControl_KeyDown"
     mc:Ignorable="d">
     <Grid>
         <Grid.RowDefinitions>
@@ -25,6 +26,7 @@
                 Orientation="Vertical">
                 <controls:PanelHeader HeaderLabelContent="Name" />
                 <TextBox
+                    x:Name="TextBoxName"
                     Width="400"
                     Height="30"
                     Margin="0,5,0,0"
@@ -35,6 +37,7 @@
                     Text="{Binding CurrentCommand.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                 <controls:PanelHeader Margin="0,15,0,0" HeaderLabelContent="Paths to execute" />
                 <DataGrid
+                    x:Name="DataGridCommands"
                     Width="1450"
                     MinHeight="300"
                     Margin="0,15,0,0"
@@ -64,6 +67,7 @@
                 </DataGrid>
                 <controls:PanelHeader Margin="0,15,0,0" HeaderLabelContent="Note" />
                 <TextBox
+                    x:Name="TextBoxNote"
                     Width="1200"
                     Height="Auto"
                     MinHeight="30"

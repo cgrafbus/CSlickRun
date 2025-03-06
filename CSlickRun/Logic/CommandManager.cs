@@ -12,7 +12,7 @@ public class CommandManager
     /// <summary>
     /// Alle Commands
     /// </summary>
-    public List<Command> UserCommands = new();
+    private List<Command> _userCommands = new();
 
     /// <summary>
     /// Erstellt die Default Commands als Json
@@ -33,12 +33,30 @@ public class CommandManager
     }
 
     /// <summary>
+    /// Gibt alle Commands sortiert zurück
+    /// </summary>
+    /// <returns></returns>
+    public List<Command> GetCommands()
+    {
+        return _userCommands.OrderBy(command => command.Name).ToList();
+    }
+
+    /// <summary>
+    /// Setzt die Commands
+    /// </summary>
+    /// <param name="value">Neue Liste an Commands</param>
+    public void SetCommands(IEnumerable<Command> value)
+    {
+        _userCommands = value.OrderBy(command => command.Name).ToList();
+    }
+
+    /// <summary>
     /// Lädt die Commands und speichert sie danach
     /// </summary>
     public async Task LoadCommands()
     {
         var commandsAsJson = await File.ReadAllTextAsync(Global.CommandsFile);
-        UserCommands = JsonConvert.DeserializeObject<List<Command>>(commandsAsJson) ?? [];
+        _userCommands = JsonConvert.DeserializeObject<List<Command>>(commandsAsJson) ?? [];
         await SaveCommands();
     }
 
@@ -48,12 +66,12 @@ public class CommandManager
     public async Task SaveCommands()
     {
         var defaultCommands = CreateDefaultCommands();
-        foreach (var defaultCommand in defaultCommands.Where(defaultCommand => UserCommands.All(c => c.Name != defaultCommand.Name)))
+        foreach (var defaultCommand in defaultCommands.Where(defaultCommand => _userCommands.All(c => c.Name != defaultCommand.Name)))
         {
-            UserCommands.Add(defaultCommand);
+            _userCommands.Add(defaultCommand);
         }
 
-        var commandsAsJson = JsonConvert.SerializeObject(UserCommands);
+        var commandsAsJson = JsonConvert.SerializeObject(_userCommands);
         await File.WriteAllTextAsync(Global.CommandsFile, commandsAsJson);
     }
 
