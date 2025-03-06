@@ -18,6 +18,11 @@ public class CommandLineVm_Base : ViewModelBase
     private string? _commandLineWidth;
     private string? _autoCompleteBackgroundColor;
     private string? _borderColor;
+    private string? _borderInactiveColor;
+    private string? _commandLineInactiveBackgroundColor;
+    private string? _currentBackgroundColor;
+    private string? _currentBorderColor;
+    private string? _selectionColor;
     private double _left;
     private double _top;
     #endregion
@@ -30,6 +35,33 @@ public class CommandLineVm_Base : ViewModelBase
     {
         get => _borderColor;
         set => SetField(ref _borderColor, value);
+    }
+
+    /// <summary>
+    /// Farbe der Border vom CommandLineWindow wenn inaktiv
+    /// </summary>
+    public string? BorderInactiveColor
+    {
+        get => _borderInactiveColor;
+        set => SetField(ref _borderInactiveColor, value);
+    }
+
+    /// <summary>
+    /// Hintergrundfarbe der CommandLine wenn inaktiv
+    /// </summary>
+    public string? CommandLineInactiveBackgroundColor
+    {
+        get => _commandLineInactiveBackgroundColor;
+        set => SetField(ref _commandLineInactiveBackgroundColor, value);
+    }
+
+    /// <summary>
+    /// Farbe der Textselektion vom CommandLineWindow
+    /// </summary>
+    public string? SelectionColor
+    {
+        get => _selectionColor;
+        set => SetField(ref _selectionColor, value);
     }
 
     /// <summary>
@@ -113,6 +145,18 @@ public class CommandLineVm_Base : ViewModelBase
         set => SetField(ref _autoCompleteForegroundColor, value);
     }
 
+    public string? CurrentBackgroundColor
+    {
+        get => _currentBackgroundColor;
+        set => SetField(ref _currentBackgroundColor, value);
+    }
+
+    public string? CurrentBorderColor
+    {
+        get => _currentBorderColor;
+        set => SetField(ref _currentBorderColor, value);
+    }
+
     /// <summary>
     /// Die linke Position des Fensters.
     /// </summary>
@@ -130,5 +174,7 @@ public class CommandLineVm_Base : ViewModelBase
         get => _top;
         set => SetField(ref _top, value);
     }
+
+
     #endregion
 }

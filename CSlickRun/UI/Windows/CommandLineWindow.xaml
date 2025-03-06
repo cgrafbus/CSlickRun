@@ -27,15 +27,15 @@
         Width="{Binding CommandLineWidth, Mode=TwoWay}"
         Height="{Binding CommandLineHeight, Mode=TwoWay}"
         VerticalAlignment="Center"
-        Background="{Binding CommandLineBackgroundColor, Mode=TwoWay}"
-        BorderBrush="{Binding BorderColor, Mode=TwoWay}"
+        Background="{Binding CurrentBackgroundColor}"
+        BorderBrush="{Binding CurrentBorderColor}"
         MouseLeftButtonDown="CommandLineHost_MouseLeftButtonDown"
         Style="{DynamicResource SlickRunBorderStyle}">
         <Grid
             Width="{Binding CommandLineWidth, Mode=TwoWay}"
             Height="{Binding CommandLineHeight, Mode=TwoWay}"
             VerticalAlignment="Center"
-            Background="{Binding CommandLineBackgroundColor}">
+            Background="Transparent">
             <TextBlock
                 x:Name="PreviewTextBlock"
                 Width="{Binding CommandLineWidth, Mode=TwoWay}"
@@ -60,6 +60,7 @@
                 KeyDown="CommandTextBox_KeyDown"
                 LostKeyboardFocus="CommandTextBox_LostKeyboardFocus"
                 MaxLength="20"
+                SelectionBrush="{Binding SelectionColor}"
                 Style="{DynamicResource SlickRunCommandLineStyle}"
                 TextChanged="CommandTextBox_TextChanged"
                 Visibility="Hidden" />

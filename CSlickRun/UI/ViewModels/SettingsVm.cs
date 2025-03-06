@@ -3,7 +3,6 @@ using System.Windows;
 using CSlickRun.Logic;
 using CSlickRun.UI.Windows;
 using IWshRuntimeLibrary;
-using Microsoft.Win32;
 using File = System.IO.File;
 
 namespace CSlickRun.UI.ViewModels;
@@ -112,6 +111,7 @@ public class SettingsVm : SettingsVm_Base
 
         var shell = new WshShell();
         var shortcut = (IWshShortcut)shell.CreateShortcut(shortcutPath);
+        shortcut.IconLocation = Global.IconFile;
         shortcut.Description = "Launch CSlickRun";
         shortcut.TargetPath = targetPath;
         shortcut.Save();
@@ -181,6 +181,9 @@ public class SettingsVm : SettingsVm_Base
                !string.IsNullOrEmpty(CommandLineForegroundColor) && 
                !string.IsNullOrEmpty(CaretColor) && 
                !string.IsNullOrEmpty(AutoCompleteForegroundColor) && 
+               !string.IsNullOrEmpty(CommandLineInactiveBackgroundColor) && 
+               !string.IsNullOrEmpty(SelectionColor) && 
+               !string.IsNullOrEmpty(BorderInactiveColor) && 
                !string.IsNullOrEmpty(CommandLineWidth) && 
                !string.IsNullOrEmpty(CommandLineHeight);
     }

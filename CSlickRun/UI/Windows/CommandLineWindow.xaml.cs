@@ -63,8 +63,8 @@ public partial class CommandLineWindow : Window
         Application.Current.Dispatcher.Invoke(() =>
         {
             Activate();
-            CommandLineHost.BorderBrush = UIHelper.ConvertHexToBrush(((CommandLineVm)DataContext).BorderColor) ??
-                                          throw new InvalidOperationException();
+            ((CommandLineVm)DataContext).CurrentBorderColor = ((CommandLineVm)DataContext).BorderColor;
+            ((CommandLineVm)DataContext).CurrentBackgroundColor = ((CommandLineVm)DataContext).CommandLineBackgroundColor;
             PreviewTextBlock.Visibility = Visibility.Collapsed;
             CommandTextBox.Visibility = Visibility.Visible;
             AutoCompleteTextBlock.Visibility = Visibility.Visible;
@@ -80,8 +80,8 @@ public partial class CommandLineWindow : Window
     /// </summary>
     private void SetCommandStatusUnavailable()
     {
-        CommandLineHost.BorderBrush = UIHelper.ConvertHexToBrush(((CommandLineVm)DataContext).BorderColor) ??
-                                      throw new InvalidOperationException();
+        ((CommandLineVm)DataContext).CurrentBorderColor = ((CommandLineVm)DataContext).BorderInactiveColor;
+        ((CommandLineVm)DataContext).CurrentBackgroundColor = ((CommandLineVm)DataContext).CommandLineInactiveBackgroundColor;
         PreviewTextBlock.Visibility = Visibility.Visible;
         CommandTextBox.Visibility = Visibility.Collapsed;
         CommandTextBox.Text = string.Empty;

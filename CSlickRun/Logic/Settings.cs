@@ -18,6 +18,8 @@ public class Settings
     /// </summary>
     public string? CommandLineBackgroundColor { get; set; }
 
+    public string? CommandLineInactiveBackgroundColor { get; set; }
+
     /// <summary>
     /// <see cref="SettingsVm_Base.CommandLineForegroundColor"/>
     /// </summary>
@@ -53,6 +55,10 @@ public class Settings
     /// </summary>
     public string? BorderColor { get; set; }
 
+    public string? BorderInactiveColor { get; set; }
+
+    public string? SelectionColor { get; set; }
+
     /// <summary>
     /// <see cref="SettingsVm_Base.AlwaysOnTop"/>
     /// </summary>
@@ -83,17 +89,20 @@ public class Settings
     {
         ShortCutCodes =
         [
-            VirtualKeyCodes.CTRLKEY,
             VirtualKeyCodes.ALTKEY,
+            VirtualKeyCodes.SHIFTKEY,
             "q"
         ];
 
         CommandLineForegroundColor = "#ebebeb";
         CommandLineBackgroundColor = "#141414";
+        CommandLineInactiveBackgroundColor = CommandLineBackgroundColor;
         CaretColor = "#b162d1";
         AutoCompleteForegroundColor = "#830bb3";
         AutoCompleteBackgroundColor = CommandLineBackgroundColor;
         BorderColor = AutoCompleteForegroundColor;
+        BorderInactiveColor = BorderColor;
+        SelectionColor = "#79B162D1";
         CommandLineWidth = "800";
         CommandLineHeight = "22";
         AlwaysOnTop = true;

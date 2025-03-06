@@ -14,6 +14,7 @@ public class Global
     public static string ConfigFile = Path.Combine(ConfigPath, "config.json");
     public static string CommandsFile = Path.Combine(ConfigPath, "commands.json");
     public static string HistoryFile = Path.Combine(ConfigPath, "history.json");
+    public static string IconFile = Path.Combine(Environment.CurrentDirectory, @"\Design\CSlickRun.ico");
 
     /// <summary>
     /// Globaler Command-Manager

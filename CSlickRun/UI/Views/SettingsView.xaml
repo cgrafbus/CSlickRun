@@ -2,15 +2,15 @@
     x:Class="CSlickRun.UI.Views.SettingsView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:colorCanvas="clr-namespace:CSlickRun.UI.Controls.ColorCanvas"
     xmlns:controls="clr-namespace:CSlickRun.UI.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:CSlickRun.UI.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:viewModels="clr-namespace:CSlickRun.UI.ViewModels"
-    xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
     d:DesignHeight="800"
     d:DesignWidth="1500"
-    FontFamily="Consolas"
+    FontFamily="Lucida Console"
     mc:Ignorable="d">
     <UserControl.DataContext>
         <viewModels:SettingsVm />
@@ -20,8 +20,22 @@
             <RowDefinition Height="10*" />
             <RowDefinition Height="1*" />
         </Grid.RowDefinitions>
-        <ScrollViewer Grid.Row="0" Style="{DynamicResource ModernScrollViewer}">
-            <StackPanel Orientation="Vertical">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="6*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <StackPanel
+            x:Name="SideBarHost"
+            Grid.Row="0"
+            Grid.Column="1"
+            Panel.ZIndex="10"
+            Orientation="Vertical" />
+        <ScrollViewer
+            x:Name="Scroller"
+            Grid.Row="0"
+            Grid.Column="0"
+            Style="{DynamicResource ModernScrollViewer}">
+            <StackPanel x:Name="ContentHost" Orientation="Vertical">
                 <controls:PanelHeader HeaderLabelContent="General" />
                 <Grid
                     Width="600"
@@ -56,7 +70,6 @@
                         <ColumnDefinition />
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
-
                     <CheckBox
                         Grid.Column="0"
                         Content="Strg"
@@ -85,6 +98,7 @@
                         <TextBlock
                             x:Name="ShortCutPlaceholderTextBlock"
                             Panel.ZIndex="5"
+                            FontSize="16"
                             Foreground="{DynamicResource MainAccentBrush}"
                             Style="{DynamicResource SlickRunCommandLineAutCompleteStyle}"
                             Text="char:"
@@ -95,60 +109,26 @@
                             Margin="3,0,0,0"
                             Foreground="{DynamicResource MainForegroundBrush}"
                             MaxLength="1"
-                            Style="{DynamicResource SlickRunCommandLineStyle}"
+                            Style="{DynamicResource ModernTextBox}"
                             Text="{Binding Shortcut, Mode=TwoWay}"
                             TextAlignment="Center" />
                     </StackPanel>
                 </Grid>
                 <controls:PanelHeader Margin="0,15,0,0" HeaderLabelContent="Design" />
-                <Grid Margin="0,10,0,0" HorizontalAlignment="Center">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="Auto" />
-                    </Grid.ColumnDefinitions>
-                    <StackPanel
-                        Grid.Column="0"
-                        Margin="10"
-                        Orientation="Vertical">
-                        <Label Content="Command-Line Background" FontSize="8" />
-                        <xctk:ColorCanvas HexadecimalString="{Binding CommandLineBackgroundColor, Mode=TwoWay}" />
-
-                        <Label
-                            Margin="0,10,0,0"
-                            Content="Autocomplete Foreground"
-                            FontSize="8" />
-                        <xctk:ColorCanvas HexadecimalString="{Binding AutoCompleteForegroundColor, Mode=TwoWay}" />
-                    </StackPanel>
-                    <StackPanel
-                        Grid.Column="1"
-                        Margin="10"
-                        Orientation="Vertical">
-                        <Label Content="Command-Line Foreground" FontSize="8" />
-                        <xctk:ColorCanvas HexadecimalString="{Binding CommandLineForegroundColor, Mode=TwoWay}" />
-
-                        <Label
-                            Margin="0,10,0,0"
-                            Content="Autocomplete Background"
-                            FontSize="8" />
-                        <xctk:ColorCanvas HexadecimalString="{Binding AutoCompleteBackgroundColor, Mode=TwoWay}" />
-                    </StackPanel>
-                    <StackPanel
-                        Grid.Column="2"
-                        Margin="10"
-                        Orientation="Vertical">
-                        <Label Content="Border-Color" FontSize="8" />
-                        <xctk:ColorCanvas HexadecimalString="{Binding BorderColor, Mode=TwoWay}" />
-                    </StackPanel>
-                    <StackPanel
-                        Grid.Column="3"
-                        Margin="10"
-                        Orientation="Vertical">
-                        <Label Content="Caret-Color" FontSize="8" />
-                        <xctk:ColorCanvas HexadecimalString="{Binding CaretColor, Mode=TwoWay}" />
-                    </StackPanel>
-                </Grid>
+                <WrapPanel
+                    Width="1000"
+                    HorizontalAlignment="Stretch"
+                    Orientation="Horizontal">
+                    <colorCanvas:ColorCanvas HeaderContent="Foreground" HexadecimalString="{Binding CommandLineForegroundColor, Mode=TwoWay}" />
+                    <colorCanvas:ColorCanvas HeaderContent="Active Background" HexadecimalString="{Binding CommandLineBackgroundColor, Mode=TwoWay}" />
+                    <colorCanvas:ColorCanvas HeaderContent="Inactive Background" HexadecimalString="{Binding CommandLineInactiveBackgroundColor, Mode=TwoWay}" />
+                    <colorCanvas:ColorCanvas HeaderContent="Active Border" HexadecimalString="{Binding BorderColor, Mode=TwoWay}" />
+                    <colorCanvas:ColorCanvas HeaderContent="Inactive Border" HexadecimalString="{Binding BorderInactiveColor, Mode=TwoWay}" />
+                    <colorCanvas:ColorCanvas HeaderContent="Caret" HexadecimalString="{Binding CaretColor, Mode=TwoWay}" />
+                    <colorCanvas:ColorCanvas HeaderContent="Selectionbrush" HexadecimalString="{Binding SelectionColor, Mode=TwoWay}" />
+                    <colorCanvas:ColorCanvas HeaderContent="Autocomplete-Foreground" HexadecimalString="{Binding AutoCompleteForegroundColor, Mode=TwoWay}" />
+                    <colorCanvas:ColorCanvas HeaderContent="Autocomplete-Background" HexadecimalString="{Binding AutoCompleteBackgroundColor, Mode=TwoWay}" />
+                </WrapPanel>
                 <controls:PanelHeader Margin="0,25,0,0" HeaderLabelContent="Layout" />
                 <StackPanel
                     Margin="0,10,0,0"
@@ -160,22 +140,23 @@
                         Foreground="{DynamicResource MainForegroundBrush}"
                         InputScope="Number"
                         PreviewTextInput="UIElement_OnPreviewTextInput"
-                        Style="{DynamicResource SlickRunCommandLineStyle}"
+                        Style="{DynamicResource ModernTextBox}"
                         Text="{Binding CommandLineWidth, Mode=TwoWay}" />
                     <TextBox
                         Width="100"
                         Foreground="{DynamicResource MainForegroundBrush}"
                         InputScope="Number"
                         PreviewTextInput="UIElement_OnPreviewTextInput"
-                        Style="{DynamicResource SlickRunCommandLineStyle}"
+                        Style="{DynamicResource ModernTextBox}"
                         Text="{Binding CommandLineHeight, Mode=TwoWay}" />
                 </StackPanel>
                 <Rectangle Height="4000" />
             </StackPanel>
-
         </ScrollViewer>
         <Button
             Grid.Row="1"
+            Grid.Column="0"
+            Grid.ColumnSpan="2"
             Width="300"
             Background="{DynamicResource MainBackgroundBrush}"
             Command="{Binding SaveCommand}"

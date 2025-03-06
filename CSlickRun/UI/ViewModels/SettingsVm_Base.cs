@@ -15,8 +15,11 @@ public class SettingsVm_Base : ViewModelBase
     private string? _autoCompleteForegroundColor;
     private bool _autoStartup;
     private string? _borderColor;
+    private string? _borderInactiveColor;
+    private string? _selectionColor;
     private string? _caretColor;
     private string? _commandLineBackgroundColor;
+    private string? _commandLineInactiveBackgroundColor;
     private string? _commandLineForegroundColor;
     private string? _commandLineHeight;
     private string? _commandLineWidth;
@@ -36,6 +39,33 @@ public class SettingsVm_Base : ViewModelBase
     {
         get => _borderColor;
         set => SetField(ref _borderColor, value);
+    }
+
+    /// <summary>
+    /// Farbe der Border vom CommandLineWindow wenn inaktiv
+    /// </summary>
+    public string? BorderInactiveColor
+    {
+        get => _borderInactiveColor;
+        set => SetField(ref _borderInactiveColor, value);
+    }
+
+    /// <summary>
+    /// Hintergrundfarbe der CommandLine wenn inaktiv
+    /// </summary>
+    public string? CommandLineInactiveBackgroundColor
+    {
+        get => _commandLineInactiveBackgroundColor;
+        set => SetField(ref _commandLineInactiveBackgroundColor, value);
+    }
+
+    /// <summary>
+    /// Farbe der Textselektion vom CommandLineWindow
+    /// </summary>
+    public string? SelectionColor
+    {
+        get => _selectionColor;
+        set => SetField(ref _selectionColor, value);
     }
 
     /// <summary>
