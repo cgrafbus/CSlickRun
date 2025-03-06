@@ -1,7 +1,13 @@
 ﻿namespace CSlickRun.Logic;
 
+/// <summary>
+/// Klasse zu den KeyCodes
+/// </summary>
 public static class VirtualKeyCodes
 {
+    /// <summary>
+    /// Dictionary mit string des Knopfes als Key und dem uint-Wert als Value
+    /// </summary>
     public static Dictionary<string, uint> KeyCodes = new()
     {
         { "a", 0x41 }, { "b", 0x42 }, { "c", 0x43 }, { "d", 0x44 }, { "e", 0x45 },
@@ -20,8 +26,23 @@ public static class VirtualKeyCodes
         { "left_shift", 0xA0 }
     };
 
+    /// <summary>
+    /// String des Windows-Knopfes
+    /// </summary>
     public const string WINKEY = "left_win";
+
+    /// <summary>
+    /// String des Alt-Knopfes
+    /// </summary>
     public const string ALTKEY = "left_alt";
+
+    /// <summary>
+    /// String des STRG-Knopfes
+    /// </summary>
     public const string CTRLKEY = "left_ctrl";
+
+    /// <summary>
+    /// String des Shift-Knopfes
+    /// </summary>
     public const string SHIFTKEY = "left_shift";
 }                   

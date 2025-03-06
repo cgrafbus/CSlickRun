@@ -1,38 +1,41 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection.Metadata;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Controls;
+﻿using System.Windows.Controls;
 using CSlickRun.UI.ViewModels.Base;
 using CSlickRun.UI.Views;
 
-namespace CSlickRun.UI.ViewModels
+namespace CSlickRun.UI.ViewModels;
+
+/// <summary>
+/// ConfigWindow-ViewModel
+/// </summary>
+public class ConfigWindowVm : ViewModelBase
 {
-    public class ConfigWindowVm : ViewModelBase
+    private UserControl _currentView;
+
+    /// <summary>
+    /// Konstruktor
+    /// </summary>
+    public ConfigWindowVm()
     {
-        private UserControl _currentView;
-        public UserControl CurrentView
-        {
-            get => _currentView;
-            set => SetField(ref _currentView, value);
-        }
+        NavigationCommand = new RelayCommand(ExecuteNavigation);
+        _currentView = new CommandView();
+    }
 
-        public RelayCommand NavigationCommand { get; set; }
+    /// <summary>
+    /// Momentane View
+    /// </summary>
+    public UserControl CurrentView
+    {
+        get => _currentView;
+        set => SetField(ref _currentView, value);
+    }
 
-        public ConfigWindowVm()
-        {
-            NavigationCommand = new RelayCommand(ExecuteNavigation);
-            CurrentView = new CommandView();
-        }
+    public RelayCommand NavigationCommand { get; set; }
 
-        private void ExecuteNavigation (object? obj)
-        {
-            if (obj is Func<UserControl> viewFactory)
-            {
-                CurrentView = viewFactory();
-            }
-        }
+    /// <summary>
+    /// Navigiert zwischen den Views
+    /// </summary>
+    private void ExecuteNavigation(object? obj)
+    {
+        if (obj is Func<UserControl> viewFactory) CurrentView = viewFactory();
     }
 }

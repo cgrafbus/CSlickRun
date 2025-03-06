@@ -10,12 +10,18 @@ namespace CSlickRun.UI.Windows;
 /// </summary>
 public partial class ConfigWindow : Window
 {
+    /// <summary>
+    /// Konstruktor
+    /// </summary>
     public ConfigWindow()
     {
         InitializeComponent();
         InitNavbarLogic();
     }
 
+    /// <summary>
+    /// Initialisiert die Navigationbar
+    /// </summary>
     private void InitNavbarLogic()
     {
         CommandNavButton.CommandParameter = () => new CommandView();
@@ -38,11 +44,17 @@ public partial class ConfigWindow : Window
         CommandNavButton.Active = true;
     }
 
+    /// <summary>
+    /// Schließt das Fenster
+    /// </summary>
     private void CloseWindowButton_OnClick(object sender, RoutedEventArgs e)
     {
         Close();
     }
 
+    /// <summary>
+    /// Minimiert das Fenster
+    /// </summary>
     private void MinimizeWindowButton_OnClick(object sender, RoutedEventArgs e)
     {
         WindowState = WindowState.Minimized;

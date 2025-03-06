@@ -10,6 +10,7 @@
                 <ResourceDictionary Source="/Design/Colors/DarkTheme.xaml" />
                 <ResourceDictionary Source="/Design/Brushes/SolidBrushes.xaml" />
                 <ResourceDictionary Source="/Design/Styles.xaml" />
+                <ResourceDictionary Source="/Design/ColorCanvasStyle.xaml" />
                 <ResourceDictionary Source="/Design/GridStyle.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>

@@ -12,6 +12,7 @@
     Height="800"
     AllowsTransparency="True"
     Background="Transparent"
+    Icon="/Design/CSlickRun.ico"
     ResizeMode="CanMinimize"
     WindowStartupLocation="CenterScreen"
     WindowStyle="None"
@@ -43,13 +44,13 @@
             <StackPanel
                 Width="1600"
                 Height="30"
-                HorizontalAlignment="Right"
                 VerticalAlignment="Top"
                 Panel.ZIndex="1"
                 Background="{DynamicResource TertiaryBackgroundBrush}"
                 ClipToBounds="True"
                 FlowDirection="RightToLeft"
                 Orientation="Horizontal">
+
                 <Button
                     x:Name="CloseWindowButton"
                     Width="50"

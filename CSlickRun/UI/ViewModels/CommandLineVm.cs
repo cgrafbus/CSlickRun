@@ -4,26 +4,28 @@ using CSlickRun.UI.ViewModels.Base;
 
 namespace CSlickRun.UI.ViewModels;
 
+/// <summary>
+/// ViewModel für die Kommandozeile.
+/// </summary>
 public class CommandLineVm : CommandLineVm_Base
 {
+    /// <summary>
+    /// Konstrukor
+    /// </summary>
     public CommandLineVm()
     {
         InitUI();
     }
 
+    /// <summary>
+    /// Initialisiert die UI
+    /// </summary>
     public void InitUI()
     {
-        var screenHeight = SystemParameters.WorkArea.Height;
-        CommandLineBackgroundColor = Global.GlobalSettings.CommandLineBackgroundColor;
-        CommandLineForegroundColor = Global.GlobalSettings.CommandLineForegroundColor;
-        CaretColor = Global.GlobalSettings.CaretColor;
-        AutoCompleteForegroundColor = Global.GlobalSettings.AutoCompleteForegroundColor;
-        AutoCompleteBackgroundColor = Global.GlobalSettings.AutoCompleteBackgroundColor;
-        BorderColor = Global.GlobalSettings.BorderColor;
-        CommandLineHeight = Global.GlobalSettings.CommandLineHeight;
-        CommandLineWidth = Global.GlobalSettings.CommandLineWidth;
-        AlwaysOnTop = Global.GlobalSettings.AlwaysOnTop;
+        Mapper.MapClasses(Global.GlobalSettings, this);
         Left = 0;
-        Top = screenHeight - Convert.ToInt32(CommandLineHeight);
+        Top = SystemParameters.WorkArea.Height - Convert.ToInt32(CommandLineHeight);
+        CurrentBackgroundColor = CommandLineInactiveBackgroundColor;
+        CurrentBorderColor = BorderInactiveColor;
     }
 }

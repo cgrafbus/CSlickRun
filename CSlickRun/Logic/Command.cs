@@ -56,16 +56,24 @@ public class Command
     /// </summary>
     public void Execute()
     {
-        if (CheckAndExecuteDefaultCommands()) return;
-
-        if (Paths == null) return;
+        if (CheckAndExecuteDefaultCommands() || Paths == null)
+        {
+            return;
+        }
         foreach (var path in Paths)
         {
             var process = new Process();
-            var info = new ProcessStartInfo();
-            info.FileName = path.Path;
-            info.Arguments = path.Argument;
-            info.UseShellExecute = true;
+            var info = new ProcessStartInfo
+            {
+                FileName = path.Path,
+                Arguments = path.Argument,
+                ErrorDialog = true,
+                UseShellExecute = path.StartupPath is null or ""
+            };
+            if (!info.UseShellExecute)
+            {
+                info.WorkingDirectory = path.StartupPath;
+            }
             process.StartInfo = info;
             process.Start();
         }
@@ -91,6 +99,11 @@ public class Command
 
             var configWindow = new ConfigWindow();
             configWindow.Show();
+            return true;
+        }
+        if (Name == "Exit")
+        {
+            Application.Current.Shutdown();
             return true;
         }
 

@@ -27,5 +27,24 @@ namespace CSlickRun.UI.Views
             InitializeComponent();
             DataContext = new EditCommandVm(parentVm, command);
         }
+
+        private void UserControl_KeyDown(object sender, KeyEventArgs e)
+        {
+            var noTextboxFocused = !TextBoxName.IsFocused && !TextBoxNote.IsFocused && !DataGridCommands.IsFocused;
+            if (!noTextboxFocused)
+            {
+                return;
+            }
+
+            switch (e.Key)
+            {
+                case Key.Q:
+                    break;
+                case Key.F:
+                    break;
+                case Key.E:
+                    break;
+            }
+        }
     }
 }
