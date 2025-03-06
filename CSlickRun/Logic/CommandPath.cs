@@ -7,8 +7,8 @@ public class CommandPath
 {
     public CommandPath()
     {
+        Console.Write("");
         // Durch DataGrid wird ein Parameterloser Konstruktor benötigt
-#
     }
 
     /// <summary>
