@@ -1,4 +1,5 @@
 ﻿using System.Windows.Controls;
+using CSlickRun.Logic;
 using CSlickRun.UI.ViewModels;
 
 namespace CSlickRun.UI.Views;
@@ -16,5 +17,11 @@ public partial class CommandListView : UserControl
     {
         InitializeComponent();
         DataContext = new CommandListVm(viewModel);
+    }
+
+    private void SearchTextBox_TextChanged(object sender, TextChangedEventArgs e)
+    {
+        var itemssource = ((CommandListVm)DataContext).Commands;
+        CommandHost.ItemsSource = itemssource.Where(x => x.Name.Contains(SearchTextBox.Text, StringComparison.OrdinalIgnoreCase)).ToList();
     }
 }

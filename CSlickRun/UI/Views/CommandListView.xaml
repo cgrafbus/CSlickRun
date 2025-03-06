@@ -30,10 +30,11 @@
                 Orientation="Vertical">
                 <controls:PanelHeader HeaderLabelContent="Commands" />
                 <ListBox
+                    x:Name="CommandHost"
                     Width="1410"
                     Margin="0,10,0,0"
                     ItemContainerStyle="{DynamicResource ListBoxItemStyle}"
-                    ItemsSource="{Binding Commands}"
+                    ItemsSource="{Binding Commands, Mode=OneWay}"
                     SelectedItem="{Binding SelectedCommand}">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
@@ -82,13 +83,20 @@
             Style="{DynamicResource ButtonColored}" />
         <Button
             Grid.Row="1"
-            Width="150"
+            Width="200"
             HorizontalAlignment="Right"
             Background="{DynamicResource MainBackgroundBrush}"
             Command="{Binding AddCommand}"
             Content="Add"
-            Cursor="Hand"
             Style="{DynamicResource ButtonDefault}" />
-
+        <TextBox
+            x:Name="SearchTextBox"
+            Grid.Row="1"
+            Width="600"
+            Height="30"
+            Margin="5,0,0,0"
+            HorizontalAlignment="Left"
+            Style="{DynamicResource ModernTextBox}"
+            TextChanged="SearchTextBox_TextChanged" />
     </Grid>
 </UserControl>

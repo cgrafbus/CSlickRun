@@ -96,8 +96,7 @@ public partial class CommandLineWindow : Window
     /// <param name="e">Die Ereignis-Daten.</param>
     private void CommandTextBox_TextChanged(object sender, TextChangedEventArgs e)
     {
-        var preview = Global.GlobalCommandManager.UserCommands
-            .FirstOrDefault(c => c.Name.StartsWith(CommandTextBox.Text, StringComparison.OrdinalIgnoreCase));
+        var preview = Global.GlobalCommandManager.UserCommands.OrderBy(comm => comm.Name).FirstOrDefault(c => c.Name.StartsWith(CommandTextBox.Text, StringComparison.OrdinalIgnoreCase));
         if (string.IsNullOrEmpty(CommandTextBox.Text) || string.IsNullOrWhiteSpace(CommandTextBox.Text))
         {
             preview = null;
