@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using System.Windows;
+using System.Windows.Input;
 using CSlickRun.UI.Windows;
 
 namespace CSlickRun.Logic;
@@ -56,10 +57,7 @@ public class Command
     /// </summary>
     public void Execute()
     {
-        if (CheckAndExecuteDefaultCommands() || Paths == null)
-        {
-            return;
-        }
+        if (CheckAndExecuteDefaultCommands() || Paths == null) return;
         foreach (var path in Paths)
         {
             var process = new Process();
@@ -70,10 +68,7 @@ public class Command
                 ErrorDialog = true,
                 UseShellExecute = path.StartupPath is null or ""
             };
-            if (!info.UseShellExecute)
-            {
-                info.WorkingDirectory = path.StartupPath;
-            }
+            if (!info.UseShellExecute) info.WorkingDirectory = path.StartupPath;
             process.StartInfo = info;
             process.Start();
         }
@@ -99,8 +94,12 @@ public class Command
 
             var configWindow = new ConfigWindow();
             configWindow.Show();
+            Keyboard.ClearFocus();
+            Keyboard.Focus(configWindow);
+            configWindow.Focus();
             return true;
         }
+
         if (Name == "Exit")
         {
             Application.Current.Shutdown();

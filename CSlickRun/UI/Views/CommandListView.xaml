@@ -1,17 +1,23 @@
-﻿<UserControl
+﻿<local:ViewBase
     x:Class="CSlickRun.UI.Views.CommandListView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
     xmlns:controls="clr-namespace:CSlickRun.UI.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:CSlickRun.UI.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ui="clr-namespace:CSlickRun.UI"
     xmlns:viewModels="clr-namespace:CSlickRun.UI.ViewModels"
     Width="1493"
     d:DesignHeight="800"
     d:DesignWidth="1493"
     KeyDown="UserControl_KeyDown"
     mc:Ignorable="d">
+    <b:Interaction.Behaviors>
+        <ui:KeyPressBehavior Key="F" Command="{Binding SaveCommand}" />
+        <ui:KeyPressBehavior Key="T" Command="{Binding AddCommand}" />
+    </b:Interaction.Behaviors>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="14*" />
@@ -92,7 +98,7 @@
             Width="200"
             HorizontalAlignment="Center"
             Command="{Binding SaveCommand}"
-            Content="Save"
+            Content="Save (f)"
             Cursor="Hand"
             Style="{DynamicResource ButtonColored}" />
         <Button
@@ -101,7 +107,7 @@
             HorizontalAlignment="Right"
             Background="{DynamicResource MainBackgroundBrush}"
             Command="{Binding AddCommand}"
-            Content="Add"
+            Content="Add (t)"
             Style="{DynamicResource ButtonDefault}" />
         <TextBox
             x:Name="SearchTermTextBox"
@@ -141,4 +147,4 @@
             </TextBlock.Style>
         </TextBlock>
     </Grid>
-</UserControl>
+</local:ViewBase>

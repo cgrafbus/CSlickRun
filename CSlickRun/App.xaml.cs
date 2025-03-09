@@ -1,16 +1,12 @@
-﻿using System.Configuration;
-using System.Data;
-using System.Diagnostics;
-using System.IO;
+﻿using System.IO;
 using System.Windows;
 using System.Windows.Threading;
 using CSlickRun.Logic;
-using Newtonsoft.Json;
 
 namespace CSlickRun;
 
 /// <summary>
-/// Interaction logic for App.xaml
+///     Interaction logic for App.xaml
 /// </summary>
 public partial class App
 {
@@ -25,34 +21,30 @@ public partial class App
 
     private async Task CheckConfigs()
     {
-        if (!Directory.Exists(Global.ConfigPath))
-        {
-            Directory.CreateDirectory(Global.ConfigPath);
-        }
+        if (!Directory.Exists(Global.ConfigPath)) Directory.CreateDirectory(Global.ConfigPath);
         if (!File.Exists(Global.CommandsFile))
         {
             var defaultCommands = Global.GlobalCommandManager.CreateDefaultCommandsAsJson();
             await File.WriteAllTextAsync(Global.CommandsFile, defaultCommands);
         }
+
         if (!File.Exists(Global.ConfigFile))
         {
             var defaultSettings = Global.GlobalSettings.GetDefaultSettingsAsJson();
             await File.WriteAllTextAsync(Global.ConfigFile, defaultSettings);
         }
-        if (!File.Exists(Global.HistoryFile))
-        {
-            await File.WriteAllTextAsync(Global.HistoryFile, "");
-        }
+
+        if (!File.Exists(Global.HistoryFile)) await File.WriteAllTextAsync(Global.HistoryFile, "");
     }
 
     private void ConfigureExceptionHandling()
     {
-         this.DispatcherUnhandledException += OnDispatcherUnhandledException;
-         AppDomain.CurrentDomain.UnhandledException += CurrentDomainOnUnhandledException;
+        DispatcherUnhandledException += OnDispatcherUnhandledException;
+        AppDomain.CurrentDomain.UnhandledException += CurrentDomainOnUnhandledException;
 
-         // Catch unobserved task exceptions
-         TaskScheduler.UnobservedTaskException += TaskSchedulerOnUnobservedTaskException;
-}
+        // Catch unobserved task exceptions
+        TaskScheduler.UnobservedTaskException += TaskSchedulerOnUnobservedTaskException;
+    }
 
     private void TaskSchedulerOnUnobservedTaskException(object? sender, UnobservedTaskExceptionEventArgs e)
     {
@@ -65,11 +57,17 @@ public partial class App
         ShowException(new Exception("Unhandled Exception"));
     }
 
+    protected override void OnExit(ExitEventArgs e)
+    {
+        if (Global.GlobalHook.HotkeyRegistered) Global.GlobalHook.UnregisterHotkey();
+        base.OnExit(e);
+    }
+
 
     private void OnDispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
     {
-         ShowException(e.Exception);   
-         e.Handled = true; // Prevents application crash
+        ShowException(e.Exception);
+        e.Handled = true; // Prevents application crash
     }
 
     private void ShowException(Exception ex)
@@ -77,4 +75,3 @@ public partial class App
         MessageBox.Show(ex.Message, "Unhandled Exception", MessageBoxButton.OK, MessageBoxImage.Error);
     }
 }
-

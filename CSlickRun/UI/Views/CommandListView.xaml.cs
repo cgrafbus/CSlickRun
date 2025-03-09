@@ -1,5 +1,4 @@
-﻿using System.Windows;
-using System.Windows.Controls;
+﻿using System.Windows.Controls;
 using System.Windows.Input;
 using CSlickRun.UI.ViewModels;
 
@@ -8,12 +7,12 @@ namespace CSlickRun.UI.Views;
 /// <summary>
 ///     Interaction logic for CommandListView.xaml
 /// </summary>
-public partial class CommandListView : UserControl
+public partial class CommandListView : ViewBase
 {
     private readonly CommandVm _currentVm;
 
     /// <summary>
-    /// Konstruktor
+    ///     Konstruktor
     /// </summary>
     /// <param name="viewModel">Überliegendes ViewModel</param>
     public CommandListView(CommandVm viewModel)
@@ -21,15 +20,8 @@ public partial class CommandListView : UserControl
         InitializeComponent();
         _currentVm = viewModel;
         DataContext = new CommandListVm(_currentVm);
-        Loaded += OnLoaded;
     }
 
-    private void OnLoaded(object sender, RoutedEventArgs e)
-    {
-        Keyboard.ClearFocus();
-        Keyboard.Focus(this);
-        Focus();
-    }
 
     private void SearchTextBox_TextChanged(object sender, TextChangedEventArgs e)
     {
@@ -41,10 +33,7 @@ public partial class CommandListView : UserControl
     private void UserControl_KeyDown(object sender, KeyEventArgs e)
     {
         var textBoxFocused = SearchTermTextBox.IsFocused;
-        if (textBoxFocused)
-        {
-            return;
-        }
+        if (textBoxFocused) return;
 
         switch (e.Key)
         {
@@ -59,10 +48,7 @@ public partial class CommandListView : UserControl
             case Key.W:
             {
                 CommandHost.Focus();
-                if (CommandHost.SelectedIndex > -1)
-                {
-                    CommandHost.SelectedIndex -= 1;
-                }
+                if (CommandHost.SelectedIndex > -1) CommandHost.SelectedIndex -= 1;
 
                 break;
             }
@@ -72,14 +58,8 @@ public partial class CommandListView : UserControl
     private void ContentGrid_KeyDown(object sender, KeyEventArgs e)
     {
         var selectedItem = CommandHost.SelectedItem;
-        if (e.Key == Key.E)
-        {
-            _currentVm.EditCommand.Execute(selectedItem);
-        }
+        if (e.Key == Key.E) _currentVm.EditCommand.Execute(selectedItem);
 
-        if (e.Key == Key.Q)
-        {
-            _currentVm.DeleteCommand.Execute(selectedItem);
-        }
+        if (e.Key == Key.Q) _currentVm.DeleteCommand.Execute(selectedItem);
     }
 }

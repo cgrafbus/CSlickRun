@@ -1,11 +1,9 @@
-﻿using System.Windows.Controls;
-
-namespace CSlickRun.UI.Views;
+﻿namespace CSlickRun.UI.Views;
 
 /// <summary>
-/// Interaction logic for CommandView.xaml
+///     Interaction logic for CommandView.xaml
 /// </summary>
-public partial class CommandView : UserControl
+public partial class CommandView : ViewBase
 {
     public CommandView()
     {

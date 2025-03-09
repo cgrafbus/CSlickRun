@@ -1,24 +1,23 @@
 ﻿using System.Windows.Controls;
+using System.Windows.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CSlickRun.UI.ViewModels.Base;
-using CSlickRun.UI.Views;
 
 namespace CSlickRun.UI.ViewModels;
 
 /// <summary>
-/// ConfigWindow-ViewModel
+///     ConfigWindow-ViewModel
 /// </summary>
 public partial class ConfigWindowVm : ViewModelBase
 {
     [ObservableProperty] private UserControl currentView;
 
     /// <summary>
-    /// Konstruktor
+    ///     Konstruktor
     /// </summary>
     public ConfigWindowVm()
     {
-        CurrentView = new CommandView();
     }
 
     [RelayCommand]
@@ -27,6 +26,8 @@ public partial class ConfigWindowVm : ViewModelBase
         if (obj is Func<UserControl> viewFactory)
         {
             CurrentView = viewFactory();
+            Keyboard.ClearFocus();
+            Keyboard.Focus(CurrentView);
             CurrentView.Focus();
         }
     }

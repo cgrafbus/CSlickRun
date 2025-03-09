@@ -6,12 +6,12 @@ using CSlickRun.UI.Views;
 namespace CSlickRun.UI.Windows;
 
 /// <summary>
-/// Interaction logic for ConfigWindow.xaml
+///     Interaction logic for ConfigWindow.xaml
 /// </summary>
 public partial class ConfigWindow : Window
 {
     /// <summary>
-    /// Konstruktor
+    ///     Konstruktor
     /// </summary>
     public ConfigWindow()
     {
@@ -20,7 +20,7 @@ public partial class ConfigWindow : Window
     }
 
     /// <summary>
-    /// Initialisiert die Navigationbar
+    ///     Initialisiert die Navigationbar
     /// </summary>
     private void InitNavbarLogic()
     {
@@ -29,10 +29,7 @@ public partial class ConfigWindow : Window
 
         foreach (var child in NavBar.Children)
         {
-            if (child is not NavigationBarButton navbarButton)
-            {
-                continue;
-            }
+            if (child is not NavigationBarButton navbarButton) continue;
 
             var commandBinding = new Binding("NavigationCommand")
             {
@@ -41,11 +38,11 @@ public partial class ConfigWindow : Window
             BindingOperations.SetBinding(navbarButton, NavigationBarButton.CommandProperty, commandBinding);
         }
 
-        CommandNavButton.Active = true;
+        CommandNavButton.Command.Execute(CommandNavButton.CommandParameter);
     }
 
     /// <summary>
-    /// Schließt das Fenster
+    ///     Schließt das Fenster
     /// </summary>
     private void CloseWindowButton_OnClick(object sender, RoutedEventArgs e)
     {
@@ -53,7 +50,7 @@ public partial class ConfigWindow : Window
     }
 
     /// <summary>
-    /// Minimiert das Fenster
+    ///     Minimiert das Fenster
     /// </summary>
     private void MinimizeWindowButton_OnClick(object sender, RoutedEventArgs e)
     {

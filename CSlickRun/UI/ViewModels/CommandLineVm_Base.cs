@@ -10,7 +10,7 @@ public partial class CommandLineVm_Base : ViewModelBase
 {
     #region Private Fields
 
-    [ObservableProperty] private bool alwaysOnTop;
+    [ObservableProperty]private bool alwaysOnTop;
     [ObservableProperty] private string? autoCompleteForegroundColor;
     [ObservableProperty] private bool autoStartup;
     [ObservableProperty] private string? caretColor;

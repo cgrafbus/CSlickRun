@@ -9,7 +9,7 @@ using CSlickRun.UI.Views;
 namespace CSlickRun.UI.ViewModels;
 
 /// <summary>
-/// ViewModel für die Bearbeitung von Befehlen.
+///     ViewModel für die Bearbeitung von Befehlen.
 /// </summary>
 public partial class EditCommandVm : ViewModelBase
 {
@@ -19,23 +19,19 @@ public partial class EditCommandVm : ViewModelBase
     [ObservableProperty] private CommandPath? selectedPath;
 
     /// <summary>
-    /// Initialisiert eine neue Instanz der <see cref="EditCommandVm"/> Klasse.
+    ///     Initialisiert eine neue Instanz der <see cref="EditCommandVm" /> Klasse.
     /// </summary>
     /// <param name="parentvm">Das übergeordnete ViewModel.</param>
     /// <param name="command">Der zu bearbeitende Befehl.</param>
     public EditCommandVm(CommandVm parentvm, Command command)
     {
-        parentVm = parentvm;
+        ParentVm = parentvm;
         CurrentCommand = command;
         CommandPaths = [];
 
         if (command.Paths != null)
-        {
             foreach (var path in command.Paths)
-            {
                 CommandPaths.Add(path);
-            }
-        }
     }
 
 
@@ -53,13 +49,11 @@ public partial class EditCommandVm : ViewModelBase
                            && !string.IsNullOrWhiteSpace(path.Path))
             .ToList() ?? [];
 
-        if (parentVm.Commands != null && !parentVm.Commands.Contains(CurrentCommand))
-        {
-            parentVm.Commands.Add(CurrentCommand);
-        }
+        if (ParentVm.Commands != null && !ParentVm.Commands.Contains(CurrentCommand))
+            ParentVm.Commands.Add(CurrentCommand);
 
-        parentVm.CurrentCommandView = new CommandListView(parentVm);
-        parentVm.SaveCommand.Execute(this);
+        ParentVm.CurrentCommandView = new CommandListView(ParentVm);
+        ParentVm.SaveCommand.Execute(this);
     }
 
     [RelayCommand]
@@ -71,7 +65,7 @@ public partial class EditCommandVm : ViewModelBase
     [RelayCommand]
     private void GoBack(object? obj)
     {
-        parentVm.CurrentCommandView = new CommandListView(parentVm);
+        ParentVm.CurrentCommandView = new CommandListView(ParentVm);
     }
 
     [RelayCommand]
@@ -82,7 +76,7 @@ public partial class EditCommandVm : ViewModelBase
             Paths = CommandPaths?
                 .Where(path => !string.IsNullOrEmpty(path.Path)
                                && !string.IsNullOrWhiteSpace(path.Path))
-                .ToList() ?? new List<CommandPath>()
+                .ToList() ?? []
         };
         testCommand.Execute();
     }

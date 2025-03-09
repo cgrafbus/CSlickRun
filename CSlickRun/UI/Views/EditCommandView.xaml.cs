@@ -1,13 +1,12 @@
-﻿using System.Windows.Controls;
-using CSlickRun.Logic;
+﻿using CSlickRun.Logic;
 using CSlickRun.UI.ViewModels;
 
 namespace CSlickRun.UI.Views;
 
 /// <summary>
-/// Interaction logic for EditCommandView.xaml
+///     Interaction logic for EditCommandView.xaml
 /// </summary>
-public partial class EditCommandView : UserControl
+public partial class EditCommandView : ViewBase
 {
     private readonly Command _command;
     private readonly EditCommandVm _currentVm;

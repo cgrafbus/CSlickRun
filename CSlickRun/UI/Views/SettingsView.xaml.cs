@@ -9,7 +9,7 @@ namespace CSlickRun.UI.Views;
 /// <summary>
 ///     Interaction logic for SettingsView.xaml
 /// </summary>
-public partial class SettingsView : UserControl
+public partial class SettingsView : ViewBase
 {
     public SettingsView()
     {
@@ -33,20 +33,16 @@ public partial class SettingsView : UserControl
             Panel.SetZIndex(label, 100);
             SideBarHost.Children.Add(label);
         }
+
         UpdateLayout();
     }
 
     private void LabelOnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
     {
-        if (sender is not Label label)
-        {
-            return;
-        }
-        var header = UIHelper.FindAllChildrenWithType<PanelHeader>(ContentHost).First(header => header?.HeaderLabelContent == (string?)label.Content);
-        if(header != null)
-        {
-            ScrollToElement(header);
-        }
+        if (sender is not Label label) return;
+        var header = UIHelper.FindAllChildrenWithType<PanelHeader>(ContentHost)
+            .First(header => header?.HeaderLabelContent == (string?)label.Content);
+        if (header != null) ScrollToElement(header);
     }
 
     private void ScrollToElement(UIElement element)

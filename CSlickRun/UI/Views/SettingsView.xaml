@@ -1,4 +1,4 @@
-﻿<UserControl
+﻿<local:ViewBase
     x:Class="CSlickRun.UI.Views.SettingsView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -12,9 +12,9 @@
     d:DesignWidth="1500"
     FontFamily="Lucida Console"
     mc:Ignorable="d">
-    <UserControl.DataContext>
+    <local:ViewBase.DataContext>
         <viewModels:SettingsVm />
-    </UserControl.DataContext>
+    </local:ViewBase.DataContext>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="10*" />
@@ -165,4 +165,4 @@
             Cursor="Hand"
             Style="{DynamicResource ButtonDefault}" />
     </Grid>
-</UserControl>
+</local:ViewBase>

@@ -6,7 +6,7 @@ using System.Windows.Interop;
 namespace CSlickRun.Logic;
 
 /// <summary>
-/// Klasse zur Verwaltung von globalen Hotkeys.
+///     Klasse zur Verwaltung von globalen Hotkeys.
 /// </summary>
 public class KeyboardHook
 {
@@ -17,6 +17,8 @@ public class KeyboardHook
     private const uint MOD_WIN = 0x0008;
     private IntPtr _windowHandle;
 
+    public bool HotkeyRegistered;
+
     [DllImport("user32.dll")]
     private static extern bool RegisterHotKey(IntPtr hWnd, int id, uint fsModifiers, uint vk);
 
@@ -24,12 +26,12 @@ public class KeyboardHook
     private static extern bool UnregisterHotKey(IntPtr hWnd, int id);
 
     /// <summary>
-    /// Ereignis, das ausgelöst wird, wenn der Hotkey gedrückt wird.
+    ///     Ereignis, das ausgelöst wird, wenn der Hotkey gedrückt wird.
     /// </summary>
     public event Action HotkeyPressed;
 
     /// <summary>
-    /// Registriert einen globalen Hotkey.
+    ///     Registriert einen globalen Hotkey.
     /// </summary>
     /// <param name="window">Das Fenster, das den Hotkey registriert.</param>
     /// <param name="keys">Die Liste der Tasten, die den Hotkey bilden.</param>
@@ -37,19 +39,12 @@ public class KeyboardHook
     /// <exception cref="Win32Exception">Wird ausgelöst, wenn die Registrierung des Hotkeys fehlschlägt.</exception>
     public void RegisterHotkey(Window window, List<string> keys)
     {
-        if (keys.Count == 0)
-        {
-            return;
-        }
+        if (keys.Count == 0) return;
 
         List<uint> keyCodes = new();
         foreach (var key in keys)
-        {
             if (VirtualKeyCodes.KeyCodes.TryGetValue(key, out var code))
-            {
                 keyCodes.Add(code);
-            }
-        }
 
         var charKey = keyCodes.Last();
         keyCodes.RemoveAt(keyCodes.Count - 1);
@@ -57,7 +52,6 @@ public class KeyboardHook
         uint modifiers = 0;
 
         foreach (var code in keyCodes)
-        {
             switch (code)
             {
                 case 0xA4:
@@ -77,36 +71,32 @@ public class KeyboardHook
                     modifiers |= MOD_WIN; // Left/Right WIN
                     break;
             }
-        }
 
         var helper = new WindowInteropHelper(window);
         _windowHandle = helper.Handle;
 
-        if (_windowHandle == IntPtr.Zero)
-        {
-            throw new InvalidOperationException("Window handle is invalid.");
-        }
+        if (_windowHandle == IntPtr.Zero) throw new InvalidOperationException("Window handle is invalid.");
 
         var success = RegisterHotKey(_windowHandle, HOTKEY_ID, modifiers, charKey);
-        if (!success)
-        {
-            throw new Win32Exception(Marshal.GetLastWin32Error());
-        }
+        if (!success) throw new Win32Exception(Marshal.GetLastWin32Error());
+
+        HotkeyRegistered = true;
 
         ComponentDispatcher.ThreadFilterMessage += OnHotkeyPressed;
     }
 
     /// <summary>
-    /// Hebt die Registrierung des globalen Hotkeys auf.
+    ///     Hebt die Registrierung des globalen Hotkeys auf.
     /// </summary>
     public void UnregisterHotkey()
     {
         UnregisterHotKey(_windowHandle, HOTKEY_ID);
         ComponentDispatcher.ThreadFilterMessage -= OnHotkeyPressed;
+        HotkeyRegistered = false;
     }
 
     /// <summary>
-    /// Event-Handler, der aufgerufen wird, wenn der Hotkey gedrückt wird.
+    ///     Event-Handler, der aufgerufen wird, wenn der Hotkey gedrückt wird.
     /// </summary>
     /// <param name="msg">Die Nachricht.</param>
     /// <param name="handled">Gibt an, ob die Nachricht behandelt wurde.</param>
@@ -119,4 +109,3 @@ public class KeyboardHook
         }
     }
 }
-
