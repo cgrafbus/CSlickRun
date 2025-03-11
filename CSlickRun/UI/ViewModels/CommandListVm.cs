@@ -1,5 +1,4 @@
 ﻿using System.Collections.ObjectModel;
-using System.Windows;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -10,6 +9,11 @@ namespace CSlickRun.UI.ViewModels;
 
 public partial class CommandListVm : ViewModelBase
 {
+    [ObservableProperty] private int? _currentIndex;
+
+    [ObservableProperty] [NotifyCanExecuteChangedFor(nameof(FilterCommandsCommand))]
+    private string? commandFilter;
+
     /// <summary>
     ///     Parent-ViewModel
     /// </summary>
@@ -20,11 +24,13 @@ public partial class CommandListVm : ViewModelBase
     /// </summary>
     [ObservableProperty] private Command? selectedCommand;
 
+    [ObservableProperty] private ObservableCollection<Command> visibleCommands;
+
 
     /// <summary>
     ///     Konstruktor
     /// </summary>
-    /// <param name="parentVm">Parent-ViewModel</param>
+    /// <param name="parentvm">Parent-ViewModel</param>
     public CommandListVm(CommandVm parentvm)
     {
         parentVm = parentvm;
@@ -34,32 +40,50 @@ public partial class CommandListVm : ViewModelBase
     /// <summary>
     ///     <see cref="CommandVm_Base.Commands" />
     /// </summary>
-    public ObservableCollection<Command> Commands => parentVm.Commands ?? [];
+    public ObservableCollection<Command> Commands => ParentVm.Commands ?? [];
 
 
     /// <summary>
-    ///     <see cref="CommandVm_Base.EditCommand" />
+    ///     
     /// </summary>
-    public ICommand EditCommand => parentVm.EditCommand;
+    public ICommand EditCommand => ParentVm.EditCommand;
 
     /// <summary>
-    ///     <see cref="CommandVm_Base.DeleteCommand" />
+    ///    
     /// </summary>
-    public ICommand DeleteCommand => parentVm.DeleteCommand;
+    public ICommand DeleteCommand => ParentVm.DeleteCommand;
 
     /// <summary>
-    ///     <see cref="CommandVm_Base.AddCommand" />
+    ///     
     /// </summary>
-    public ICommand AddCommand => parentVm.AddCommand;
+    public ICommand AddCommand => ParentVm.AddCommand;
 
     /// <summary>
-    ///     <see cref="CommandVm_Base.SaveCommand" />
+    ///     
     /// </summary>
-    public ICommand SaveCommand => parentVm.SaveCommand;
+    public ICommand SaveCommand => ParentVm.SaveCommand;
 
     [RelayCommand]
-    private void Test()
+    private void MoveIndexUp()
     {
-        MessageBox.Show("Test");
+        if (CurrentIndex < Commands.Count)
+        {
+            CurrentIndex += 1;
+        }
+    }
+
+    [RelayCommand]
+    private void MoveIndexDown()
+    {
+        if (CurrentIndex >= 0)
+        {
+            CurrentIndex += 1;
+        }
+    }
+
+    [RelayCommand]
+    private void FilterCommands()
+    {
+        VisibleCommands = Commands.Where( .Where(x => CommandFilter != null && x.Name.Contains(CommandFilter, StringComparison.OrdinalIgnoreCase)).ToList();)
     }
 }
