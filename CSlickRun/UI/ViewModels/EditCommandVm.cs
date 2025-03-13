@@ -18,6 +18,16 @@ public partial class EditCommandVm : ViewModelBase
     [ObservableProperty] private CommandVm parentVm;
     [ObservableProperty] private CommandPath? selectedPath;
 
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(ForbidShortcutExecution))]
+    private bool pathGridFocused;
+
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(ForbidShortcutExecution))]
+    private bool anyTextBoxFocused;
+
+    public bool ForbidShortcutExecution => PathGridFocused || AnyTextBoxFocused;
+
     /// <summary>
     ///     Initialisiert eine neue Instanz der <see cref="EditCommandVm" /> Klasse.
     /// </summary>
@@ -53,7 +63,6 @@ public partial class EditCommandVm : ViewModelBase
             ParentVm.Commands.Add(CurrentCommand);
 
         ParentVm.CurrentCommandView = new CommandListView(ParentVm);
-        ParentVm.SaveCommand.Execute(this);
     }
 
     [RelayCommand]

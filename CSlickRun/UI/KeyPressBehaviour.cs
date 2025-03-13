@@ -12,6 +12,9 @@ public class KeyPressBehavior : Behavior<UIElement>
     public static readonly DependencyProperty KeyProperty =
         DependencyProperty.Register(nameof(Key), typeof(Key), typeof(KeyPressBehavior));
 
+    public static readonly DependencyProperty CanExecuteProperty =
+        DependencyProperty.Register(nameof(CanExecute), typeof(bool), typeof(KeyPressBehavior));
+
     public ICommand Command
     {
         get => (ICommand)GetValue(CommandProperty);
@@ -22,6 +25,12 @@ public class KeyPressBehavior : Behavior<UIElement>
     {
         get => (Key)GetValue(KeyProperty);
         set => SetValue(KeyProperty, value);
+    }
+
+    public bool CanExecute
+    {
+        get => (bool)GetValue(CanExecuteProperty);
+        set => SetCurrentValue(CanExecuteProperty, value);
     }
 
     protected override void OnAttached()
@@ -38,7 +47,7 @@ public class KeyPressBehavior : Behavior<UIElement>
 
     private void OnKeyDown(object sender, KeyEventArgs e)
     {
-        if (e.Key != Key || Command?.CanExecute(null) != true)
+        if (e.Key != Key || Command?.CanExecute(null) != true || !CanExecute)
         {
             return;
         }

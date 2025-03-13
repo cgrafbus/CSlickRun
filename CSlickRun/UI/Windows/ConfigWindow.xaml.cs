@@ -1,5 +1,7 @@
 ﻿using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Data;
+using System.Windows.Input;
 using CSlickRun.UI.Controls;
 using CSlickRun.UI.Views;
 
@@ -38,7 +40,11 @@ public partial class ConfigWindow : Window
             BindingOperations.SetBinding(navbarButton, NavigationBarButton.CommandProperty, commandBinding);
         }
 
-        CommandNavButton.Command.Execute(CommandNavButton.CommandParameter);
+        var args = new MouseButtonEventArgs(Mouse.PrimaryDevice, 0, MouseButton.Left)
+        {
+            RoutedEvent = MouseLeftButtonDownEvent
+        };
+        CommandNavButton.RaiseEvent(args);
     }
 
     /// <summary>

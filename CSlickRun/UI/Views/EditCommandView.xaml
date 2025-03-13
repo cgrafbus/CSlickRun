@@ -12,10 +12,22 @@
     d:DesignHeight="800"
     d:DesignWidth="1500"
     mc:Ignorable="d">
+    <UserControl.Resources>
+        <ui:BooleanInverterConverter x:Key="BooleanInverter" />
+    </UserControl.Resources>
     <i:Interaction.Behaviors>
-        <ui:KeyPressBehavior Key="Q" Command="{Binding GoBackCommand}" />
-        <ui:KeyPressBehavior Key="F" Command="{Binding SaveCommand}" />
-        <ui:KeyPressBehavior Key="E" Command="{Binding TestCommandCommand}" />
+        <ui:KeyPressBehavior
+            Key="Q"
+            CanExecute="{Binding ForbidShortcutExecution, Converter={StaticResource BooleanInverter}}"
+            Command="{Binding GoBackCommand}" />
+        <ui:KeyPressBehavior
+            Key="F"
+            CanExecute="{Binding ForbidShortcutExecution, Converter={StaticResource BooleanInverter}}"
+            Command="{Binding SaveCommand}" />
+        <ui:KeyPressBehavior
+            Key="E"
+            CanExecute="{Binding ForbidShortcutExecution, Converter={StaticResource BooleanInverter}}"
+            Command="{Binding TestCommandCommand}" />
     </i:Interaction.Behaviors>
     <Grid>
         <Grid.RowDefinitions>
@@ -37,6 +49,8 @@
                     Height="30"
                     Margin="0,5,0,0"
                     HorizontalAlignment="Center"
+                    ui:FocusBehaviour.IsFocused="{Binding AnyTextBoxFocused, Mode=OneWayToSource}"
+                    ui:FocusBehaviour.TrackFocus="True"
                     Background="{DynamicResource MainBackgroundBrush}"
                     MaxLength="30"
                     Style="{DynamicResource ModernTextBox}"
@@ -47,6 +61,8 @@
                     Width="1450"
                     MinHeight="300"
                     Margin="0,15,0,0"
+                    ui:FocusBehaviour.IsFocused="{Binding DataGridFocused, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    ui:FocusBehaviour.TrackFocus="True"
                     AutoGenerateColumns="False"
                     CanUserDeleteRows="True"
                     CanUserResizeColumns="False"
@@ -78,6 +94,8 @@
                     Height="Auto"
                     MinHeight="30"
                     Margin="0,15,0,0"
+                    ui:FocusBehaviour.IsFocused="{Binding AnyTextBoxFocused, Mode=OneWayToSource}"
+                    ui:FocusBehaviour.TrackFocus="True"
                     AcceptsReturn="True"
                     Background="{DynamicResource SecondaryBackgroundBrush}"
                     BorderBrush="{DynamicResource MainAccentBrush}"
