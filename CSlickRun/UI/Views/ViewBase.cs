@@ -9,6 +9,16 @@ public class ViewBase : UserControl
     public ViewBase()
     {
         Loaded += OnLoaded;
+
+        foreach (var element in UIHelper.FindAllChildren(this))
+        {
+            element.LostFocus += ElementOnLostFocus;
+        }
+    }
+
+    private void ElementOnLostFocus(object sender, RoutedEventArgs e)
+    {
+        Application.Current.Dispatcher.Invoke(FocusThing);
     }
 
     private void OnLoaded(object sender, RoutedEventArgs e)

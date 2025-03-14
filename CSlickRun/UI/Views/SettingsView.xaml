@@ -151,7 +151,6 @@
                         Style="{DynamicResource ModernTextBox}"
                         Text="{Binding CommandLineHeight, Mode=TwoWay}" />
                 </StackPanel>
-                <Rectangle Height="4000" />
             </StackPanel>
         </ScrollViewer>
         <Button

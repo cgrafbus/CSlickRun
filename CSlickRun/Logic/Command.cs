@@ -22,11 +22,13 @@ public class Command
     /// <param name="note">
     ///     <see cref="Note" />
     /// </param>
-    public Command(string name, List<CommandPath>? paths, string? note)
+    /// <param name="defaultCommand"> Kennzeichen, ob der Command ein DefaultCommand ist</param>
+    public Command(string name, List<CommandPath>? paths, string? note, bool defaultCommand = false)
     {
         Name = name;
         Paths = paths;
         Note = note;
+        DefaultCommand = defaultCommand;
     }
 
 
@@ -51,6 +53,8 @@ public class Command
     ///     Notiz zum Befehl
     /// </summary>
     public string? Note { get; set; }
+
+    public bool DefaultCommand { get; set; }
 
     /// <summary>
     ///     Führt den Befehl aus
@@ -80,32 +84,32 @@ public class Command
     /// <returns>true, falls es ein Standardcommand war, ansonsten false</returns>
     private bool CheckAndExecuteDefaultCommands()
     {
-        if (Name == "Config")
+        switch (Name)
         {
-            var confWindow = Application.Current.Windows
-                .OfType<ConfigWindow>()
-                .FirstOrDefault();
-
-            if (confWindow != null)
+            case "Config":
             {
-                confWindow.Activate();
+                var confWindow = Application.Current.Windows
+                    .OfType<ConfigWindow>()
+                    .FirstOrDefault();
+
+                if (confWindow != null)
+                {
+                    confWindow.Activate();
+                    return true;
+                }
+
+                var configWindow = new ConfigWindow();
+                configWindow.Show();
+                Keyboard.ClearFocus();
+                Keyboard.Focus(configWindow);
+                configWindow.Focus();
                 return true;
             }
-
-            var configWindow = new ConfigWindow();
-            configWindow.Show();
-            Keyboard.ClearFocus();
-            Keyboard.Focus(configWindow);
-            configWindow.Focus();
-            return true;
+            case "Exit":
+                Application.Current.Shutdown();
+                return true;
+            default:
+                return false;
         }
-
-        if (Name == "Exit")
-        {
-            Application.Current.Shutdown();
-            return true;
-        }
-
-        return false;
     }
 }

@@ -97,7 +97,7 @@ public partial class CommandLineWindow : Window
     /// <param name="e">Die Ereignis-Daten.</param>
     private void CommandTextBox_TextChanged(object sender, TextChangedEventArgs e)
     {
-        var preview = Global.GlobalCommandManager.GetCommands().FirstOrDefault(c =>
+        var preview = Global.GlobalCommandManager.GetAllCommands().FirstOrDefault(c =>
             c.Name.StartsWith(CommandTextBox.Text, StringComparison.OrdinalIgnoreCase));
         if (string.IsNullOrEmpty(CommandTextBox.Text) || string.IsNullOrWhiteSpace(CommandTextBox.Text))
         {
@@ -146,12 +146,12 @@ public partial class CommandLineWindow : Window
     /// <param name="e">Die Ereignis-Daten.</param>
     private void CommandTextBox_KeyDown(object sender, KeyEventArgs e)
     {
-        if (e.Key != Key.Enter)
+        if (e.Key != Key.Enter && e.Key != Key.Tab)
         {
             return;
         }
 
-        Global.GlobalCommandManager.ExecuteCommand(Global.GlobalCommandManager.GetCommands().FirstOrDefault(c =>
+        Global.GlobalCommandManager.ExecuteCommand(Global.GlobalCommandManager.GetAllCommands().FirstOrDefault(c =>
             c.Name.Contains(CommandTextBox.Text, StringComparison.OrdinalIgnoreCase)));
         SetCommandStatusUnavailable();
     }

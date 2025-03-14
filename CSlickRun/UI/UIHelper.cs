@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.IO;
+using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
@@ -58,9 +59,9 @@ public static class UIHelper
     /// <param name="parent">Parent-Control</param>
     /// <typeparam name="T">Typ der Children</typeparam>
     /// <returns>Liste der Children</returns>
-    public static List<T?> FindAllChildrenWithType<T>(DependencyObject? parent)
+    public static List<T> FindAllChildrenWithType<T>(DependencyObject? parent)
     {
-        var children = new List<T?>();
+        var children = new List<T>();
 
         if (parent == null) return children;
         // Überprüfe alle direkten Children
@@ -74,6 +75,11 @@ public static class UIHelper
         }
 
         return children;
+    }
+
+    public static List<UIElement> FindAllChildren(DependencyObject? parent)
+    {
+        return FindAllChildrenWithType<UIElement>(parent ?? null);
     }
 
     /// <summary>
@@ -98,7 +104,7 @@ public static class UIHelper
     /// <returns>Bild</returns>
     public static BitmapImage GetImageFromBytes(byte[] imagedata)
     {
-        using (var ms = new System.IO.MemoryStream(imagedata))
+        using (var ms = new MemoryStream(imagedata))
         {
             var image = new BitmapImage();
             image.BeginInit();

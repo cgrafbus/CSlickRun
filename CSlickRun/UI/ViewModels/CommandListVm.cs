@@ -1,9 +1,8 @@
 ﻿using System.Collections.ObjectModel;
-using System.DirectoryServices.ActiveDirectory;
-using System.Windows.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CSlickRun.Logic;
+using CSlickRun.UI.Controls;
 using CSlickRun.UI.ViewModels.Base;
 
 namespace CSlickRun.UI.ViewModels;
@@ -12,8 +11,11 @@ public partial class CommandListVm : ViewModelBase
 {
     [ObservableProperty] private int? _currentIndex;
 
-    [ObservableProperty]
-    private string? commandFilter;
+    [ObservableProperty] private string? commandFilter;
+
+    [ObservableProperty] private bool forbidShortcutExecution;
+
+    
 
     /// <summary>
     ///     Parent-ViewModel
@@ -26,19 +28,6 @@ public partial class CommandListVm : ViewModelBase
     [ObservableProperty] private Command? selectedCommand;
 
     [ObservableProperty] private ObservableCollection<Command> visibleCommands;
-
-    [ObservableProperty]
-    private bool forbidShortcutExecution;
-
-    partial void OnCommandFilterChanging(string? oldValue, string? newValue)
-    {
-        FilterCommands(newValue);
-    }
-    private void FilterCommands(string? value)
-    {
-        VisibleCommands = new ObservableCollection<Command>(Commands.Where(x => x.Name.Contains(value ?? string.Empty, StringComparison.OrdinalIgnoreCase)).ToList());
-        CurrentIndex = VisibleCommands.Count > 0 ? 0 : -1;
-    }
 
 
     /// <summary>
@@ -67,6 +56,18 @@ public partial class CommandListVm : ViewModelBase
     ///     
     /// </summary>
     public IRelayCommand SaveCommand => ParentVm.SaveCommand;
+
+    partial void OnCommandFilterChanging(string? oldValue, string? newValue)
+    {
+        FilterCommands(newValue);
+    }
+
+    private void FilterCommands(string? value)
+    {
+        VisibleCommands = new ObservableCollection<Command>(Commands
+            .Where(x => x.Name.Contains(value ?? string.Empty, StringComparison.OrdinalIgnoreCase)).ToList());
+        CurrentIndex = VisibleCommands.Count > 0 ? 0 : -1;
+    }
 
     [RelayCommand]
     private void MoveIndexUp()

@@ -9,6 +9,8 @@ namespace CSlickRun.Logic;
 /// </summary>
 public class CommandManager
 {
+    private List<Command> _defaultCommands = new();
+
     /// <summary>
     /// Alle Commands
     /// </summary>
@@ -36,16 +38,24 @@ public class CommandManager
     /// Gibt alle Commands sortiert zurück
     /// </summary>
     /// <returns></returns>
-    public List<Command> GetCommands()
+    public List<Command> GetUserCommands()
     {
         return _userCommands.OrderBy(command => command.Name).ToList();
+    }
+
+    public List<Command> GetAllCommands()
+    {
+        var allCommands = new List<Command>();
+        allCommands.AddRange(_userCommands);
+        allCommands.AddRange(_defaultCommands);
+        return allCommands.OrderBy(command => command.Name).ToList();
     }
 
     /// <summary>
     /// Setzt die Commands
     /// </summary>
     /// <param name="value">Neue Liste an Commands</param>
-    public void SetCommands(IEnumerable<Command> value)
+    public void SetUserCommands(IEnumerable<Command> value)
     {
         _userCommands = value.OrderBy(command => command.Name).ToList();
     }
@@ -57,6 +67,7 @@ public class CommandManager
     {
         var commandsAsJson = await File.ReadAllTextAsync(Global.CommandsFile);
         _userCommands = JsonConvert.DeserializeObject<List<Command>>(commandsAsJson) ?? [];
+        _defaultCommands = Global.DefaultCommands;
         await SaveCommands();
     }
 
@@ -65,12 +76,6 @@ public class CommandManager
     /// </summary>
     public async Task SaveCommands()
     {
-        var defaultCommands = CreateDefaultCommands();
-        foreach (var defaultCommand in defaultCommands.Where(defaultCommand => _userCommands.All(c => c.Name != defaultCommand.Name)))
-        {
-            _userCommands.Add(defaultCommand);
-        }
-
         var commandsAsJson = JsonConvert.SerializeObject(_userCommands);
         await File.WriteAllTextAsync(Global.CommandsFile, commandsAsJson);
     }

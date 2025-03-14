@@ -16,7 +16,7 @@ public partial class CommandVm : CommandVm_Base
     /// </summary>
     public CommandVm()
     {
-        Commands = new ObservableCollection<Command>(Global.GlobalCommandManager.GetCommands() ?? new());
+        Commands = new ObservableCollection<Command>(Global.GlobalCommandManager.GetUserCommands());
 
         // Übersicht der Commands anzeigen
         CurrentCommandView = new CommandListView(this);
@@ -29,7 +29,7 @@ public partial class CommandVm : CommandVm_Base
     [RelayCommand]
     private void Edit(object? obj)
     {
-        CurrentCommandView = new EditCommandView((Command)obj! ?? new(), this);
+        CurrentCommandView = new EditCommandView((Command?)obj ?? new Command(), this);
     }
 
     /// <summary>
@@ -44,11 +44,11 @@ public partial class CommandVm : CommandVm_Base
     /// <summary>
     ///     Löscht einen Befehl
     /// </summary>
-    /// <exception cref="AggregateException"></exception>
+    /// <exception cref="ArgumentNullException"></exception>
     [RelayCommand]
     private void Delete(object? obj)
     {
-        if (obj is not Command command) throw new ArgumentNullException();
+        if (obj is not Command command) throw new ArgumentNullException($"Parameter {obj} is not a valid command.");
 
         if (MessageBox.Show($"Are you sure you want to delete the Command {command.Name}", "Confirmation",
                 MessageBoxButton.YesNo, MessageBoxImage.Question) != MessageBoxResult.Yes)
@@ -62,7 +62,7 @@ public partial class CommandVm : CommandVm_Base
     [RelayCommand]
     private async Task Save(object? obj)
     {
-        Global.GlobalCommandManager.SetCommands(Commands ?? []);
+        Global.GlobalCommandManager.SetUserCommands(Commands ?? []);
 
         await Global.GlobalCommandManager.SaveCommands();
     }

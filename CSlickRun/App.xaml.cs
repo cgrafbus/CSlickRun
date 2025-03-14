@@ -24,8 +24,7 @@ public partial class App
         if (!Directory.Exists(Global.ConfigPath)) Directory.CreateDirectory(Global.ConfigPath);
         if (!File.Exists(Global.CommandsFile))
         {
-            var defaultCommands = Global.GlobalCommandManager.CreateDefaultCommandsAsJson();
-            await File.WriteAllTextAsync(Global.CommandsFile, defaultCommands);
+            await File.WriteAllTextAsync(Global.CommandsFile, "");
         }
 
         if (!File.Exists(Global.ConfigFile))
@@ -59,7 +58,7 @@ public partial class App
 
     protected override void OnExit(ExitEventArgs e)
     {
-        if (Global.GlobalHook.HotkeyRegistered) Global.GlobalHook.UnregisterHotkey();
+        if (Global.GlobalHook.IsHotkeyRegistered()) Global.GlobalHook.UnregisterHotkey();
         base.OnExit(e);
     }
 

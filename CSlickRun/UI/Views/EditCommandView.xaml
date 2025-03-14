@@ -17,10 +17,6 @@
     </UserControl.Resources>
     <i:Interaction.Behaviors>
         <ui:KeyPressBehavior
-            Key="Q"
-            CanExecute="{Binding ForbidShortcutExecution, Converter={StaticResource BooleanInverter}}"
-            Command="{Binding GoBackCommand}" />
-        <ui:KeyPressBehavior
             Key="F"
             CanExecute="{Binding ForbidShortcutExecution, Converter={StaticResource BooleanInverter}}"
             Command="{Binding SaveCommand}" />
@@ -28,6 +24,10 @@
             Key="E"
             CanExecute="{Binding ForbidShortcutExecution, Converter={StaticResource BooleanInverter}}"
             Command="{Binding TestCommandCommand}" />
+        <ui:KeyPressBehavior
+            Key="Q"
+            CanExecute="{Binding ForbidShortcutExecution, Converter={StaticResource BooleanInverter}}"
+            Command="{Binding GoBackCommand}" />
     </i:Interaction.Behaviors>
     <Grid>
         <Grid.RowDefinitions>
@@ -61,12 +61,12 @@
                     Width="1450"
                     MinHeight="300"
                     Margin="0,15,0,0"
-                    ui:FocusBehaviour.IsFocused="{Binding DataGridFocused, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                    ui:FocusBehaviour.TrackFocus="True"
                     AutoGenerateColumns="False"
                     CanUserDeleteRows="True"
                     CanUserResizeColumns="False"
                     ColumnWidth="500"
+                    GotFocus="DataGridCommands_OnGotFocus"
+                    LostFocus="DataGridCommands_OnLostFocus"
                     HorizontalScrollBarVisibility="Disabled"
                     ItemsSource="{Binding CommandPaths, Mode=TwoWay}"
                     MinColumnWidth="400"
@@ -74,14 +74,17 @@
                     SelectionUnit="FullRow">
                     <DataGrid.Columns>
                         <DataGridTextColumn
+                            ui:GridFocusBehaviour.IsFocused="{Binding PathGridFocused, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}"
                             Binding="{Binding Path}"
                             EditingElementStyle="{DynamicResource ModernTextBoxDataGridCell}"
                             Header="Path" />
                         <DataGridTextColumn
+                            ui:GridFocusBehaviour.IsFocused="{Binding PathGridFocused, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}"
                             Binding="{Binding Argument}"
                             EditingElementStyle="{DynamicResource ModernTextBoxDataGridCell}"
                             Header="Argument" />
                         <DataGridTextColumn
+                            ui:GridFocusBehaviour.IsFocused="{Binding PathGridFocused, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}"
                             Binding="{Binding StartupPath}"
                             EditingElementStyle="{DynamicResource ModernTextBoxDataGridCell}"
                             Header="Startup Path" />
@@ -113,19 +116,19 @@
                 Width="200"
                 Background="{DynamicResource MainBackgroundBrush}"
                 Command="{Binding SaveCommand}"
-                Content="Save (f)"
-                Style="{DynamicResource ButtonDefault}" />
-            <Button
-                Width="200"
-                Background="{DynamicResource MainBackgroundBrush}"
-                Command="{Binding GoBackCommand}"
-                Content="Cancel (q)"
+                Content="Save (F)"
                 Style="{DynamicResource ButtonDefault}" />
             <Button
                 Width="200"
                 Background="{DynamicResource MainBackgroundBrush}"
                 Command="{Binding TestCommandCommand}"
-                Content="Test Command (e)"
+                Content="Test Command (E)"
+                Style="{DynamicResource ButtonDefault}" />
+            <Button
+                Width="200"
+                Background="{DynamicResource MainBackgroundBrush}"
+                Command="{Binding GoBackCommand}"
+                Content="Cancel (Q)"
                 Style="{DynamicResource ButtonDefault}" />
         </StackPanel>
     </Grid>

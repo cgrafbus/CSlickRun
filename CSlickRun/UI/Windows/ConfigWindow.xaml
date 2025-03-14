@@ -97,6 +97,11 @@
                         Cursor="Hand"
                         Style="{DynamicResource NavigationBarButtonStyle}"
                         TextContent="Settings" />
+                    <controls:NavigationBarButton
+                        x:Name="HelpNavButton"
+                        Cursor="Hand"
+                        Style="{DynamicResource NavigationBarButtonStyle}"
+                        TextContent="Help" />
                 </StackPanel>
             </Grid>
 

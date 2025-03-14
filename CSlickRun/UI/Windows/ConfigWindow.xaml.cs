@@ -1,5 +1,4 @@
 ﻿using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
 using CSlickRun.UI.Controls;
@@ -28,6 +27,7 @@ public partial class ConfigWindow : Window
     {
         CommandNavButton.CommandParameter = () => new CommandView();
         SettingsNavButton.CommandParameter = () => new SettingsView();
+        HelpNavButton.CommandParameter = () => new HelpView();
 
         foreach (var child in NavBar.Children)
         {

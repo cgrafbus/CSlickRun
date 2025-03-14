@@ -13,28 +13,26 @@ namespace CSlickRun.UI.ViewModels;
 /// </summary>
 public partial class EditCommandVm : ViewModelBase
 {
+    [ObservableProperty] [NotifyPropertyChangedFor(nameof(ForbidShortcutExecution))]
+    private bool anyTextBoxFocused;
+
     [ObservableProperty] private ObservableCollection<CommandPath>? commandPaths;
     [ObservableProperty] private Command currentCommand;
     [ObservableProperty] private CommandVm parentVm;
-    [ObservableProperty] private CommandPath? selectedPath;
 
-    [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(ForbidShortcutExecution))]
+    [ObservableProperty] [NotifyPropertyChangedFor(nameof(ForbidShortcutExecution))]
     private bool pathGridFocused;
 
-    [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(ForbidShortcutExecution))]
-    private bool anyTextBoxFocused;
-
-    public bool ForbidShortcutExecution => PathGridFocused || AnyTextBoxFocused;
+    [ObservableProperty] private CommandPath? selectedPath;
 
     /// <summary>
     ///     Initialisiert eine neue Instanz der <see cref="EditCommandVm" /> Klasse.
     /// </summary>
     /// <param name="parentvm">Das übergeordnete ViewModel.</param>
     /// <param name="command">Der zu bearbeitende Befehl.</param>
-    public EditCommandVm(CommandVm parentvm, Command command)
+    public EditCommandVm(CommandVm parentvm, Command command, out EditCommandVm a)
     {
+        a = this;
         ParentVm = parentvm;
         CurrentCommand = command;
         CommandPaths = [];
@@ -43,6 +41,8 @@ public partial class EditCommandVm : ViewModelBase
             foreach (var path in command.Paths)
                 CommandPaths.Add(path);
     }
+
+    public bool ForbidShortcutExecution => PathGridFocused || AnyTextBoxFocused;
 
 
     [RelayCommand]

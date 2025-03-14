@@ -12,7 +12,7 @@ public partial class SettingsVm_Base : ViewModelBase
 
     [ObservableProperty] private bool altBool;
     [ObservableProperty] private bool alwaysOnTop;
-    [ObservableProperty] private string? autocompleteBackgroundColor;
+    [ObservableProperty] private string? autoCompleteBackgroundColor;
     [ObservableProperty] private string? autoCompleteForegroundColor;
     [ObservableProperty] private bool autoStartup;
     [ObservableProperty] private string? borderColor;

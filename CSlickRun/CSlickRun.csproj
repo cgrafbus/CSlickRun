@@ -9,6 +9,11 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="Design\Icons\deleted.png" />
+    <None Remove="Design\Icons\modified.png" />
+    <None Remove="Design\Icons\new.png" />
+  </ItemGroup>
+  <ItemGroup>
     <COMReference Include="IWshRuntimeLibrary">
       <WrapperTool>tlbimp</WrapperTool>
       <VersionMinor>0</VersionMinor>
@@ -21,6 +26,15 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Design\CSlickRun.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Design\Icons\deleted.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Design\Icons\modified.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Design\Icons\new.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

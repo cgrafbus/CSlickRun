@@ -15,9 +15,9 @@ public class KeyboardHook
     private const uint MOD_CONTROL = 0x0002;
     private const uint MOD_SHIFT = 0x0004;
     private const uint MOD_WIN = 0x0008;
-    private IntPtr _windowHandle;
 
-    public bool HotkeyRegistered;
+    private bool _hotkeyRegistered;
+    private IntPtr _windowHandle;
 
     [DllImport("user32.dll")]
     private static extern bool RegisterHotKey(IntPtr hWnd, int id, uint fsModifiers, uint vk);
@@ -80,9 +80,13 @@ public class KeyboardHook
         var success = RegisterHotKey(_windowHandle, HOTKEY_ID, modifiers, charKey);
         if (!success) throw new Win32Exception(Marshal.GetLastWin32Error());
 
-        HotkeyRegistered = true;
-
+        _hotkeyRegistered = true;
         ComponentDispatcher.ThreadFilterMessage += OnHotkeyPressed;
+    }
+
+    public bool IsHotkeyRegistered()
+    {
+        return _hotkeyRegistered;
     }
 
     /// <summary>
@@ -92,7 +96,7 @@ public class KeyboardHook
     {
         UnregisterHotKey(_windowHandle, HOTKEY_ID);
         ComponentDispatcher.ThreadFilterMessage -= OnHotkeyPressed;
-        HotkeyRegistered = false;
+        _hotkeyRegistered = false;
     }
 
     /// <summary>

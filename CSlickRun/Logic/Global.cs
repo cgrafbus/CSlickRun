@@ -15,6 +15,8 @@ public class Global
     public static string CommandsFile = Path.Combine(ConfigPath, "commands.json");
     public static string HistoryFile = Path.Combine(ConfigPath, "history.json");
     public static string IconFile = Path.Combine(Environment.CurrentDirectory, @"\Design\CSlickRun.ico");
+    public static string ImagePath = Path.Combine(Environment.CurrentDirectory, @"\Design\Icons");
+
 
     /// <summary>
     /// Globaler Command-Manager
@@ -31,8 +33,8 @@ public class Global
     /// </summary>
     public static List<Command> DefaultCommands = new()
     {
-        new ("Config", null, null),
-        new ("Exit", null, null),
+        new Command("Config", null, null, true),
+        new Command("Exit", null, null, true)
     };
 
     /// <summary>
@@ -47,7 +49,9 @@ public class Global
     /// <exception cref="AggregateException"></exception>
     public static void RegisterGlobalHotkey()
     {
-        GlobalHook.RegisterHotkey((CommandLineWindow)Application.Current.MainWindow ?? throw new ArgumentNullException(), GlobalSettings.ShortCutCodes ?? throw new ArgumentNullException());
+        GlobalHook.RegisterHotkey(
+            (CommandLineWindow)Application.Current.MainWindow ?? throw new ArgumentNullException(),
+            GlobalSettings.ShortCutCodes ?? throw new ArgumentNullException());
     }
 
     /// <summary>
@@ -63,7 +67,7 @@ public class Global
     /// </summary>
     public static void ResetGlobalHotkey()
     {
-       UnregisterGlobalHotkey();
-       RegisterGlobalHotkey();
+        UnregisterGlobalHotkey();
+        RegisterGlobalHotkey();
     }
 }
