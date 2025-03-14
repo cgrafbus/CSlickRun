@@ -1,11 +1,6 @@
 ﻿namespace CSlickRun.Logic.Attributes;
 
-public class ImageAttribute : Attribute
+public class ImageAttribute(string? imagePath) : Attribute
 {
-    public ImageAttribute(string? ImagePath)
-    {
-        ImagePath = ImagePath;
-    }
-
-    public string? ImagePath { get; set; }
+    public string? ImagePath { get; set; } = imagePath;
 }

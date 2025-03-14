@@ -7,7 +7,7 @@ using CSlickRun.UI.ViewModels.Base;
 
 namespace CSlickRun.UI.ViewModels;
 
-public partial class CommandListVm : ViewModelBase
+public partial class CommandListVm : ViewModelBase, ISubView
 {
     [ObservableProperty] private int? _currentIndex;
 
@@ -15,7 +15,6 @@ public partial class CommandListVm : ViewModelBase
 
     [ObservableProperty] private bool forbidShortcutExecution;
 
-    
 
     /// <summary>
     ///     Parent-ViewModel
@@ -56,6 +55,15 @@ public partial class CommandListVm : ViewModelBase
     ///     
     /// </summary>
     public IRelayCommand SaveCommand => ParentVm.SaveCommand;
+
+    public bool OnExit()
+    {
+        return Commands.All(c => c.ItemStatus == ItemStatus.None);
+    }
+
+    public void OnEnter()
+    {
+    }
 
     partial void OnCommandFilterChanging(string? oldValue, string? newValue)
     {

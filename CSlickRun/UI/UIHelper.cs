@@ -89,12 +89,19 @@ public static class UIHelper
     /// <returns>Bild</returns>
     public static BitmapImage GetImageFromPath(string? path)
     {
-        if (path == null) return new BitmapImage();
-        var image = new BitmapImage();
-        image.BeginInit();
-        image.UriSource = new Uri(path);
-        image.EndInit();
-        return image;
+        try
+        {
+            if (path == null) return new BitmapImage();
+            var image = new BitmapImage();
+            image.BeginInit();
+            image.UriSource = new Uri(path, UriKind.Relative);
+            image.EndInit();
+            return image;
+        }
+        catch
+        {
+            return new BitmapImage();
+        }
     }
 
     /// <summary>

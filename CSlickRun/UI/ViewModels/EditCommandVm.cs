@@ -3,6 +3,7 @@ using System.Windows;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CSlickRun.Logic;
+using CSlickRun.UI.Controls;
 using CSlickRun.UI.ViewModels.Base;
 using CSlickRun.UI.Views;
 
@@ -13,6 +14,8 @@ namespace CSlickRun.UI.ViewModels;
 /// </summary>
 public partial class EditCommandVm : ViewModelBase
 {
+    private readonly bool _newItem;
+
     [ObservableProperty] [NotifyPropertyChangedFor(nameof(ForbidShortcutExecution))]
     private bool anyTextBoxFocused;
 
@@ -30,16 +33,24 @@ public partial class EditCommandVm : ViewModelBase
     /// </summary>
     /// <param name="parentvm">Das übergeordnete ViewModel.</param>
     /// <param name="command">Der zu bearbeitende Befehl.</param>
-    public EditCommandVm(CommandVm parentvm, Command command, out EditCommandVm a)
+    /// <param name="editCommandVm">This</param>
+    public EditCommandVm(CommandVm parentvm, Command command, out EditCommandVm editCommandVm)
     {
-        a = this;
+        editCommandVm = this;
         ParentVm = parentvm;
         CurrentCommand = command;
         CommandPaths = [];
 
+        CurrentCommand.ItemStatus =
+            string.IsNullOrEmpty(CurrentCommand.Name) || string.IsNullOrWhiteSpace(CurrentCommand.Name)
+                ? ItemStatus.New
+                : ItemStatus.None;
+
         if (command.Paths != null)
+        {
             foreach (var path in command.Paths)
                 CommandPaths.Add(path);
+        }
     }
 
     public bool ForbidShortcutExecution => PathGridFocused || AnyTextBoxFocused;
@@ -59,8 +70,14 @@ public partial class EditCommandVm : ViewModelBase
                            && !string.IsNullOrWhiteSpace(path.Path))
             .ToList() ?? [];
 
-        if (ParentVm.Commands != null && !ParentVm.Commands.Contains(CurrentCommand))
+        if (ParentVm.Commands != null && ParentVm.Commands.Contains(CurrentCommand))
+        {
+            CurrentCommand.ItemStatus = ItemStatus.Modified;
+        }
+        else if (ParentVm.Commands != null && !ParentVm.Commands.Contains(CurrentCommand))
+        {
             ParentVm.Commands.Add(CurrentCommand);
+        }
 
         ParentVm.CurrentCommandView = new CommandListView(ParentVm);
     }

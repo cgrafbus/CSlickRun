@@ -1,7 +1,7 @@
 ﻿using System.Collections.ObjectModel;
-using System.Windows;
 using CommunityToolkit.Mvvm.Input;
 using CSlickRun.Logic;
+using CSlickRun.UI.Controls;
 using CSlickRun.UI.Views;
 
 namespace CSlickRun.UI.ViewModels;
@@ -17,10 +17,9 @@ public partial class CommandVm : CommandVm_Base
     public CommandVm()
     {
         Commands = new ObservableCollection<Command>(Global.GlobalCommandManager.GetUserCommands());
-
-        // Übersicht der Commands anzeigen
         CurrentCommandView = new CommandListView(this);
     }
+
 
     /// <summary>
     ///     Zeigt die Editieransicht für einen Befehl an
@@ -48,12 +47,12 @@ public partial class CommandVm : CommandVm_Base
     [RelayCommand]
     private void Delete(object? obj)
     {
-        if (obj is not Command command) throw new ArgumentNullException($"Parameter {obj} is not a valid command.");
+        if (obj is not Command command)
+        {
+            throw new ArgumentNullException($"Parameter {obj} is not a valid command.");
+        }
 
-        if (MessageBox.Show($"Are you sure you want to delete the Command {command.Name}", "Confirmation",
-                MessageBoxButton.YesNo, MessageBoxImage.Question) != MessageBoxResult.Yes)
-            return;
-        Commands?.Remove(command);
+        command.ItemStatus = ItemStatus.Deleted;
     }
 
     /// <summary>
@@ -62,8 +61,12 @@ public partial class CommandVm : CommandVm_Base
     [RelayCommand]
     private async Task Save(object? obj)
     {
-        Global.GlobalCommandManager.SetUserCommands(Commands ?? []);
+        foreach (var command in Commands?.Where(c => c.ItemStatus == ItemStatus.Deleted)!)
+        {
+            Commands.Remove(command);
+        }
 
+        Global.GlobalCommandManager.SetUserCommands(Commands ?? []);
         await Global.GlobalCommandManager.SaveCommands();
     }
 }

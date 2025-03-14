@@ -1,7 +1,9 @@
 ﻿using System.Diagnostics;
 using System.Windows;
 using System.Windows.Input;
+using CSlickRun.UI.Controls;
 using CSlickRun.UI.Windows;
+using Newtonsoft.Json;
 
 namespace CSlickRun.Logic;
 
@@ -31,13 +33,14 @@ public class Command
         DefaultCommand = defaultCommand;
     }
 
-
     /// <summary>
     ///     Konstruktor
     /// </summary>
     public Command()
     {
     }
+
+    [JsonIgnore] public ItemStatus ItemStatus { get; set; }
 
     /// <summary>
     ///     Name des Befehls

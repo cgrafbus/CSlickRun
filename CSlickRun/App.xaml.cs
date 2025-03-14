@@ -10,6 +10,9 @@ namespace CSlickRun;
 /// </summary>
 public partial class App
 {
+    /// <summary>
+    /// Konstruktor
+    /// </summary>
     public App()
     {
         ConfigureExceptionHandling();
@@ -19,6 +22,9 @@ public partial class App
         Global.GlobalCommandManager.LoadCommands().Wait();
     }
 
+    /// <summary>
+    /// Überprüft die Konfigurationen
+    /// </summary>
     private async Task CheckConfigs()
     {
         if (!Directory.Exists(Global.ConfigPath)) Directory.CreateDirectory(Global.ConfigPath);
@@ -36,6 +42,9 @@ public partial class App
         if (!File.Exists(Global.HistoryFile)) await File.WriteAllTextAsync(Global.HistoryFile, "");
     }
 
+    /// <summary>
+    /// Konfiguriert das Exception Handling
+    /// </summary>
     private void ConfigureExceptionHandling()
     {
         DispatcherUnhandledException += OnDispatcherUnhandledException;
@@ -45,32 +54,44 @@ public partial class App
         TaskScheduler.UnobservedTaskException += TaskSchedulerOnUnobservedTaskException;
     }
 
+    /// <summary>
+    /// Behandelt unobserved Task Exceptions
+    /// </summary>
     private void TaskSchedulerOnUnobservedTaskException(object? sender, UnobservedTaskExceptionEventArgs e)
     {
         ShowException(e.Exception);
         e.SetObserved(); // Prevents process termination
     }
 
+    /// <summary>
+    /// Behandelt unhandled Exceptions
+    /// </summary>
     private void CurrentDomainOnUnhandledException(object sender, UnhandledExceptionEventArgs e)
     {
         ShowException(new Exception("Unhandled Exception"));
     }
 
+    /// <inheritdoc />
     protected override void OnExit(ExitEventArgs e)
     {
         if (Global.GlobalHook.IsHotkeyRegistered()) Global.GlobalHook.UnregisterHotkey();
         base.OnExit(e);
     }
 
-
+    /// <summary>
+    /// Behandelt unhandled Dispatcher Exceptions
+    /// </summary>
     private void OnDispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
     {
         ShowException(e.Exception);
         e.Handled = true; // Prevents application crash
     }
 
+    /// <summary>
+    /// Zeigt eine Exception an
+    /// </summary>
     private void ShowException(Exception ex)
     {
-        MessageBox.Show(ex.Message, "Unhandled Exception", MessageBoxButton.OK, MessageBoxImage.Error);
+        MessageBox.Show(ex.Message, "Exception Occurred", MessageBoxButton.OK, MessageBoxImage.Error);
     }
 }

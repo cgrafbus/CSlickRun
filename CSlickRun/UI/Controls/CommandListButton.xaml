@@ -1,0 +1,54 @@
+﻿<UserControl
+    x:Class="CSlickRun.UI.Controls.CommandListButton"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:converter="clr-namespace:CSlickRun.Logic.Converter"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DesignHeight="50"
+    d:DesignWidth="1400"
+    mc:Ignorable="d">
+    <UserControl.Resources>
+        <converter:ItemStatusToImageConverter x:Key="ImageConverter" />
+    </UserControl.Resources>
+    <Grid Height="50" Background="{Binding Background, RelativeSource={RelativeSource AncestorType=UserControl}}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="18*" />
+            <ColumnDefinition Width="2*" />
+            <ColumnDefinition Width="2*" />
+        </Grid.ColumnDefinitions>
+        <Image
+            Grid.Column="0"
+            Width="15"
+            Height="15"
+            Panel.ZIndex="9999"
+            Source="{Binding ItemStatus, Converter={StaticResource ImageConverter}}"
+            Stretch="Fill" />
+        <TextBlock
+            x:Name="TextHost"
+            Grid.Column="1"
+            Height="25"
+            HorizontalAlignment="Left"
+            Background="Transparent"
+            FontSize="22"
+            Style="{DynamicResource ModernTextBlock}"
+            Text="{Binding Name}" />
+        <Button
+            Grid.Column="2"
+            Background="Transparent"
+            CommandParameter="{Binding}"
+            Content="Edit (e)"
+            FontSize="22"
+            IsHitTestVisible="False"
+            Style="{DynamicResource ButtonDefault}" />
+        <Button
+            Grid.Column="3"
+            Background="Transparent"
+            CommandParameter="{Binding}"
+            Content="Delete (q)"
+            FontSize="22"
+            IsHitTestVisible="False"
+            Style="{DynamicResource ButtonDefault}" />
+    </Grid>
+</UserControl>
