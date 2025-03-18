@@ -31,11 +31,11 @@ public class Global
     /// <summary>
     /// Standard-Commands
     /// </summary>
-    public static List<Command> DefaultCommands = new()
-    {
+    public static List<Command> DefaultCommands =
+    [
         new Command("Config", null, null, true),
         new Command("Exit", null, null, true)
-    };
+    ];
 
     /// <summary>
     /// Globaler Keyboardhook
@@ -50,7 +50,7 @@ public class Global
     public static void RegisterGlobalHotkey()
     {
         GlobalHook.RegisterHotkey(
-            (CommandLineWindow)Application.Current.MainWindow ?? throw new ArgumentNullException(),
+            (CommandLineWindow?)Application.Current.MainWindow ?? throw new ArgumentNullException(),
             GlobalSettings.ShortCutCodes ?? throw new ArgumentNullException());
     }
 

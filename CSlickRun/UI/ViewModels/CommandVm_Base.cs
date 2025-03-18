@@ -14,7 +14,7 @@ public partial class CommandVm_Base : ViewModelBase
     /// <summary>
     /// Alle Commands
     /// </summary>
-    [ObservableProperty] private ObservableCollection<Command>? commands;
+    [ObservableProperty] private ObservableCollection<Command> commands;
 
     /// <summary>
     /// Momentanes ViewModel
