@@ -7,7 +7,7 @@ public static class GridFocusBehaviour
 {
     public static readonly DependencyProperty IsFocusedProperty =
         DependencyProperty.RegisterAttached(
-            nameof(DataGrid.IsFocused),
+            nameof(DataGridCell.IsFocused),
             typeof(bool),
             typeof(GridFocusBehaviour),
             new FrameworkPropertyMetadata(false));

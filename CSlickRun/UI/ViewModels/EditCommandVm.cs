@@ -42,7 +42,8 @@ public partial class EditCommandVm : ViewModelBase
         CommandPaths = [];
 
         CurrentCommand.ItemStatus =
-            string.IsNullOrEmpty(CurrentCommand.Name) || string.IsNullOrWhiteSpace(CurrentCommand.Name)
+            string.IsNullOrEmpty(CurrentCommand.Name) || string.IsNullOrWhiteSpace(CurrentCommand.Name) ||
+            CurrentCommand.ItemStatus == ItemStatus.New
                 ? ItemStatus.New
                 : ItemStatus.None;
 
@@ -70,11 +71,11 @@ public partial class EditCommandVm : ViewModelBase
                            && !string.IsNullOrWhiteSpace(path.Path))
             .ToList() ?? [];
 
-        if (ParentVm.Commands != null && ParentVm.Commands.Contains(CurrentCommand))
+        if (ParentVm.Commands.Contains(CurrentCommand) && CurrentCommand.ItemStatus != ItemStatus.New)
         {
             CurrentCommand.ItemStatus = ItemStatus.Modified;
         }
-        else if (ParentVm.Commands != null && !ParentVm.Commands.Contains(CurrentCommand))
+        else if (!ParentVm.Commands.Contains(CurrentCommand))
         {
             ParentVm.Commands.Add(CurrentCommand);
         }

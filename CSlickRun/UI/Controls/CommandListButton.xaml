@@ -23,6 +23,7 @@
             Width="15"
             Height="15"
             Panel.ZIndex="9999"
+            SourceUpdated="FrameworkElement_OnSourceUpdated"
             Source="{Binding ItemStatus, Converter={StaticResource ImageConverter}}"
             Stretch="Fill" />
         <TextBlock

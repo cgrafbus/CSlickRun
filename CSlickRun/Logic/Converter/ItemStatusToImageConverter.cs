@@ -16,6 +16,9 @@ public class ItemStatusToImageConverter : IValueConverter
             return null;
         }
 
+        var test = UIHelper.GetImageFromPath(Path.Combine(Global.ImagePath,
+            status.GetImagePathFromAttribute() ?? string.Empty));
+
         return UIHelper.GetImageFromPath(Path.Combine(Global.ImagePath,
             status.GetImagePathFromAttribute() ?? string.Empty));
     }

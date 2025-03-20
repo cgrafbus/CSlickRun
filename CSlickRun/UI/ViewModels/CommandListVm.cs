@@ -41,6 +41,8 @@ public partial class CommandListVm : ViewModelBase, ISubView
         selectedCommand = Commands.FirstOrDefault();
     }
 
+    public bool SaveAllowed => ParentVm.SaveAllowed;
+
     /// <summary>
     ///     <see cref="CommandVm_Base.Commands" />
     /// </summary>

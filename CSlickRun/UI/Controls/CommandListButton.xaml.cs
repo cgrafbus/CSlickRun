@@ -1,28 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
+﻿using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
-namespace CSlickRun.UI.Controls
+namespace CSlickRun.UI.Controls;
+
+/// <summary>
+/// Interaction logic for CommandListButton.xaml
+/// </summary>
+public partial class CommandListButton : UserControl
 {
-    /// <summary>
-    /// Interaction logic for CommandListButton.xaml
-    /// </summary>
-    public partial class CommandListButton : UserControl
+    public CommandListButton()
     {
-        public CommandListButton()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
+    }
+
+    private void FrameworkElement_OnSourceUpdated(object? sender, DataTransferEventArgs e)
+    {
+        UpdateLayout();
     }
 }

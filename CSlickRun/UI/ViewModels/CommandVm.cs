@@ -53,6 +53,8 @@ public partial class CommandVm : CommandVm_Base
         }
 
         command.ItemStatus = ItemStatus.Deleted;
+        Commands.Remove(command);
+        Commands.Add(command);
     }
 
     /// <summary>
@@ -61,12 +63,22 @@ public partial class CommandVm : CommandVm_Base
     [RelayCommand]
     private async Task Save(object? obj)
     {
-        foreach (var command in Commands?.Where(c => c.ItemStatus == ItemStatus.Deleted)!)
+        var commandList = Commands.ToList();
+        foreach (var command in commandList.ToList())
         {
-            Commands.Remove(command);
+            if (command.ItemStatus == ItemStatus.Deleted)
+            {
+                commandList.Remove(command);
+            }
+            else
+            {
+                command.ItemStatus = ItemStatus.None;
+            }
         }
 
-        Global.GlobalCommandManager.SetUserCommands(Commands ?? []);
+        Global.GlobalCommandManager.SetUserCommands(commandList ?? []);
+        Commands = new ObservableCollection<Command>(Global.GlobalCommandManager.GetUserCommands());
         await Global.GlobalCommandManager.SaveCommands();
+        CurrentCommandView = new CommandListView(this);
     }
 }

@@ -92,6 +92,7 @@
             Command="{Binding SaveCommand}"
             Content="Save (f)"
             Cursor="Hand"
+            IsEnabled="{Binding SaveAllowed, UpdateSourceTrigger=PropertyChanged}"
             Style="{DynamicResource ButtonColored}" />
         <Button
             Grid.Row="1"
