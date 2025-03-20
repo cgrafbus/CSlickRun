@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
     xmlns:controls="clr-namespace:CSlickRun.UI.Controls"
+    xmlns:converter="clr-namespace:CSlickRun.Logic.Converter"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:CSlickRun.UI.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -15,12 +16,17 @@
     mc:Ignorable="d">
     <UserControl.Resources>
         <ui:BooleanInverterConverter x:Key="BooleanInverter" />
+        <converter:MultiBooleanConverter x:Key="MultiBooleanConverter" />
     </UserControl.Resources>
     <b:Interaction.Behaviors>
-        <ui:KeyPressBehavior
-            Key="F"
-            CanExecute="{Binding ForbidShortcutExecution, Mode=OneWay, Converter={StaticResource BooleanInverter}}"
-            Command="{Binding SaveCommand}" />
+        <ui:KeyPressBehavior Key="F" Command="{Binding SaveCommand}">
+            <ui:KeyPressBehavior.CanExecute>
+                <MultiBinding Converter="{StaticResource MultiBooleanConverter}">
+                    <Binding Converter="{StaticResource BooleanInverter}" Path="ForbidShortcutExecution" />
+                    <Binding Path="AllowSave" />
+                </MultiBinding>
+            </ui:KeyPressBehavior.CanExecute>
+        </ui:KeyPressBehavior>
         <ui:KeyPressBehavior
             Key="T"
             CanExecute="{Binding ForbidShortcutExecution, Mode=OneWay, Converter={StaticResource BooleanInverter}}"

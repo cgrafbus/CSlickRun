@@ -53,8 +53,10 @@ public partial class CommandVm : CommandVm_Base
         }
 
         command.ItemStatus = ItemStatus.Deleted;
-        Commands.Remove(command);
-        Commands.Add(command);
+        var index = Commands.IndexOf(command);
+        Commands.RemoveAt(index);
+        Commands.Insert(index, command);
+        OnPropertyChanged(nameof(Commands));
     }
 
     /// <summary>

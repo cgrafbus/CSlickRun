@@ -382,6 +382,9 @@
                         <Trigger SourceName="Container" Property="IsMouseOver" Value="True">
                             <Setter TargetName="Container" Property="Background" Value="{DynamicResource HoverBrushColored}" />
                         </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="Container" Property="Background" Value="{DynamicResource TertiaryBackgroundBrush}" />
+                        </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
