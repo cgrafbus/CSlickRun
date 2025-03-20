@@ -60,12 +60,11 @@ public partial class EditCommandVm : ViewModelBase
     [RelayCommand]
     private void Save(object? obj)
     {
-        if (string.IsNullOrWhiteSpace(CurrentCommand.Name) || string.IsNullOrEmpty(CurrentCommand.Name))
+        if (!UeberpruefeName(out var fehler))
         {
-            MessageBox.Show("Invalid Name", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            MessageBox.Show(fehler, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             return;
         }
-
         CurrentCommand.Paths = CommandPaths?
             .Where(path => !string.IsNullOrEmpty(path.Path)
                            && !string.IsNullOrWhiteSpace(path.Path))
@@ -81,6 +80,25 @@ public partial class EditCommandVm : ViewModelBase
         }
 
         ParentVm.CurrentCommandView = new CommandListView(ParentVm);
+    }
+
+    private bool UeberpruefeName(out string? fehler)
+    {
+        fehler = null;
+        if (string.IsNullOrWhiteSpace(CurrentCommand.Name) || string.IsNullOrEmpty(CurrentCommand.Name))
+        {
+            fehler = "Name cannot be empty";
+            return false;
+        }
+
+
+        if (ParentVm.Commands.Select(c => c.Name).Contains(CurrentCommand.Name))
+        {
+            fehler = $"There is already a command under the name {CurrentCommand.Name}";
+            return false;
+        }
+
+        return true;
     }
 
     [RelayCommand]
