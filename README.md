@@ -1,7 +1,6 @@
 # CSlickRun
 
-CSlickRun is a WPF application designed to manage and execute custom commands. It provides a user-friendly interface for creating, editing, and executing commands, as well as managing application settings.
-
+CSlickRun is a WPF application designed to make executing applications, opening folders, visiting websites, etc. more seamless by providing a command line you can access with a shortcut where one simply inputs the name of the command to be executed. These commands as well as the UI can be completely customized.
 ## Features
 
 - Create and edit custom commands with multiple paths and arguments.
@@ -18,17 +17,14 @@ CSlickRun is a WPF application designed to manage and execute custom commands. I
 ## Installation
 
 1. Clone the repository:
-###git clone https://github.com/cgrafbus/CSlickRun.git
+   git clone https://github.com/cgrafbus/CSlickRun.git
 2. Open the solution file `CSlickRun.sln` in Visual Studio.
-
 3. Restore NuGet packages:
-###dotnet restore
-
+   dotnet restore
 4. Build the solution:
-###dotnet build
-
+   dotnet build
 5. Run the application:
-###dotnet run --project CSlickRun
+   dotnet run --project CSlickRun
 
 
 ## Usage
@@ -61,11 +57,11 @@ Contributions are welcome! Please follow these steps to contribute:
 
 1. Fork the repository.
 2. Create a new branch for your feature or bugfix:
-###git checkout -b feature-name
+   git checkout -b feature-name
 3. Make your changes and commit them:
-###git commit -m "Description of your changes"
+   git commit -m "Description of your changes"
 4. Push your changes to your fork:
-###git push origin feature-name
+   git push origin feature-name
 5. Create a pull request with a description of your changes.
 
 ## License
