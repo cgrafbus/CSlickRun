@@ -74,6 +74,7 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 - [Newtonsoft.Json](https://www.newtonsoft.com/json) for JSON serialization.
 - [IWshRuntimeLibrary](https://docs.microsoft.com/en-us/dotnet/api/iwshruntimelibrary) for creating shortcuts.
 - [Xceed WPF Toolkit](https://github.com/xceedsoftware/wpftoolkit) for the ColorCanvas
+- [SlickRun](https://www.bayden.com/slickrun) for the entire idea
 
 ## Contact
 
