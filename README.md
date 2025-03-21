@@ -4,7 +4,7 @@ CSlickRun is a WPF application designed to make executing applications, opening 
 ## Features
 
 - Create and edit custom commands with multiple paths and arguments.
-- Execute commands directly from the application.
+- Execute commands from a small commandline.
 - Manage application settings, including appearance and behavior.
 - Support for global hotkeys to quickly access commands.
 - Auto-start functionality to launch the application on system startup.
