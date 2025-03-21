@@ -19,14 +19,10 @@
         <converter:MultiBooleanConverter x:Key="MultiBooleanConverter" />
     </UserControl.Resources>
     <b:Interaction.Behaviors>
-        <ui:KeyPressBehavior Key="F" Command="{Binding SaveCommand}">
-            <ui:KeyPressBehavior.CanExecute>
-                <MultiBinding Converter="{StaticResource MultiBooleanConverter}">
-                    <Binding Converter="{StaticResource BooleanInverter}" Path="ForbidShortcutExecution" />
-                    <Binding Path="AllowSave" />
-                </MultiBinding>
-            </ui:KeyPressBehavior.CanExecute>
-        </ui:KeyPressBehavior>
+        <ui:KeyPressBehavior
+            Key="F"
+            CanExecute="{Binding ForbidShortcutExecution, Mode=OneWay, Converter={StaticResource BooleanInverter}}"
+            Command="{Binding SaveCommand}" />
         <ui:KeyPressBehavior
             Key="T"
             CanExecute="{Binding ForbidShortcutExecution, Mode=OneWay, Converter={StaticResource BooleanInverter}}"
@@ -96,9 +92,8 @@
             Width="200"
             HorizontalAlignment="Center"
             Command="{Binding SaveCommand}"
-            Content="Save (f)"
+            Content="Save (F)"
             Cursor="Hand"
-            IsEnabled="{Binding SaveAllowed, UpdateSourceTrigger=PropertyChanged}"
             Style="{DynamicResource ButtonColored}" />
         <Button
             Grid.Row="1"
@@ -106,7 +101,7 @@
             HorizontalAlignment="Right"
             Background="{DynamicResource MainBackgroundBrush}"
             Command="{Binding AddCommand}"
-            Content="Add (t)"
+            Content="Add (T)"
             Style="{DynamicResource ButtonDefault}" />
         <TextBox
             x:Name="SearchTermTextBox"
@@ -126,7 +121,7 @@
             VerticalAlignment="Center"
             Foreground="{DynamicResource HoverBrushBasic}"
             IsHitTestVisible="False"
-            Text="Search for command...(x)">
+            Text="Search for command...(X)">
             <TextBlock.Style>
                 <Style TargetType="{x:Type TextBlock}">
                     <Setter Property="Visibility" Value="Collapsed" />

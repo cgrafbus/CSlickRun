@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.Windows.Controls;
 using CommunityToolkit.Mvvm.Input;
 using CSlickRun.Logic;
 using CSlickRun.UI.Controls;
@@ -19,8 +20,6 @@ public partial class CommandVm : CommandVm_Base
         Commands = new ObservableCollection<Command>(Global.GlobalCommandManager.GetUserCommands());
         CurrentCommandView = new CommandListView(this);
     }
-
-
     /// <summary>
     ///     Zeigt die Editieransicht für einen Befehl an
     /// </summary>

@@ -14,19 +14,18 @@ namespace CSlickRun.UI.ViewModels;
 /// </summary>
 public partial class EditCommandVm : ViewModelBase
 {
-    private readonly bool _newItem;
-
     [ObservableProperty] [NotifyPropertyChangedFor(nameof(ForbidShortcutExecution))]
     private bool anyTextBoxFocused;
-
-    [ObservableProperty] private ObservableCollection<CommandPath>? commandPaths;
-    [ObservableProperty] private Command currentCommand;
-    [ObservableProperty] private CommandVm parentVm;
-
+    [ObservableProperty] 
+    private ObservableCollection<CommandPath>? commandPaths;
+    [ObservableProperty] 
+    private Command currentCommand;
+    [ObservableProperty] 
+    private CommandVm parentVm;
     [ObservableProperty] [NotifyPropertyChangedFor(nameof(ForbidShortcutExecution))]
     private bool pathGridFocused;
-
-    [ObservableProperty] private CommandPath? selectedPath;
+    [ObservableProperty] 
+    private CommandPath? selectedPath;
 
     /// <summary>
     ///     Initialisiert eine neue Instanz der <see cref="EditCommandVm" /> Klasse.
@@ -85,20 +84,12 @@ public partial class EditCommandVm : ViewModelBase
     private bool UeberpruefeName(out string? fehler)
     {
         fehler = null;
-        if (string.IsNullOrWhiteSpace(CurrentCommand.Name) || string.IsNullOrEmpty(CurrentCommand.Name))
+        if (!string.IsNullOrWhiteSpace(CurrentCommand.Name) && !string.IsNullOrEmpty(CurrentCommand.Name))
         {
-            fehler = "Name cannot be empty";
-            return false;
+            return true;
         }
-
-
-        if (ParentVm.Commands.Select(c => c.Name).Contains(CurrentCommand.Name))
-        {
-            fehler = $"There is already a command under the name {CurrentCommand.Name}";
-            return false;
-        }
-
-        return true;
+        fehler = "Name cannot be empty";
+        return false;
     }
 
     [RelayCommand]
@@ -125,4 +116,5 @@ public partial class EditCommandVm : ViewModelBase
         };
         testCommand.Execute();
     }
+
 }

@@ -13,6 +13,9 @@ public partial class CommandListVm : ViewModelBase, ISubView
 
     [ObservableProperty] private string? commandFilter;
 
+    /// <summary>
+    /// 
+    /// </summary>
     [ObservableProperty] private bool forbidShortcutExecution;
 
 
@@ -22,10 +25,13 @@ public partial class CommandListVm : ViewModelBase, ISubView
     [ObservableProperty] private CommandVm parentVm;
 
     /// <summary>
-    ///     Momentan ausgewählter Befehl
+    /// Currently selected Command
     /// </summary>
     [ObservableProperty] private Command? selectedCommand;
 
+    /// <summary>
+    /// List of visible Commands
+    /// </summary>
     [ObservableProperty] private ObservableCollection<Command> visibleCommands;
 
 
@@ -40,8 +46,6 @@ public partial class CommandListVm : ViewModelBase, ISubView
         CurrentIndex = 0;
         selectedCommand = Commands.FirstOrDefault();
     }
-
-    public bool SaveAllowed => ParentVm.SaveAllowed;
 
     /// <summary>
     ///     <see cref="CommandVm_Base.Commands" />

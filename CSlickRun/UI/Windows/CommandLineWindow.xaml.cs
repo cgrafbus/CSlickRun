@@ -64,7 +64,7 @@ public partial class CommandLineWindow : Window
             Activate();
             ((CommandLineVm)DataContext).CurrentBorderColor = ((CommandLineVm)DataContext).BorderColor;
             ((CommandLineVm)DataContext).CurrentBackgroundColor =
-                ((CommandLineVm)DataContext).CommandLineBackgroundColor;
+            ((CommandLineVm)DataContext).CommandLineBackgroundColor;
             PreviewTextBlock.Visibility = Visibility.Collapsed;
             CommandTextBox.Visibility = Visibility.Visible;
             AutoCompleteTextBlock.Visibility = Visibility.Visible;
@@ -82,7 +82,7 @@ public partial class CommandLineWindow : Window
     {
         ((CommandLineVm)DataContext).CurrentBorderColor = ((CommandLineVm)DataContext).BorderInactiveColor;
         ((CommandLineVm)DataContext).CurrentBackgroundColor =
-            ((CommandLineVm)DataContext).CommandLineInactiveBackgroundColor;
+        ((CommandLineVm)DataContext).CommandLineInactiveBackgroundColor;
         PreviewTextBlock.Visibility = Visibility.Visible;
         CommandTextBox.Visibility = Visibility.Collapsed;
         CommandTextBox.Text = string.Empty;

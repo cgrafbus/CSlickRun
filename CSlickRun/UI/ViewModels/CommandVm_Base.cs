@@ -21,7 +21,13 @@ public partial class CommandVm_Base : ViewModelBase
     /// <summary>
     /// Momentanes ViewModel
     /// </summary>
-    [ObservableProperty] private UserControl? currentCommandView;
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(CurrentSubView))]
+    private UserControl? currentCommandView;
+
+    public ISubView? CurrentSubView => CurrentCommandView?.DataContext as ISubView 
+                             ?? throw new NotImplementedException
+                                 ($"ViewModel of {CurrentCommandView?.Name} must implement the ISubView Interface");
 
     /// <summary>
     /// Ist Speichern erlaubt?

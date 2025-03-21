@@ -6,15 +6,13 @@ namespace CSlickRun.UI.Controls;
 /// <summary>
 /// Interaction logic for CommandListButton.xaml
 /// </summary>
-public partial class CommandListButton : UserControl
+public partial class CommandListButton
 {
+    /// <summary>
+    /// Constructor
+    /// </summary>
     public CommandListButton()
     {
         InitializeComponent();
-    }
-
-    private void FrameworkElement_OnSourceUpdated(object? sender, DataTransferEventArgs e)
-    {
-        UpdateLayout();
     }
 }

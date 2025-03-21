@@ -3,20 +3,17 @@
 namespace CSlickRun.UI.Views;
 
 /// <summary>
-///     Interaction logic for CommandListView.xaml
+/// Interaction logic for CommandListView.xaml
 /// </summary>
-public partial class CommandListView : ViewBase
+public partial class CommandListView
 {
-    private readonly CommandVm _currentVm;
-
     /// <summary>
-    ///     Konstruktor
+    /// Constructor
     /// </summary>
-    /// <param name="viewModel">Überliegendes ViewModel</param>
+    /// <param name="viewModel">Parent-ViewModell</param>
     public CommandListView(CommandVm viewModel)
     {
         InitializeComponent();
-        _currentVm = viewModel;
-        DataContext = new CommandListVm(_currentVm);
+        DataContext = new CommandListVm(viewModel);
     }
 }
