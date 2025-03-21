@@ -11,10 +11,10 @@ namespace CSlickRun.UI.Windows;
 /// <summary>
 /// Interaction logic for CommandLineWindow.xaml
 /// </summary>
-public partial class CommandLineWindow : Window
+public partial class CommandLineWindow
 {
     /// <summary>
-    /// Konstruktor
+    /// Constructor
     /// </summary>
     public CommandLineWindow()
     {
@@ -24,20 +24,16 @@ public partial class CommandLineWindow : Window
     }
 
     /// <summary>
-    /// Event-Handler für das Closed-Ereignis.
+    /// Event-Handler for Closed Event
     /// </summary>
-    /// <param name="sender">Der Ereignis-Sender.</param>
-    /// <param name="e">Die Ereignis-Daten.</param>
     private void OnClosed(object? sender, EventArgs e)
     {
         Global.UnregisterGlobalHotkey();
     }
 
     /// <summary>
-    /// Event-Handler für das Loaded-Ereignis.
+    /// Event-Handler for Loaded Event.
     /// </summary>
-    /// <param name="sender">Der Ereignis-Sender.</param>
-    /// <param name="e">Die Ereignis-Daten.</param>
     private void OnLoaded(object sender, RoutedEventArgs e)
     {
         Global.RegisterGlobalHotkey();
@@ -45,17 +41,15 @@ public partial class CommandLineWindow : Window
     }
 
     /// <summary>
-    /// Event-Handler für das MouseLeftButtonDown-Ereignis des CommandLineHost.
+    /// Event-Handler for MouseLeftButtonDown Event of CommandLineHost.
     /// </summary>
-    /// <param name="sender">Der Ereignis-Sender.</param>
-    /// <param name="e">Die Ereignis-Daten.</param>
     private void CommandLineHost_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
     {
         SetCommandStatusAvailable();
     }
 
     /// <summary>
-    /// Setzt den Status der Befehlszeile auf verfügbar.
+    /// Sets the commandline available
     /// </summary>
     private void SetCommandStatusAvailable()
     {
@@ -76,7 +70,7 @@ public partial class CommandLineWindow : Window
     }
 
     /// <summary>
-    /// Setzt den Status der Befehlszeile auf nicht verfügbar.
+    /// Sets the commandline unavailable
     /// </summary>
     private void SetCommandStatusUnavailable()
     {
@@ -91,10 +85,8 @@ public partial class CommandLineWindow : Window
     }
 
     /// <summary>
-    /// Event-Handler für das TextChanged-Ereignis des CommandTextBox.
+    /// Event-Handler for TextChanged Event of CommandTextBox.
     /// </summary>
-    /// <param name="sender">Der Ereignis-Sender.</param>
-    /// <param name="e">Die Ereignis-Daten.</param>
     private void CommandTextBox_TextChanged(object sender, TextChangedEventArgs e)
     {
         var preview = Global.GlobalCommandManager.GetAllCommands().FirstOrDefault(c =>
@@ -129,10 +121,8 @@ public partial class CommandLineWindow : Window
     }
 
     /// <summary>
-    /// Event-Handler für das LostKeyboardFocus-Ereignis des CommandTextBox.
+    /// Event-Handler for LostKeyboardFocus Event of CommandTextBox.
     /// </summary>
-    /// <param name="sender">Der Ereignis-Sender.</param>
-    /// <param name="e">Die Ereignis-Daten.</param>
     private void CommandTextBox_LostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
     {
         SetCommandStatusUnavailable();
@@ -140,10 +130,8 @@ public partial class CommandLineWindow : Window
     }
 
     /// <summary>
-    /// Event-Handler für das KeyDown-Ereignis des CommandTextBox.
+    /// Event-Handler for KeyDown Event of CommandTextBox.
     /// </summary>
-    /// <param name="sender">Der Ereignis-Sender.</param>
-    /// <param name="e">Die Ereignis-Daten.</param>
     private void CommandTextBox_KeyDown(object sender, KeyEventArgs e)
     {
         if (e.Key != Key.Enter && e.Key != Key.Tab)
@@ -151,8 +139,15 @@ public partial class CommandLineWindow : Window
             return;
         }
 
-        Global.GlobalCommandManager.ExecuteCommand(Global.GlobalCommandManager.GetAllCommands().FirstOrDefault(c =>
-            c.Name.Contains(CommandTextBox.Text, StringComparison.OrdinalIgnoreCase)));
+        try
+        {
+            Global.GlobalCommandManager.GetAllCommands().First(c =>
+                c.Name.StartsWith(CommandTextBox.Text, StringComparison.OrdinalIgnoreCase)).Execute();
+        }
+        catch
+        {
+            MessageBox.Show($"Could not execute command.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+        }
         SetCommandStatusUnavailable();
     }
 }

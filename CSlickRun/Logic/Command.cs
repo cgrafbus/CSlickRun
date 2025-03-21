@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.IO;
 using System.Windows;
 using System.Windows.Input;
 using CSlickRun.UI.Controls;
@@ -8,23 +9,23 @@ using Newtonsoft.Json;
 namespace CSlickRun.Logic;
 
 /// <summary>
-///     Klasse zu den Commands
+/// Command-Class
 /// </summary>
 public class Command
 {
     /// <summary>
-    ///     Konstuktor
+    /// Constructor
     /// </summary>
     /// <param name="name">
-    ///     <see cref="Name" />
+    /// <inheritdoc cref="Name" />
     /// </param>
     /// <param name="paths">
-    ///     <see cref="Paths" />
+    /// <inheritdoc cref="Paths" />
     /// </param>
     /// <param name="note">
-    ///     <see cref="Note" />
+    /// <inheritdoc cref="Note" />
     /// </param>
-    /// <param name="defaultCommand"> Kennzeichen, ob der Command ein DefaultCommand ist</param>
+    /// <param name="defaultCommand"> <inheritdoc cref="DefaultCommand" /></param>
     public Command(string name, List<CommandPath>? paths, string? note, bool defaultCommand = false)
     {
         Name = name;
@@ -34,37 +35,55 @@ public class Command
     }
 
     /// <summary>
-    ///     Konstruktor
+    /// Constructor
     /// </summary>
     public Command()
     {
     }
 
+    /// <summary>
+    /// Item-Status of command (only used for UI)
+    /// </summary>
     [JsonIgnore] public ItemStatus ItemStatus { get; set; }
 
     /// <summary>
-    ///     Name des Befehls
+    /// Name of command
     /// </summary>
     public string Name { get; set; }
 
     /// <summary>
-    ///     Commands, die ausgeführt werden sollen
+    /// Paths to be executed
     /// </summary>
     public List<CommandPath>? Paths { get; set; }
 
     /// <summary>
-    ///     Notiz zum Befehl
+    /// Note to command
     /// </summary>
     public string? Note { get; set; }
 
+    /// <summary>
+    /// Flag, whether or not command is a default command
+    /// </summary>
     public bool DefaultCommand { get; set; }
 
     /// <summary>
-    ///     Führt den Befehl aus
+    /// Executes command
     /// </summary>
     public void Execute()
     {
-        if (CheckAndExecuteDefaultCommands() || Paths == null) return;
+        if (Global.GlobalSettings.WriteHistory)
+        {
+            WriteHistory();
+        }
+        if (DefaultCommand)
+        {
+            CheckAndExecuteDefaultCommands();
+            return;
+        }
+        if (Paths == null)
+        {
+            return;
+        }
         foreach (var path in Paths)
         {
             var process = new Process();
@@ -75,17 +94,28 @@ public class Command
                 ErrorDialog = true,
                 UseShellExecute = path.StartupPath is null or ""
             };
-            if (!info.UseShellExecute) info.WorkingDirectory = path.StartupPath;
+            if (!info.UseShellExecute)
+            {
+                info.WorkingDirectory = path.StartupPath;
+            }
             process.StartInfo = info;
             process.Start();
         }
     }
 
     /// <summary>
-    ///     Überprüft, ob es sich um einen Standardbefehl handelt und führt diesen aus
+    /// Writes the command to the history
     /// </summary>
-    /// <returns>true, falls es ein Standardcommand war, ansonsten false</returns>
-    private bool CheckAndExecuteDefaultCommands()
+    private void WriteHistory()
+    {
+        var historyText = $"[{DateTime.Now}] - {Name} ";
+        File.AppendAllText(Global.HistoryFile, historyText);
+    }
+
+    /// <summary>
+    /// Executes Default Commands
+    /// </summary>
+    private void CheckAndExecuteDefaultCommands()
     {
         switch (Name)
         {
@@ -98,7 +128,7 @@ public class Command
                 if (confWindow != null)
                 {
                     confWindow.Activate();
-                    return true;
+                    return;
                 }
 
                 var configWindow = new ConfigWindow();
@@ -106,13 +136,13 @@ public class Command
                 Keyboard.ClearFocus();
                 Keyboard.Focus(configWindow);
                 configWindow.Focus();
-                return true;
+                return;
             }
             case "Exit":
                 Application.Current.Shutdown();
-                return true;
+                return;
             default:
-                return false;
+                return;
         }
     }
 }

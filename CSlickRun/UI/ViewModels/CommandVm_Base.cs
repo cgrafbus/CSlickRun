@@ -8,29 +8,24 @@ using CSlickRun.UI.ViewModels.Base;
 namespace CSlickRun.UI.ViewModels;
 
 /// <summary>
-/// Base-Klasse zum überliegenden Command-ViewModel
+/// Base Class for Command-ViewModel
 /// </summary>
 public partial class CommandVm_Base : ViewModelBase
 {
     /// <summary>
-    /// Alle Commands
+    /// All Commands
     /// </summary>
     [ObservableProperty] [NotifyPropertyChangedFor(nameof(SaveAllowed))]
     private ObservableCollection<Command> commands;
 
     /// <summary>
-    /// Momentanes ViewModel
+    /// Current ViewModel
     /// </summary>
     [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(CurrentSubView))]
     private UserControl? currentCommandView;
 
-    public ISubView? CurrentSubView => CurrentCommandView?.DataContext as ISubView 
-                             ?? throw new NotImplementedException
-                                 ($"ViewModel of {CurrentCommandView?.Name} must implement the ISubView Interface");
-
     /// <summary>
-    /// Ist Speichern erlaubt?
+    /// Flag, if Save is allowed
     /// </summary>
     public bool SaveAllowed => Commands.Any(c =>
         c.ItemStatus is ItemStatus.New or ItemStatus.Deleted or ItemStatus.Modified);

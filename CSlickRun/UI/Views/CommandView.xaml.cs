@@ -1,10 +1,13 @@
 ﻿namespace CSlickRun.UI.Views;
 
 /// <summary>
-///     Interaction logic for CommandView.xaml
+/// Interaction logic for CommandView.xaml
 /// </summary>
-public partial class CommandView : ViewBase
+public partial class CommandView
 {
+    /// <summary>
+    /// Constructor
+    /// </summary>
     public CommandView()
     {
         InitializeComponent();

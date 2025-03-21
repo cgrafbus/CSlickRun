@@ -7,10 +7,16 @@ using CSlickRun.UI.ViewModels.Base;
 
 namespace CSlickRun.UI.ViewModels;
 
-public partial class CommandListVm : ViewModelBase, ISubView
+public partial class CommandListVm : ViewModelBase
 {
+    /// <summary>
+    /// Current index of selected Command
+    /// </summary>
     [ObservableProperty] private int? _currentIndex;
 
+    /// <summary>
+    /// Command filter
+    /// </summary>
     [ObservableProperty] private string? commandFilter;
 
     /// <summary>
@@ -20,7 +26,7 @@ public partial class CommandListVm : ViewModelBase, ISubView
 
 
     /// <summary>
-    ///     Parent-ViewModel
+    /// Parent-ViewModel
     /// </summary>
     [ObservableProperty] private CommandVm parentVm;
 
@@ -36,7 +42,7 @@ public partial class CommandListVm : ViewModelBase, ISubView
 
 
     /// <summary>
-    ///     Konstruktor
+    /// Constructor
     /// </summary>
     /// <param name="parentvm">Parent-ViewModel</param>
     public CommandListVm(CommandVm parentvm)
@@ -47,35 +53,18 @@ public partial class CommandListVm : ViewModelBase, ISubView
         selectedCommand = Commands.FirstOrDefault();
     }
 
-    /// <summary>
-    ///     <see cref="CommandVm_Base.Commands" />
-    /// </summary>
+    /// <inheritdoc cref="CommandVm_Base.Commands" />
     public ObservableCollection<Command> Commands => ParentVm.Commands ?? [];
-
-    /// <summary>
-    ///     
-    /// </summary>
-    public IRelayCommand AddCommand => ParentVm.AddCommand;
-
-    /// <summary>
-    ///     
-    /// </summary>
-    public IRelayCommand SaveCommand => ParentVm.SaveCommand;
-
-    public bool OnExit()
-    {
-        return Commands.All(c => c.ItemStatus == ItemStatus.None);
-    }
-
-    public void OnEnter()
-    {
-    }
 
     partial void OnCommandFilterChanging(string? oldValue, string? newValue)
     {
         FilterCommands(newValue);
     }
 
+    /// <summary>
+    /// Filters the commands on the ui by the name
+    /// </summary>
+    /// <param name="value">Filter</param>
     private void FilterCommands(string? value)
     {
         VisibleCommands = new ObservableCollection<Command>(Commands
@@ -83,6 +72,9 @@ public partial class CommandListVm : ViewModelBase, ISubView
         CurrentIndex = VisibleCommands.Count > 0 ? 0 : -1;
     }
 
+    /// <summary>
+    /// Decreases index by one
+    /// </summary>
     [RelayCommand]
     private void MoveIndexUp()
     {
@@ -92,6 +84,9 @@ public partial class CommandListVm : ViewModelBase, ISubView
         }
     }
 
+    /// <summary>
+    /// Increases index by one
+    /// </summary>
     [RelayCommand]
     private void MoveIndexDown()
     {
@@ -101,12 +96,16 @@ public partial class CommandListVm : ViewModelBase, ISubView
         }
     }
 
+    /// <summary>
+    /// Activates search mode
+    /// </summary>
     [RelayCommand]
     private void ActivateSearch()
     {
         ForbidShortcutExecution = true;
     }
 
+    /// <inheritdoc cref="CommandVm.Edit"/>
     [RelayCommand]
     private void ExecuteEdit()
     {
@@ -116,6 +115,7 @@ public partial class CommandListVm : ViewModelBase, ISubView
         }
     }
 
+    /// <inheritdoc cref="CommandVm.Delete"/>
     [RelayCommand]
     private void ExecuteDelete()
     {

@@ -7,19 +7,23 @@ using CSlickRun.UI.ViewModels.Base;
 namespace CSlickRun.UI.ViewModels;
 
 /// <summary>
-///     ConfigWindow-ViewModel
+/// ConfigWindow-ViewModel
 /// </summary>
 public partial class ConfigWindowVm : ViewModelBase
 {
     [ObservableProperty] private UserControl currentView;
 
     /// <summary>
-    ///     Konstruktor
+    /// Constructor
     /// </summary>
     public ConfigWindowVm()
     {
     }
 
+    /// <summary>
+    /// Sets Current View
+    /// </summary>
+    /// <param name="obj">Function that creates view</param>
     [RelayCommand]
     private void Navigation(object? obj)
     {

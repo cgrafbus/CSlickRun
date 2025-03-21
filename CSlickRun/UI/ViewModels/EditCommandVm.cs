@@ -10,35 +10,37 @@ using CSlickRun.UI.Views;
 namespace CSlickRun.UI.ViewModels;
 
 /// <summary>
-///     ViewModel für die Bearbeitung von Befehlen.
+/// ViewModel for editing commands.
 /// </summary>
 public partial class EditCommandVm : ViewModelBase
 {
-    [ObservableProperty] [NotifyPropertyChangedFor(nameof(ForbidShortcutExecution))]
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(ForbidShortcutExecution))]
     private bool anyTextBoxFocused;
-    [ObservableProperty] 
+    [ObservableProperty]
     private ObservableCollection<CommandPath>? commandPaths;
-    [ObservableProperty] 
+    [ObservableProperty]
     private Command currentCommand;
-    [ObservableProperty] 
+    [ObservableProperty]
     private CommandVm parentVm;
-    [ObservableProperty] [NotifyPropertyChangedFor(nameof(ForbidShortcutExecution))]
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(ForbidShortcutExecution))]
     private bool pathGridFocused;
-    [ObservableProperty] 
+    [ObservableProperty]
     private CommandPath? selectedPath;
 
     /// <summary>
-    ///     Initialisiert eine neue Instanz der <see cref="EditCommandVm" /> Klasse.
+    /// Initializes a new instance of the <see cref="EditCommandVm"/> class.
     /// </summary>
-    /// <param name="parentvm">Das übergeordnete ViewModel.</param>
-    /// <param name="command">Der zu bearbeitende Befehl.</param>
-    /// <param name="editCommandVm">This</param>
+    /// <param name="parentvm">The parent ViewModel.</param>
+    /// <param name="command">The command to be edited.</param>
+    /// <param name="editCommandVm">This instance.</param>
     public EditCommandVm(CommandVm parentvm, Command command, out EditCommandVm editCommandVm)
     {
         editCommandVm = this;
         ParentVm = parentvm;
         CurrentCommand = command;
-        CommandPaths = [];
+        CommandPaths = new ObservableCollection<CommandPath>();
 
         CurrentCommand.ItemStatus =
             string.IsNullOrEmpty(CurrentCommand.Name) || string.IsNullOrWhiteSpace(CurrentCommand.Name) ||
@@ -53,9 +55,14 @@ public partial class EditCommandVm : ViewModelBase
         }
     }
 
+    /// <summary>
+    /// Gets a value indicating whether shortcut execution is forbidden.
+    /// </summary>
     public bool ForbidShortcutExecution => PathGridFocused || AnyTextBoxFocused;
 
-
+    /// <summary>
+    /// Saves the command.
+    /// </summary>
     [RelayCommand]
     private void Save(object? obj)
     {
@@ -67,7 +74,7 @@ public partial class EditCommandVm : ViewModelBase
         CurrentCommand.Paths = CommandPaths?
             .Where(path => !string.IsNullOrEmpty(path.Path)
                            && !string.IsNullOrWhiteSpace(path.Path))
-            .ToList() ?? [];
+            .ToList() ?? new List<CommandPath>();
 
         if (ParentVm.Commands.Contains(CurrentCommand) && CurrentCommand.ItemStatus != ItemStatus.New)
         {
@@ -81,6 +88,11 @@ public partial class EditCommandVm : ViewModelBase
         ParentVm.CurrentCommandView = new CommandListView(ParentVm);
     }
 
+    /// <summary>
+    /// Checks if the command name is valid.
+    /// </summary>
+    /// <param name="fehler">The error message, if any.</param>
+    /// <returns>True if the name is valid, otherwise false.</returns>
     private bool UeberpruefeName(out string? fehler)
     {
         fehler = null;
@@ -92,18 +104,27 @@ public partial class EditCommandVm : ViewModelBase
         return false;
     }
 
+    /// <summary>
+    /// Deletes the selected path.
+    /// </summary>
     [RelayCommand]
     private void DeletePath(object? obj)
     {
         CommandPaths?.Remove(SelectedPath!);
     }
 
+    /// <summary>
+    /// Navigates back to the command list view.
+    /// </summary>
     [RelayCommand]
     private void GoBack(object? obj)
     {
         ParentVm.CurrentCommandView = new CommandListView(ParentVm);
     }
 
+    /// <summary>
+    /// Tests the command.
+    /// </summary>
     [RelayCommand]
     private void TestCommand(object? obj)
     {
@@ -112,9 +133,9 @@ public partial class EditCommandVm : ViewModelBase
             Paths = CommandPaths?
                 .Where(path => !string.IsNullOrEmpty(path.Path)
                                && !string.IsNullOrWhiteSpace(path.Path))
-                .ToList() ?? []
+                .ToList() ?? new List<CommandPath>()
         };
         testCommand.Execute();
     }
-
 }
+

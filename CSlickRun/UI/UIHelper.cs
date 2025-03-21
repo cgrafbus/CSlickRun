@@ -5,14 +5,17 @@ using System.Windows.Media.Imaging;
 
 namespace CSlickRun.UI;
 
+/// <summary>
+/// Provides helper methods for UI operations.
+/// </summary>
 public static class UIHelper
 {
     /// <summary>
-    ///     Findet den nächsten Parent des Typen T
+    /// Finds the nearest parent of the specified type T.
     /// </summary>
-    /// <typeparam name="T">Typ des Parents</typeparam>
-    /// <param name="child">Item, dessen Parent gesucht wird</param>
-    /// <returns>Den Parent</returns>
+    /// <typeparam name="T">The type of the parent.</typeparam>
+    /// <param name="child">The item whose parent is to be found.</param>
+    /// <returns>The parent of the specified type, or null if not found.</returns>
     public static T? FindParent<T>(DependencyObject child) where T : DependencyObject
     {
         while (true)
@@ -33,10 +36,10 @@ public static class UIHelper
     }
 
     /// <summary>
-    /// Konvertiert einen Hex-String in eine SolidColorBrush
+    /// Converts a hex string to a SolidColorBrush.
     /// </summary>
-    /// <param name="hex">Hex-String</param>
-    /// <returns>Ergebener SolidColorBrush</returns>
+    /// <param name="hex">The hex string.</param>
+    /// <returns>The resulting SolidColorBrush.</returns>
     public static SolidColorBrush ConvertHexToBrush(string? hex)
     {
         var converter = new BrushConverter();
@@ -44,27 +47,17 @@ public static class UIHelper
     }
 
     /// <summary>
-    ///     Gibt alle direkten Children der übergebenen Control zurück
+    /// Gets all children of the specified type T from the specified control.
     /// </summary>
-    /// <param name="parent">Parent-Control</param>
-    /// <returns>Liste der Children</returns>
-    public static List<UIElement?> FindDirectChildren(DependencyObject? parent)
-    {
-        return FindAllChildrenWithType<UIElement>(parent);
-    }
-
-    /// <summary>
-    ///     Gibt alle Children des übergebenen Typen T der übergebenen Control zurück
-    /// </summary>
-    /// <param name="parent">Parent-Control</param>
-    /// <typeparam name="T">Typ der Children</typeparam>
-    /// <returns>Liste der Children</returns>
+    /// <typeparam name="T">The type of the children.</typeparam>
+    /// <param name="parent">The parent control.</param>
+    /// <returns>A list of children of the specified type.</returns>
     public static List<T> FindAllChildrenWithType<T>(DependencyObject? parent)
     {
         var children = new List<T>();
 
         if (parent == null) return children;
-        // Überprüfe alle direkten Children
+        // Check all direct children
         for (var i = 0; i < VisualTreeHelper.GetChildrenCount(parent); i++)
         {
             var child = VisualTreeHelper.GetChild(parent, i);
@@ -77,16 +70,21 @@ public static class UIHelper
         return children;
     }
 
+    /// <summary>
+    /// Gets all children of the specified control.
+    /// </summary>
+    /// <param name="parent">The parent control.</param>
+    /// <returns>A list of all children.</returns>
     public static List<UIElement> FindAllChildren(DependencyObject? parent)
     {
         return FindAllChildrenWithType<UIElement>(parent ?? null);
     }
 
     /// <summary>
-    ///    Gibt ein Bild aus einem Pfad zurück
+    /// Gets an image from the specified path.
     /// </summary>
-    /// <param name="path">Pfad</param>
-    /// <returns>Bild</returns>
+    /// <param name="path">The path to the image.</param>
+    /// <returns>The resulting BitmapImage.</returns>
     public static BitmapImage GetImageFromPath(string? path)
     {
         try
@@ -103,22 +101,8 @@ public static class UIHelper
             return new BitmapImage();
         }
     }
-
-    /// <summary>
-    ///    Gibt ein Bild aus einem Byte-Array zurück
-    /// </summary>
-    /// <param name="imagedata">Image-Daten</param>
-    /// <returns>Bild</returns>
-    public static BitmapImage GetImageFromBytes(byte[] imagedata)
-    {
-        using (var ms = new MemoryStream(imagedata))
-        {
-            var image = new BitmapImage();
-            image.BeginInit();
-            image.CacheOption = BitmapCacheOption.OnLoad; // here
-            image.StreamSource = ms;
-            image.EndInit();
-            return image;
-        }
-    }
 }
+
+
+
+

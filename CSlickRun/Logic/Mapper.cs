@@ -1,12 +1,15 @@
 ﻿namespace CSlickRun.Logic;
 
+/// <summary>
+/// Mapper class
+/// </summary>
 public static class Mapper
 {
     /// <summary>
-    /// Mappt die Werte der Properties einer Klasse zu einer anderen
+    /// Mapps the values of properties of a class to another
     /// </summary>
-    /// <param name="source">Ursprungsklasse</param>
-    /// <param name="destination">Zielklasse</param>
+    /// <param name="source">Source class</param>
+    /// <param name="destination">Target class</param>
     public static void MapClasses(object source, object destination)
     {
         var sourceProperties = source.GetType().GetProperties();

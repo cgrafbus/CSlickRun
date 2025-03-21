@@ -7,16 +7,22 @@ using CSlickRun.UI.Controls;
 namespace CSlickRun.UI.Views;
 
 /// <summary>
-///     Interaction logic for SettingsView.xaml
+/// Interaction logic for SettingsView.xaml
 /// </summary>
-public partial class SettingsView : ViewBase
+public partial class SettingsView
 {
+    /// <summary>
+    /// Constructor
+    /// </summary>
     public SettingsView()
     {
         InitializeComponent();
         LoadSideBar();
     }
 
+    /// <summary>
+    /// Loads the sidebar with labels corresponding to headers in the content host.
+    /// </summary>
     private void LoadSideBar()
     {
         var headers = UIHelper.FindAllChildrenWithType<PanelHeader>(ContentHost);
@@ -37,14 +43,21 @@ public partial class SettingsView : ViewBase
         UpdateLayout();
     }
 
+    /// <summary>
+    /// Event handler for the MouseLeftButtonDown event on labels.
+    /// Scrolls to the corresponding header in the content host.
+    /// </summary>
     private void LabelOnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
     {
         if (sender is not Label label) return;
         var header = UIHelper.FindAllChildrenWithType<PanelHeader>(ContentHost)
             .First(header => header?.HeaderLabelContent == (string?)label.Content);
-        if (header != null) ScrollToElement(header);
+        ScrollToElement(header);
     }
 
+    /// <summary>
+    /// Scrolls to the specified element within the scroller.
+    /// </summary>
     private void ScrollToElement(UIElement element)
     {
         var transform = element.TransformToVisual(Scroller.Content as Visual ?? throw new InvalidOperationException());
@@ -52,8 +65,13 @@ public partial class SettingsView : ViewBase
         Scroller.ScrollToVerticalOffset(position.Y);
     }
 
+    /// <summary>
+    /// Event handler for the PreviewTextInput event on UI elements.
+    /// Ensures that only numeric input is allowed.
+    /// </summary>
     private void UIElement_OnPreviewTextInput(object sender, TextCompositionEventArgs e)
     {
         e.Handled = !int.TryParse(e.Text, out _);
     }
 }
+

@@ -4,12 +4,12 @@ using CSlickRun.Logic;
 namespace CSlickRun.UI.ViewModels;
 
 /// <summary>
-/// ViewModel für die Kommandozeile.
+/// Commandline-ViewModel
 /// </summary>
 public class CommandLineVm : CommandLineVm_Base
 {
     /// <summary>
-    /// Konstrukor
+    /// Constructor
     /// </summary>
     public CommandLineVm()
     {
@@ -17,7 +17,7 @@ public class CommandLineVm : CommandLineVm_Base
     }
 
     /// <summary>
-    /// Initialisiert die UI
+    /// Applies the UI
     /// </summary>
     public void InitUI()
     {

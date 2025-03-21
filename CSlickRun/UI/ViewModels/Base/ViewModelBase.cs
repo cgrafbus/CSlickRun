@@ -3,7 +3,7 @@
 namespace CSlickRun.UI.ViewModels.Base;
 
 /// <summary>
-///     Basisklasse für ViewModels, die die INotifyPropertyChanged-Schnittstelle implementiert.
+/// Viewmodel-Base-Class
 /// </summary>
 public partial class ViewModelBase : ObservableObject
 {

@@ -4,76 +4,92 @@ using CSlickRun.UI.ViewModels;
 
 namespace CSlickRun.Logic;
 
+/// <summary>
+/// Class for managing application settings.
+/// </summary>
 public class Settings
 {
     #region Properties
 
     /// <summary>
-    /// <see cref="SettingsVm_Base.Shortcut"/>
+    /// Shortcut codes for the application.
     /// </summary>
     public List<string>? ShortCutCodes { get; set; }
 
     /// <summary>
-    /// <see cref="SettingsVm_Base.CommandLineBackgroundColor"/>
+    /// Background color of the command line.
     /// </summary>
     public string? CommandLineBackgroundColor { get; set; }
 
+    /// <summary>
+    /// Inactive background color of the command line.
+    /// </summary>
     public string? CommandLineInactiveBackgroundColor { get; set; }
 
     /// <summary>
-    /// <see cref="SettingsVm_Base.CommandLineForegroundColor"/>
+    /// Foreground color of the command line.
     /// </summary>
     public string? CommandLineForegroundColor { get; set; }
 
     /// <summary>
-    /// <see cref="SettingsVm_Base.CaretColor"/>
+    /// Caret color of the command line.
     /// </summary>
     public string? CaretColor { get; set; }
 
     /// <summary>
-    /// <see cref="SettingsVm_Base.AutoCompleteForegroundColor"/>
+    /// Foreground color of the autocomplete.
     /// </summary>
     public string? AutoCompleteForegroundColor { get; set; }
 
     /// <summary>
-    /// <see cref="SettingsVm_Base.AutoCompleteBackgroundColor"/>
+    /// Background color of the autocomplete.
     /// </summary>
     public string? AutoCompleteBackgroundColor { get; set; }
 
     /// <summary>
-    /// <see cref="SettingsVm_Base.CommandLineWidth"/>
+    /// Width of the command line.
     /// </summary>
     public string? CommandLineWidth { get; set; }
 
     /// <summary>
-    /// <see cref="SettingsVm_Base.CommandLineHeight"/>
+    /// Height of the command line.
     /// </summary>
     public string? CommandLineHeight { get; set; }
 
     /// <summary>
-    /// <see cref="SettingsVm_Base.BorderColor"/>
+    /// Border color of the command line.
     /// </summary>
     public string? BorderColor { get; set; }
 
+    /// <summary>
+    /// Inactive border color of the command line.
+    /// </summary>
     public string? BorderInactiveColor { get; set; }
 
+    /// <summary>
+    /// Selection color of the command line.
+    /// </summary>
     public string? SelectionColor { get; set; }
 
     /// <summary>
-    /// <see cref="SettingsVm_Base.AlwaysOnTop"/>
+    /// Indicates whether the application is always on top.
     /// </summary>
     public bool AlwaysOnTop { get; set; }
 
     /// <summary>
-    /// <see cref="SettingsVm_Base.AutoStartup"/>
+    /// Indicates whether the application starts automatically.
     /// </summary>
     public bool AutoStartup { get; set; }
 
+    /// <summary>
+    /// Indicates whether the history should be written.
+    /// </summary>
+    public bool WriteHistory { get; set; }
 
     #endregion Properties
 
     /// <summary>
-    /// Speichert die Einstellungen
+    /// Saves the settings asynchronously.
     /// </summary>
     public async Task SaveAsync()
     {
@@ -82,17 +98,17 @@ public class Settings
     }
 
     /// <summary>
-    /// Gibt die Default-Settings als JSON zurück
+    /// Gets the default settings as a JSON string.
     /// </summary>
-    /// <returns>Default Settings</returns>
+    /// <returns>Default settings as JSON.</returns>
     public string GetDefaultSettingsAsJson()
     {
-        ShortCutCodes =
-        [
+        ShortCutCodes = new List<string>
+        {
             VirtualKeyCodes.ALTKEY,
             VirtualKeyCodes.SHIFTKEY,
             "q"
-        ];
+        };
 
         CommandLineForegroundColor = "#ebebeb";
         CommandLineBackgroundColor = "#141414";
@@ -111,7 +127,7 @@ public class Settings
     }
 
     /// <summary>
-    /// Lädt die Einstellungen
+    /// Loads the settings asynchronously.
     /// </summary>
     public async Task LoadAsync()
     {
@@ -127,3 +143,4 @@ public class Settings
         Mapper.MapClasses(settings, this);
     }
 }
+

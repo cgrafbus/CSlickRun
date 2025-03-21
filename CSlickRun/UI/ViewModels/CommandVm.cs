@@ -8,12 +8,12 @@ using CSlickRun.UI.Views;
 namespace CSlickRun.UI.ViewModels;
 
 /// <summary>
-///     Überliegendes ViewModel zu den Commands
+/// Command-ViewModel
 /// </summary>
 public partial class CommandVm : CommandVm_Base
 {
     /// <summary>
-    ///     Konstruktor
+    /// Constructor
     /// </summary>
     public CommandVm()
     {
@@ -21,9 +21,8 @@ public partial class CommandVm : CommandVm_Base
         CurrentCommandView = new CommandListView(this);
     }
     /// <summary>
-    ///     Zeigt die Editieransicht für einen Befehl an
+    /// Sets current view to edit a command
     /// </summary>
-    /// <exception cref="AggregateException"></exception>
     [RelayCommand]
     private void Edit(object? obj)
     {
@@ -31,7 +30,7 @@ public partial class CommandVm : CommandVm_Base
     }
 
     /// <summary>
-    ///     Zeigt die Editieransicht für einen neuen Befehl an
+    /// Sets current view to add a new commnad
     /// </summary>
     [RelayCommand]
     private void Add(object? obj)
@@ -40,9 +39,9 @@ public partial class CommandVm : CommandVm_Base
     }
 
     /// <summary>
-    ///     Löscht einen Befehl
+    /// Deletes a command
     /// </summary>
-    /// <exception cref="ArgumentNullException"></exception>
+    /// <exception cref="ArgumentNullException">Throws when given object is not a Command</exception>
     [RelayCommand]
     private void Delete(object? obj)
     {
@@ -59,7 +58,7 @@ public partial class CommandVm : CommandVm_Base
     }
 
     /// <summary>
-    ///     Speichert die Befehle
+    /// Saves the commands
     /// </summary>
     [RelayCommand]
     private async Task Save(object? obj)

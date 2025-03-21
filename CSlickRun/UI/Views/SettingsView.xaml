@@ -45,6 +45,7 @@
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition />
                         <ColumnDefinition />
+                        <ColumnDefinition />
                     </Grid.ColumnDefinitions>
                     <CheckBox
                         Grid.Column="0"
@@ -55,6 +56,11 @@
                         Grid.Column="1"
                         Content="Automatic Startup"
                         IsChecked="{Binding AutoStartup, Mode=TwoWay}"
+                        Style="{DynamicResource CheckboxModern}" />
+                    <CheckBox
+                        Grid.Column="2"
+                        Content="Enable History"
+                        IsChecked="{Binding WriteHistory, Mode=TwoWay}"
                         Style="{DynamicResource CheckboxModern}" />
                 </Grid>
                 <controls:PanelHeader Margin="0,15,0,0" HeaderLabelContent="Configure Shortcut" />

@@ -4,8 +4,14 @@ using System.Windows.Input;
 
 namespace CSlickRun.UI.Views;
 
+/// <summary>
+/// Base class for views, providing common functionality.
+/// </summary>
 public class ViewBase : UserControl
 {
+    /// <summary>
+    /// Constructor
+    /// </summary>
     public ViewBase()
     {
         Loaded += OnLoaded;
@@ -16,16 +22,25 @@ public class ViewBase : UserControl
         }
     }
 
+    /// <summary>
+    /// Handles the LostFocus event for child elements.
+    /// </summary>
     private void ElementOnLostFocus(object sender, RoutedEventArgs e)
     {
         Application.Current.Dispatcher.Invoke(FocusThing);
     }
 
+    /// <summary>
+    /// Handles the Loaded event.
+    /// </summary>
     private void OnLoaded(object sender, RoutedEventArgs e)
     {
         Application.Current.Dispatcher.Invoke(FocusThing);
     }
 
+    /// <summary>
+    /// Sets focus to the current element.
+    /// </summary>
     private void FocusThing()
     {
         Focus();

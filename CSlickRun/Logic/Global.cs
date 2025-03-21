@@ -5,7 +5,7 @@ using CSlickRun.UI.Windows;
 namespace CSlickRun.Logic;
 
 /// <summary>
-/// Globale Klasse
+/// Global Class
 /// </summary>
 public class Global
 {
@@ -19,17 +19,17 @@ public class Global
 
 
     /// <summary>
-    /// Globaler Command-Manager
+    /// Global Command-Manager
     /// </summary>
     public static CommandManager GlobalCommandManager = new();
 
     /// <summary>
-    /// Globale Settings
+    /// Global Settings
     /// </summary>
     public static Settings GlobalSettings = new();
 
     /// <summary>
-    /// Standard-Commands
+    /// Default-Commands
     /// </summary>
     public static List<Command> DefaultCommands =
     [
@@ -38,12 +38,12 @@ public class Global
     ];
 
     /// <summary>
-    /// Globaler Keyboardhook
+    /// Global Keyboardhook
     /// </summary>
     public static KeyboardHook GlobalHook = new();
 
     /// <summary>
-    /// Registriert den globalen Shortcut 
+    /// Registers the global Shortcut
     /// </summary>
     /// <exception cref="ArgumentNullException"></exception>
     /// <exception cref="AggregateException"></exception>
@@ -55,7 +55,7 @@ public class Global
     }
 
     /// <summary>
-    /// Entfernt den momentan registrierten Shortcut
+    /// Removes the global Shortcut
     /// </summary>
     public static void UnregisterGlobalHotkey()
     {
@@ -63,7 +63,7 @@ public class Global
     }
 
     /// <summary>
-    /// Entfernt den momentan registrierten Shortcut und weist diesen erneut zu
+    /// Resets the global Shortcut
     /// </summary>
     public static void ResetGlobalHotkey()
     {

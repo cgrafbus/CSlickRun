@@ -9,14 +9,12 @@
     xmlns:local="clr-namespace:CSlickRun.UI.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ui="clr-namespace:CSlickRun.UI"
-    xmlns:viewModels="clr-namespace:CSlickRun.UI.ViewModels"
     Width="1493"
     d:DesignHeight="800"
     d:DesignWidth="1493"
     mc:Ignorable="d">
     <UserControl.Resources>
         <ui:BooleanInverterConverter x:Key="BooleanInverter" />
-        <converter:MultiBooleanConverter x:Key="MultiBooleanConverter" />
     </UserControl.Resources>
     <b:Interaction.Behaviors>
         <ui:KeyPressBehavior

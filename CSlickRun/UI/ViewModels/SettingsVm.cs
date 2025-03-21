@@ -10,7 +10,7 @@ using File = System.IO.File;
 namespace CSlickRun.UI.ViewModels;
 
 /// <summary>
-/// Settings-ViewModel
+/// ViewModel for managing application settings.
 /// </summary>
 public partial class SettingsVm : SettingsVm_Base
 {
@@ -18,7 +18,7 @@ public partial class SettingsVm : SettingsVm_Base
     private static readonly string StartupFolderPath = Environment.GetFolderPath(Environment.SpecialFolder.Startup);
 
     /// <summary>
-    /// Kontruktor
+    /// Constructor
     /// </summary>
     public SettingsVm()
     {
@@ -26,7 +26,7 @@ public partial class SettingsVm : SettingsVm_Base
     }
 
     /// <summary>
-    /// Mappt die Globalen Settings in das ViewModel
+    /// Maps the global settings to the ViewModel.
     /// </summary>
     private void Load()
     {
@@ -60,6 +60,9 @@ public partial class SettingsVm : SettingsVm_Base
         Shortcut = shortcut.Last();
     }
 
+    /// <summary>
+    /// Saves the settings.
+    /// </summary>
     [RelayCommand]
     private async Task Save()
     {
@@ -86,9 +89,8 @@ public partial class SettingsVm : SettingsVm_Base
         ApplyAutoStartup();
     }
 
-
     /// <summary>
-    /// Setzt oder entfernt den Autostart-Eintrag im Startup-Folder von Windows
+    /// Sets or removes the auto-start entry in the Windows startup folder.
     /// </summary>
     private void ApplyAutoStartup()
     {
@@ -103,7 +105,7 @@ public partial class SettingsVm : SettingsVm_Base
     }
 
     /// <summary>
-    /// Erstellt eine Verknüpfung im Startup-Ordner.
+    /// Creates a shortcut in the startup folder.
     /// </summary>
     private void CreateShortcutInStartupFolder()
     {
@@ -120,7 +122,7 @@ public partial class SettingsVm : SettingsVm_Base
     }
 
     /// <summary>
-    /// Entfernt die Verknüpfung aus dem Startup-Ordner.
+    /// Removes the shortcut from the startup folder.
     /// </summary>
     private void RemoveShortcutFromStartupFolder()
     {
@@ -132,9 +134,9 @@ public partial class SettingsVm : SettingsVm_Base
     }
 
     /// <summary>
-    /// Baut den ShortcutCode zusammen
+    /// Builds the shortcut code list.
     /// </summary>
-    /// <returns>Zusammengebauter ShortcutCode</returns>
+    /// <returns>The constructed shortcut code list.</returns>
     private List<string> BuildShortCodeList()
     {
         List<string> codeList = new();
@@ -169,18 +171,18 @@ public partial class SettingsVm : SettingsVm_Base
     }
 
     /// <summary>
-    /// Prüft, ob der ShortCut valide ist
+    /// Checks if the shortcut is valid.
     /// </summary>
-    /// <returns>true, falls valide, ansonsten false</returns>
+    /// <returns>True if valid, otherwise false.</returns>
     private bool CheckIfShortCutValid()
     {
         return Shortcut != null && VirtualKeyCodes.KeyCodes.Keys.Contains(Shortcut);
     }
 
     /// <summary>
-    /// Prüft, ob alle wichtigen Felder valide sind
+    /// Checks if all important fields are valid.
     /// </summary>
-    /// <returns>true, falls valide, ansonsten false</returns>
+    /// <returns>True if valid, otherwise false.</returns>
     private bool CheckIfFieldsValid()
     {
         return !string.IsNullOrEmpty(CommandLineBackgroundColor) &&
@@ -194,3 +196,5 @@ public partial class SettingsVm : SettingsVm_Base
                !string.IsNullOrEmpty(CommandLineHeight);
     }
 }
+
+

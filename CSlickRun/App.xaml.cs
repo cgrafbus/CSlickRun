@@ -11,7 +11,7 @@ namespace CSlickRun;
 public partial class App
 {
     /// <summary>
-    /// Konstruktor
+    /// Constructor
     /// </summary>
     public App()
     {
@@ -23,27 +23,31 @@ public partial class App
     }
 
     /// <summary>
-    /// Überprüft die Konfigurationen
+    /// Checks whether all required directories and files exist. Creates them if not
     /// </summary>
     private async Task CheckConfigs()
     {
-        if (!Directory.Exists(Global.ConfigPath)) Directory.CreateDirectory(Global.ConfigPath);
+        if (!Directory.Exists(Global.ConfigPath))
+        {
+            Directory.CreateDirectory(Global.ConfigPath);
+        }
         if (!File.Exists(Global.CommandsFile))
         {
             await File.WriteAllTextAsync(Global.CommandsFile, "");
         }
-
         if (!File.Exists(Global.ConfigFile))
         {
             var defaultSettings = Global.GlobalSettings.GetDefaultSettingsAsJson();
             await File.WriteAllTextAsync(Global.ConfigFile, defaultSettings);
         }
-
-        if (!File.Exists(Global.HistoryFile)) await File.WriteAllTextAsync(Global.HistoryFile, "");
+        if (!File.Exists(Global.HistoryFile))
+        {
+            await File.WriteAllTextAsync(Global.HistoryFile, "");
+        }
     }
 
     /// <summary>
-    /// Konfiguriert das Exception Handling
+    /// Configures exception handling
     /// </summary>
     private void ConfigureExceptionHandling()
     {
@@ -55,7 +59,7 @@ public partial class App
     }
 
     /// <summary>
-    /// Behandelt unobserved Task Exceptions
+    /// Handles unobserved Task Exceptions
     /// </summary>
     private void TaskSchedulerOnUnobservedTaskException(object? sender, UnobservedTaskExceptionEventArgs e)
     {
@@ -64,7 +68,7 @@ public partial class App
     }
 
     /// <summary>
-    /// Behandelt unhandled Exceptions
+    /// Handles unhandled Exceptions
     /// </summary>
     private void CurrentDomainOnUnhandledException(object sender, UnhandledExceptionEventArgs e)
     {
@@ -79,7 +83,7 @@ public partial class App
     }
 
     /// <summary>
-    /// Behandelt unhandled Dispatcher Exceptions
+    /// Handles unhandled Dispatcher Exceptions
     /// </summary>
     private void OnDispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
     {
@@ -88,7 +92,7 @@ public partial class App
     }
 
     /// <summary>
-    /// Zeigt eine Exception an
+    /// Shows an Exception
     /// </summary>
     private void ShowException(Exception ex)
     {

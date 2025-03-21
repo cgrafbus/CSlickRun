@@ -7,6 +7,8 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
+    <SupportedOSPlatformVersion>7.0</SupportedOSPlatformVersion>
+    <ApplicationIcon>Design\cslickrun.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="Design\Icons\deleted.png" />

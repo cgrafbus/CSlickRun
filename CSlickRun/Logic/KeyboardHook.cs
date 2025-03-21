@@ -6,7 +6,7 @@ using System.Windows.Interop;
 namespace CSlickRun.Logic;
 
 /// <summary>
-///     Klasse zur Verwaltung von globalen Hotkeys.
+/// Class for managing global hotkeys.
 /// </summary>
 public class KeyboardHook
 {
@@ -26,17 +26,17 @@ public class KeyboardHook
     private static extern bool UnregisterHotKey(IntPtr hWnd, int id);
 
     /// <summary>
-    ///     Ereignis, das ausgelöst wird, wenn der Hotkey gedrückt wird.
+    /// Event that is triggered when the hotkey is pressed.
     /// </summary>
-    public event Action HotkeyPressed;
+    public event Action? HotkeyPressed;
 
     /// <summary>
-    ///     Registriert einen globalen Hotkey.
+    /// Registers a global hotkey.
     /// </summary>
-    /// <param name="window">Das Fenster, das den Hotkey registriert.</param>
-    /// <param name="keys">Die Liste der Tasten, die den Hotkey bilden.</param>
-    /// <exception cref="InvalidOperationException">Wird ausgelöst, wenn das Fensterhandle ungültig ist.</exception>
-    /// <exception cref="Win32Exception">Wird ausgelöst, wenn die Registrierung des Hotkeys fehlschlägt.</exception>
+    /// <param name="window">The window that registers the hotkey.</param>
+    /// <param name="keys">The list of keys that form the hotkey.</param>
+    /// <exception cref="InvalidOperationException">Thrown if the window handle is invalid.</exception>
+    /// <exception cref="Win32Exception">Thrown if the registration of the hotkey fails.</exception>
     public void RegisterHotkey(Window window, List<string> keys)
     {
         if (keys.Count == 0) return;
@@ -75,22 +75,32 @@ public class KeyboardHook
         var helper = new WindowInteropHelper(window);
         _windowHandle = helper.Handle;
 
-        if (_windowHandle == IntPtr.Zero) throw new InvalidOperationException("Window handle is invalid.");
+        if (_windowHandle == IntPtr.Zero)
+        {
+            throw new InvalidOperationException("Window handle is invalid.");
+        }
 
         var success = RegisterHotKey(_windowHandle, HOTKEY_ID, modifiers, charKey);
-        if (!success) throw new Win32Exception(Marshal.GetLastWin32Error());
+        if (!success)
+        {
+            throw new Win32Exception(Marshal.GetLastWin32Error());
+        }
 
         _hotkeyRegistered = true;
         ComponentDispatcher.ThreadFilterMessage += OnHotkeyPressed;
     }
 
+    /// <summary>
+    /// Checks if the hotkey is registered.
+    /// </summary>
+    /// <returns>True if the hotkey is registered, otherwise false.</returns>
     public bool IsHotkeyRegistered()
     {
         return _hotkeyRegistered;
     }
 
     /// <summary>
-    ///     Hebt die Registrierung des globalen Hotkeys auf.
+    /// Unregisters the global hotkey.
     /// </summary>
     public void UnregisterHotkey()
     {
@@ -100,10 +110,10 @@ public class KeyboardHook
     }
 
     /// <summary>
-    ///     Event-Handler, der aufgerufen wird, wenn der Hotkey gedrückt wird.
+    /// Event handler that is called when the hotkey is pressed.
     /// </summary>
-    /// <param name="msg">Die Nachricht.</param>
-    /// <param name="handled">Gibt an, ob die Nachricht behandelt wurde.</param>
+    /// <param name="msg">The message.</param>
+    /// <param name="handled">Indicates whether the message was handled.</param>
     private void OnHotkeyPressed(ref MSG msg, ref bool handled)
     {
         if (msg.message == 0x0312 && msg.wParam.ToInt32() == HOTKEY_ID)
