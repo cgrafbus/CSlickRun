@@ -124,4 +124,10 @@ public partial class CommandListVm : ViewModelBase
             ParentVm.DeleteCommand.Execute(SelectedCommand);
         }
     }
+
+    [RelayCommand]
+    private void Save()
+    {
+        ParentVm.SaveCommand.Execute(null);
+    }
 }
