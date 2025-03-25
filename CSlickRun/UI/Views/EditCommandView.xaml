@@ -66,17 +66,18 @@
                     CanUserResizeColumns="False"
                     ColumnWidth="500"
                     GotFocus="DataGridCommands_OnGotFocus"
-                    LostFocus="DataGridCommands_OnLostFocus"
                     HorizontalScrollBarVisibility="Disabled"
                     ItemsSource="{Binding CommandPaths, Mode=TwoWay}"
+                    LostFocus="DataGridCommands_OnLostFocus"
                     MinColumnWidth="400"
                     SelectionMode="Single"
-                    SelectionUnit="FullRow">
+                    SelectionUnit="Cell">
                     <DataGrid.Columns>
                         <DataGridTextColumn
                             ui:GridFocusBehaviour.IsFocused="{Binding PathGridFocused, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}"
                             Binding="{Binding Path}"
                             EditingElementStyle="{DynamicResource ModernTextBoxDataGridCell}"
+                            ElementStyle="{DynamicResource ModernTextBlock}"
                             Header="Path" />
                         <DataGridTextColumn
                             ui:GridFocusBehaviour.IsFocused="{Binding PathGridFocused, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}"

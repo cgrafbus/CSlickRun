@@ -60,6 +60,35 @@
         </Setter>
     </Style>
 
+    <Style x:Key="ImageButtonStyle" TargetType="{x:Type Button}">
+        <Setter Property="UseLayoutRounding" Value="True" />
+        <Setter Property="RenderOptions.BitmapScalingMode" Value="HighQuality" />
+        <Setter Property="RenderOptions.ClearTypeHint" Value="Enabled" />
+        <Setter Property="ClipToBounds" Value="True" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="Width" Value="25" />
+        <Setter Property="Height" Value="25" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border
+                        x:Name="CONTAINER"
+                        Background="{TemplateBinding Background}"
+                        Style="{DynamicResource SlickRunBorderStyle}">
+                        <Image Opacity="0.7" Source="{Binding Content, RelativeSource={RelativeSource TemplatedParent}}" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger SourceName="CONTAINER" Property="IsMouseOver" Value="True">
+                            <Setter TargetName="CONTAINER" Property="Background" Value="{DynamicResource HoverBrushBasic}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <Style x:Key="CheckboxModern" TargetType="CheckBox">
         <Setter Property="OverridesDefaultStyle" Value="True" />
         <Setter Property="UseLayoutRounding" Value="True" />
@@ -534,7 +563,7 @@
 
     </Style>
 
-    <Style TargetType="ListBox">
+    <Style TargetType="controls:CListBox">
         <Setter Property="RenderOptions.BitmapScalingMode" Value="HighQuality" />
         <Setter Property="RenderOptions.ClearTypeHint" Value="Enabled" />
         <Setter Property="UseLayoutRounding" Value="True" />

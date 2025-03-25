@@ -30,16 +30,15 @@ public partial class CommandListVm : ViewModelBase
     /// </summary>
     [ObservableProperty] private CommandVm parentVm;
 
-    /// <summary>
-    /// Currently selected Command
-    /// </summary>
-    [ObservableProperty] private Command? selectedCommand;
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(AnyCommandsSelected))]
+    [NotifyPropertyChangedFor(nameof(SelectedCommand))]
+    private List<Command?>? selectedCommands;
 
     /// <summary>
     /// List of visible Commands
     /// </summary>
     [ObservableProperty] private ObservableCollection<Command> visibleCommands;
-
 
     /// <summary>
     /// Constructor
@@ -50,11 +49,20 @@ public partial class CommandListVm : ViewModelBase
         parentVm = parentvm;
         VisibleCommands = Commands;
         CurrentIndex = 0;
-        selectedCommand = Commands.FirstOrDefault();
+        SelectedCommands = new List<Command?>([Commands.FirstOrDefault() ?? null]);
     }
+
+    public bool AnyCommandsSelected => SelectedCommands?.Any() == true;
+
+    public Command SelectedCommand => SelectedCommands?.FirstOrDefault() ?? new Command();
 
     /// <inheritdoc cref="CommandVm_Base.Commands" />
     public ObservableCollection<Command> Commands => ParentVm.Commands ?? [];
+
+    partial void OnSelectedCommandsChanged(List<Command?>? value)
+    {
+        Console.Write("a");
+    }
 
     partial void OnCommandFilterChanging(string? oldValue, string? newValue)
     {
@@ -109,20 +117,14 @@ public partial class CommandListVm : ViewModelBase
     [RelayCommand]
     private void ExecuteEdit()
     {
-        if (SelectedCommand != null)
-        {
-            ParentVm.EditCommand.Execute(SelectedCommand);
-        }
+        ParentVm.EditCommand.Execute(SelectedCommand);
     }
 
     /// <inheritdoc cref="CommandVm.Delete"/>
     [RelayCommand]
     private void ExecuteDelete()
     {
-        if (SelectedCommand != null)
-        {
-            ParentVm.DeleteCommand.Execute(SelectedCommand);
-        }
+        ParentVm.DeleteCommand.Execute(SelectedCommands);
     }
 
     /// <inheritdoc cref="CommandVm.Save"/>
@@ -137,5 +139,28 @@ public partial class CommandListVm : ViewModelBase
     private void Add()
     {
         ParentVm.AddCommand.Execute(new Command());
+    }
+
+    [RelayCommand]
+    private async Task Export()
+    {
+        if (SelectedCommands?.Any() == true)
+        {
+            await CommandFactory.ExportCommands(SelectedCommands.ToList());
+        }
+    }
+
+    [RelayCommand]
+    private async Task Import()
+    {
+        var importedCommands = await CommandFactory.ImportCommands();
+        if (importedCommands != null)
+        {
+            foreach (var command in importedCommands.OfType<Command>())
+            {
+                command.ItemStatus = ItemStatus.New;
+                Commands.Add(command);
+            }
+        }
     }
 }

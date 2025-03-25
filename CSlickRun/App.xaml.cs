@@ -16,7 +16,7 @@ public partial class App
     public App()
     {
         ConfigureExceptionHandling();
-        Global.GlobalCommandManager = new CommandManager();
+        Global.GlobalCommandManager = new CommandFactory();
         CheckConfigs().Wait();
         Global.GlobalSettings.LoadAsync().Wait();
         Global.GlobalCommandManager.LoadCommands().Wait();
@@ -31,15 +31,18 @@ public partial class App
         {
             Directory.CreateDirectory(Global.ConfigPath);
         }
+
         if (!File.Exists(Global.CommandsFile))
         {
             await File.WriteAllTextAsync(Global.CommandsFile, "");
         }
+
         if (!File.Exists(Global.ConfigFile))
         {
             var defaultSettings = Global.GlobalSettings.GetDefaultSettingsAsJson();
             await File.WriteAllTextAsync(Global.ConfigFile, defaultSettings);
         }
+
         if (!File.Exists(Global.HistoryFile))
         {
             await File.WriteAllTextAsync(Global.HistoryFile, "");

@@ -14,20 +14,19 @@ namespace CSlickRun.UI.ViewModels;
 /// </summary>
 public partial class EditCommandVm : ViewModelBase
 {
-    [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(ForbidShortcutExecution))]
+    [ObservableProperty] [NotifyPropertyChangedFor(nameof(ForbidShortcutExecution))]
     private bool anyTextBoxFocused;
-    [ObservableProperty]
-    private ObservableCollection<CommandPath>? commandPaths;
-    [ObservableProperty]
-    private Command currentCommand;
-    [ObservableProperty]
-    private CommandVm parentVm;
-    [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(ForbidShortcutExecution))]
+
+    [ObservableProperty] private ObservableCollection<CommandPath>? commandPaths;
+
+    [ObservableProperty] private Command currentCommand;
+
+    [ObservableProperty] private CommandVm parentVm;
+
+    [ObservableProperty] [NotifyPropertyChangedFor(nameof(ForbidShortcutExecution))]
     private bool pathGridFocused;
-    [ObservableProperty]
-    private CommandPath? selectedPath;
+
+    [ObservableProperty] private CommandPath? selectedPath;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="EditCommandVm"/> class.
@@ -71,6 +70,7 @@ public partial class EditCommandVm : ViewModelBase
             MessageBox.Show(fehler, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             return;
         }
+
         CurrentCommand.Paths = CommandPaths?
             .Where(path => !string.IsNullOrEmpty(path.Path)
                            && !string.IsNullOrWhiteSpace(path.Path))
@@ -100,6 +100,7 @@ public partial class EditCommandVm : ViewModelBase
         {
             return true;
         }
+
         fehler = "Name cannot be empty";
         return false;
     }
@@ -135,7 +136,13 @@ public partial class EditCommandVm : ViewModelBase
                                && !string.IsNullOrWhiteSpace(path.Path))
                 .ToList() ?? new List<CommandPath>()
         };
-        testCommand.Execute();
+        try
+        {
+            testCommand.Execute();
+        }
+        catch
+        {
+            MessageBox.Show("Couldn't execute command", "Test failed", MessageBoxButton.OK, MessageBoxImage.Error);
+        }
     }
 }
-

@@ -13,7 +13,7 @@ public class Global
     public static string ConfigPath = Path.Combine(AppDataPath, "CSlickRun");
     public static string ConfigFile = Path.Combine(ConfigPath, "config.json");
     public static string CommandsFile = Path.Combine(ConfigPath, "commands.json");
-    public static string HistoryFile = Path.Combine(ConfigPath, "history.json");
+    public static string HistoryFile = Path.Combine(ConfigPath, "history.txt");
     public static string IconFile = Path.Combine(Environment.CurrentDirectory, @"\Design\CSlickRun.ico");
     public static string ImagePath = Path.Combine(Environment.CurrentDirectory, @"\Design\Icons\");
 
@@ -21,7 +21,7 @@ public class Global
     /// <summary>
     /// Global Command-Manager
     /// </summary>
-    public static CommandManager GlobalCommandManager = new();
+    public static CommandFactory GlobalCommandManager = new();
 
     /// <summary>
     /// Global Settings
@@ -33,8 +33,8 @@ public class Global
     /// </summary>
     public static List<Command> DefaultCommands =
     [
-        new Command("Config", null, null, true),
-        new Command("Exit", null, null, true)
+        new("Config", null, null, true),
+        new("Exit", null, null, true)
     ];
 
     /// <summary>

@@ -1,5 +1,5 @@
 ﻿using System.IO;
-using System.Windows;
+using Microsoft.Win32;
 using Newtonsoft.Json;
 
 namespace CSlickRun.Logic;
@@ -7,7 +7,7 @@ namespace CSlickRun.Logic;
 /// <summary>
 /// Class to manage commands
 /// </summary>
-public class CommandManager
+public class CommandFactory
 {
     /// <summary>
     /// Commands added by the User
@@ -38,6 +38,51 @@ public class CommandManager
         allCommands.AddRange(_userCommands);
         allCommands.AddRange(_defaultCommands);
         return allCommands.OrderBy(command => command.Name).ToList();
+    }
+
+    /// <summary>
+    /// Exports the given commands to a file
+    /// </summary>
+    /// <param name="commands">Commands to export</param>
+    public static async Task ExportCommands(List<Command?> commands)
+    {
+        var commandAsJson = JsonConvert.SerializeObject(commands, Formatting.Indented);
+        var saveFileDialog = new SaveFileDialog
+        {
+            Filter = "JSON-File|*.json",
+            Title = "Export Command"
+        };
+        if (saveFileDialog.ShowDialog() == true)
+        {
+            await File.WriteAllTextAsync(saveFileDialog.FileName, commandAsJson);
+        }
+    }
+
+    /// <summary>
+    /// Imports commands from a selected file
+    /// </summary>
+    /// <returns></returns>
+    public static async Task<List<Command?>?> ImportCommands()
+    {
+        try
+        {
+            var openFileDialog = new OpenFileDialog
+            {
+                Filter = "JSON-File|*.json",
+                Title = "Import Commands"
+            };
+            if (openFileDialog.ShowDialog() != true)
+            {
+                return null;
+            }
+
+            var commandsAsJson = await File.ReadAllTextAsync(openFileDialog.FileName);
+            return JsonConvert.DeserializeObject<List<Command?>>(commandsAsJson);
+        }
+        catch
+        {
+            return null;
+        }
     }
 
     /// <summary>

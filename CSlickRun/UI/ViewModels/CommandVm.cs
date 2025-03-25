@@ -1,5 +1,4 @@
 ﻿using System.Collections.ObjectModel;
-using System.Windows.Controls;
 using CommunityToolkit.Mvvm.Input;
 using CSlickRun.Logic;
 using CSlickRun.UI.Controls;
@@ -20,6 +19,7 @@ public partial class CommandVm : CommandVm_Base
         Commands = new ObservableCollection<Command>(Global.GlobalCommandManager.GetUserCommands());
         CurrentCommandView = new CommandListView(this);
     }
+
     /// <summary>
     /// Sets current view to edit a command
     /// </summary>
@@ -45,15 +45,19 @@ public partial class CommandVm : CommandVm_Base
     [RelayCommand]
     private void Delete(object? obj)
     {
-        if (obj is not Command command)
+        if (obj is not List<Command> commands)
         {
             throw new ArgumentNullException($"Parameter {obj} is not a valid command.");
         }
 
-        command.ItemStatus = ItemStatus.Deleted;
-        var index = Commands.IndexOf(command);
-        Commands.RemoveAt(index);
-        Commands.Insert(index, command);
+        foreach (var command in commands)
+        {
+            command.ItemStatus = ItemStatus.Deleted;
+            var index = Commands.IndexOf(command);
+            Commands.RemoveAt(index);
+            Commands.Insert(index, command);
+        }
+
         OnPropertyChanged(nameof(Commands));
     }
 

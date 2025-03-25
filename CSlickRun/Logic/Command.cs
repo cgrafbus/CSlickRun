@@ -44,7 +44,8 @@ public class Command
     /// <summary>
     /// Item-Status of command (only used for UI)
     /// </summary>
-    [JsonIgnore] public ItemStatus ItemStatus { get; set; }
+    [JsonIgnore]
+    public ItemStatus ItemStatus { get; set; }
 
     /// <summary>
     /// Name of command
@@ -75,15 +76,18 @@ public class Command
         {
             WriteHistory();
         }
+
         if (DefaultCommand)
         {
             CheckAndExecuteDefaultCommands();
             return;
         }
+
         if (Paths == null)
         {
             return;
         }
+
         foreach (var path in Paths)
         {
             var process = new Process();
@@ -98,6 +102,7 @@ public class Command
             {
                 info.WorkingDirectory = path.StartupPath;
             }
+
             process.StartInfo = info;
             process.Start();
         }

@@ -12,6 +12,8 @@
   </PropertyGroup>
   <ItemGroup>
     <None Remove="Design\Icons\deleted.png" />
+    <None Remove="Design\Icons\file.png" />
+    <None Remove="Design\Icons\folder.png" />
     <None Remove="Design\Icons\modified.png" />
     <None Remove="Design\Icons\new.png" />
   </ItemGroup>
@@ -31,6 +33,12 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Design\Icons\deleted.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Design\Icons\file.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Design\Icons\folder.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Design\Icons\modified.png">

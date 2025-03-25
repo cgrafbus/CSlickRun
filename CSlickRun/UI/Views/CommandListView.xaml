@@ -45,6 +45,14 @@
             Key="Q"
             CanExecute="{Binding ForbidShortcutExecution, Mode=OneWay, Converter={StaticResource BooleanInverter}}"
             Command="{Binding ExecuteDeleteCommand}" />
+        <ui:KeyPressBehavior
+            Key="O"
+            CanExecute="{Binding ForbidShortcutExecution, Mode=OneWay, Converter={StaticResource BooleanInverter}}"
+            Command="{Binding ImportCommand}" />
+        <ui:KeyPressBehavior
+            Key="P"
+            CanExecute="{Binding ForbidShortcutExecution, Mode=OneWay, Converter={StaticResource BooleanInverter}}"
+            Command="{Binding ExportCommand}" />
     </b:Interaction.Behaviors>
     <Grid>
         <Grid.RowDefinitions>
@@ -64,15 +72,16 @@
                 CanHorizontallyScroll="False"
                 Orientation="Vertical">
                 <controls:PanelHeader HeaderLabelContent="Commands" />
-                <ListBox
+                <controls:CListBox
                     x:Name="CommandHost"
                     Width="1410"
                     Margin="0,10,0,0"
+                    BindableSelectedItems="{Binding SelectedCommands, Mode=OneWayToSource}"
                     ItemContainerStyle="{DynamicResource ListBoxItemStyle}"
                     ItemsSource="{Binding VisibleCommands, Mode=OneWay}"
                     SelectedIndex="{Binding CurrentIndex, Mode=TwoWay}"
-                    SelectedItem="{Binding SelectedCommand}">
-                    <ListBox.ItemTemplate>
+                    SelectionMode="Extended">
+                    <controls:CListBox.ItemTemplate>
                         <DataTemplate>
                             <controls:CommandListButton x:Name="Item" Width="1400" />
                             <DataTemplate.Triggers>
@@ -81,64 +90,85 @@
                                 </DataTrigger>
                             </DataTemplate.Triggers>
                         </DataTemplate>
-                    </ListBox.ItemTemplate>
-                </ListBox>
+                    </controls:CListBox.ItemTemplate>
+                </controls:CListBox>
             </StackPanel>
         </ScrollViewer>
-        <Button
+        <StackPanel
             Grid.Row="1"
-            Width="200"
-            HorizontalAlignment="Center"
-            Command="{Binding SaveCommand}"
-            Content="Save (F)"
-            Cursor="Hand"
-            Style="{DynamicResource ButtonColored}" />
-        <Button
+            HorizontalAlignment="Left"
+            Orientation="Horizontal">
+            <Grid>
+                <TextBox
+                    x:Name="SearchTermTextBox"
+                    Width="400"
+                    Margin="5"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center"
+                    ui:FocusBehaviour.IsFocused="{Binding ForbidShortcutExecution, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    ui:FocusBehaviour.TrackFocus="True"
+                    Style="{DynamicResource ModernTextBox}"
+                    Text="{Binding CommandFilter, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                <TextBlock
+                    Margin="8,0,0,0"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center"
+                    Foreground="{DynamicResource HoverBrushBasic}"
+                    IsHitTestVisible="False"
+                    Text="Search for command...(X)">
+                    <TextBlock.Style>
+                        <Style TargetType="{x:Type TextBlock}">
+                            <Setter Property="Visibility" Value="Collapsed" />
+                            <Setter Property="UseLayoutRounding" Value="True" />
+                            <Setter Property="SnapsToDevicePixels" Value="True" />
+                            <Setter Property="FontSize" Value="14" />
+                            <Setter Property="VerticalAlignment" Value="Center" />
+                            <Setter Property="Padding" Value="0,5,0,0" />
+                            <Setter Property="RenderOptions.BitmapScalingMode" Value="HighQuality" />
+                            <Setter Property="RenderOptions.ClearTypeHint" Value="Enabled" />
+                            <Setter Property="FontFamily" Value="Lucida Console" />
+                            <Setter Property="Height" Value="20" />
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding Text, ElementName=SearchTermTextBox}" Value="">
+                                    <Setter Property="Visibility" Value="Visible" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBlock.Style>
+                </TextBlock>
+            </Grid>
+            <Button
+                Width="200"
+                HorizontalAlignment="Center"
+                Command="{Binding SaveCommand}"
+                Content="Save (F)"
+                Cursor="Hand"
+                Style="{DynamicResource ButtonColored}" />
+        </StackPanel>
+        <StackPanel
             Grid.Row="1"
-            Width="200"
             HorizontalAlignment="Right"
-            Background="{DynamicResource MainBackgroundBrush}"
-            Command="{Binding AddCommand}"
-            Content="Add (T)"
-            Style="{DynamicResource ButtonDefault}" />
-        <TextBox
-            x:Name="SearchTermTextBox"
-            Grid.Row="1"
-            Width="500"
-            Margin="5"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Center"
-            ui:FocusBehaviour.IsFocused="{Binding ForbidShortcutExecution, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-            ui:FocusBehaviour.TrackFocus="True"
-            Style="{DynamicResource ModernTextBox}"
-            Text="{Binding CommandFilter, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-        <TextBlock
-            Grid.Row="1"
-            Margin="8,0,0,0"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Center"
-            Foreground="{DynamicResource HoverBrushBasic}"
-            IsHitTestVisible="False"
-            Text="Search for command...(X)">
-            <TextBlock.Style>
-                <Style TargetType="{x:Type TextBlock}">
-                    <Setter Property="Visibility" Value="Collapsed" />
-                    <Setter Property="UseLayoutRounding" Value="True" />
-                    <Setter Property="SnapsToDevicePixels" Value="True" />
-                    <Setter Property="FontSize" Value="14" />
-                    <Setter Property="VerticalAlignment" Value="Center" />
-                    <Setter Property="Padding" Value="0,5,0,0" />
-                    <Setter Property="RenderOptions.BitmapScalingMode" Value="HighQuality" />
-                    <Setter Property="RenderOptions.ClearTypeHint" Value="Enabled" />
-                    <Setter Property="FontFamily" Value="Lucida Console" />
-                    <Setter Property="Height" Value="20" />
-                    <Style.Triggers>
-                        <DataTrigger Binding="{Binding Text, ElementName=SearchTermTextBox}" Value="">
-                            <Setter Property="Visibility" Value="Visible" />
-                        </DataTrigger>
-                    </Style.Triggers>
-                </Style>
-            </TextBlock.Style>
-        </TextBlock>
+            FlowDirection="LeftToRight"
+            Orientation="Horizontal">
+            <Button
+                Width="300"
+                Background="{DynamicResource MainBackgroundBrush}"
+                Command="{Binding ImportCommand}"
+                Content="Import Commands (O)"
+                Style="{DynamicResource ButtonDefault}" />
+            <Button
+                Width="300"
+                Background="{DynamicResource MainBackgroundBrush}"
+                Command="{Binding ExportCommand}"
+                Content="Export Commands (P)"
+                IsEnabled="{Binding AnyCommandsSelected, Mode=OneWay}"
+                Style="{DynamicResource ButtonDefault}" />
+            <Button
+                Width="200"
+                Background="{DynamicResource MainBackgroundBrush}"
+                Command="{Binding AddCommand}"
+                Content="Add (T)"
+                Style="{DynamicResource ButtonDefault}" />
+        </StackPanel>
     </Grid>
 </local:ViewBase>
