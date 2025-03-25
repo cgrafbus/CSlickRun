@@ -125,9 +125,17 @@ public partial class CommandListVm : ViewModelBase
         }
     }
 
+    /// <inheritdoc cref="CommandVm.Save"/>
     [RelayCommand]
     private void Save()
     {
         ParentVm.SaveCommand.Execute(null);
+    }
+
+    /// <inheritdoc cref="CommandVm.Add"/>
+    [RelayCommand]
+    private void Add()
+    {
+        ParentVm.AddCommand.Execute(new Command());
     }
 }
