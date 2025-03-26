@@ -352,12 +352,48 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="controls:NavigationBarButtonTest">
+                    <Grid x:Name="CONTAINER" Background="{TemplateBinding InactiveColor}">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="Active" Value="True">
+                            <Setter TargetName="CONTAINER" Property="Background" Value="{DynamicResource HoverBrushBasic}" />
+                        </Trigger>
+                        <Trigger Property="Active" Value="False">
+                            <Setter TargetName="CONTAINER" Property="Background" Value="Transparent" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="NavigationBarButtonStyleTopOne" TargetType="controls:NavigationBarButtonTest">
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="Width" Value="Auto" />
+        <Setter Property="Height" Value="50" />
+        <Setter Property="InactiveColor" Value="Transparent" />
+        <Setter Property="ActiveColor" Value="{DynamicResource HoverBrushBasic}" />
+        <Setter Property="Active" Value="False" />
+        <Setter Property="UseLayoutRounding" Value="True" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="controls:NavigationBarButtonTest">
                     <Border
                         x:Name="CONTAINER"
-                        Background="{TemplateBinding Background}"
-                        ClipToBounds="True">
+                        Background="{TemplateBinding InactiveColor}"
+                        CornerRadius="7,7,0,0">
                         <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
                     </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="Active" Value="True">
+                            <Setter TargetName="CONTAINER" Property="Background" Value="{DynamicResource HoverBrushBasic}" />
+                        </Trigger>
+                        <Trigger Property="Active" Value="False">
+                            <Setter TargetName="CONTAINER" Property="Background" Value="Transparent" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
@@ -564,12 +600,22 @@
 
     <Style TargetType="controls:CListBox">
         <Setter Property="RenderOptions.BitmapScalingMode" Value="HighQuality" />
+        <Setter Property="OverridesDefaultStyle" Value="True" />
         <Setter Property="RenderOptions.ClearTypeHint" Value="Enabled" />
         <Setter Property="UseLayoutRounding" Value="True" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="Background" Value="{DynamicResource MainBackgroundBrush}" />
         <Setter Property="ItemContainerStyle" Value="{DynamicResource test}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="controls:CListBox">
+                    <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Disabled">
+                        <ItemsPresenter />
+                    </ScrollViewer>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
     </Style>
 
     <Style x:Key="test" TargetType="ListBoxItem">
@@ -623,6 +669,20 @@
             <Trigger Property="IsDragging" Value="True">
                 <Setter Property="Background" Value="{DynamicResource SecondaryAccentBrush}" />
                 <Setter Property="Opacity" Value="1" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="BorderGridAdjuster" TargetType="Border">
+        <Setter Property="RenderOptions.BitmapScalingMode" Value="HighQuality" />
+        <Setter Property="RenderOptions.ClearTypeHint" Value="Enabled" />
+        <Setter Property="UseLayoutRounding" Value="True" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="Background" Value="{DynamicResource TertiaryBackgroundBrush}" />
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="{DynamicResource HoverBrushColored}" />
             </Trigger>
         </Style.Triggers>
     </Style>

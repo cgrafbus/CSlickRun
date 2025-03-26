@@ -62,4 +62,11 @@ public partial class ConfigWindow
     {
         WindowState = WindowState.Minimized;
     }
+
+    private void BorderGridAdjuster_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+    {
+        FirstGrid.Width = FirstGrid.Width == new GridLength(0)
+            ? new GridLength(1, GridUnitType.Star)
+            : new GridLength(0);
+    }
 }

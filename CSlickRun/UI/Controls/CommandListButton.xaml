@@ -13,10 +13,10 @@
     </UserControl.Resources>
     <Grid Height="50" Background="{Binding Background, RelativeSource={RelativeSource AncestorType=UserControl}}">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="1*" MinWidth="60" />
             <ColumnDefinition Width="18*" />
-            <ColumnDefinition Width="2*" />
-            <ColumnDefinition Width="2*" />
+            <ColumnDefinition Width="2*" MinWidth="150" />
+            <ColumnDefinition Width="2*" MinWidth="150" />
         </Grid.ColumnDefinitions>
         <StackPanel
             Grid.Column="0"
