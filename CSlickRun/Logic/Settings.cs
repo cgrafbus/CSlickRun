@@ -86,6 +86,8 @@ public class Settings
     /// </summary>
     public bool WriteHistory { get; set; }
 
+    public bool UseKeyPressBehaviour { get; set; }
+
     #endregion Properties
 
     /// <summary>
@@ -123,6 +125,8 @@ public class Settings
         CommandLineHeight = "22";
         AlwaysOnTop = true;
         AutoStartup = false;
+        UseKeyPressBehaviour = false;
+
         return JsonConvert.SerializeObject(this);
     }
 

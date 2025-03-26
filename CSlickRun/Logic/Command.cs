@@ -47,6 +47,9 @@ public class Command
     [JsonIgnore]
     public ItemStatus ItemStatus { get; set; }
 
+    [JsonIgnore]
+    public ItemStatus OldItemStatus { get; set; }
+
     /// <summary>
     /// Name of command
     /// </summary>

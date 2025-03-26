@@ -49,10 +49,17 @@ public partial class CommandVm : CommandVm_Base
         {
             throw new ArgumentNullException($"Parameter {obj} is not a valid command.");
         }
-
         foreach (var command in commands)
         {
-            command.ItemStatus = ItemStatus.Deleted;
+            if (command.ItemStatus != ItemStatus.Deleted)
+            {
+                command.OldItemStatus = command.ItemStatus;
+                command.ItemStatus = ItemStatus.Deleted;
+            }
+            else
+            {
+                command.ItemStatus = command.OldItemStatus;
+            }
             var index = Commands.IndexOf(command);
             Commands.RemoveAt(index);
             Commands.Insert(index, command);

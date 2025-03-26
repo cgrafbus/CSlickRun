@@ -7,11 +7,12 @@
     d:DesignHeight="250"
     d:DesignWidth="1600"
     mc:Ignorable="d">
-    <Grid Background="Transparent">
+    <Border Background="Transparent">
         <TextBlock
             VerticalAlignment="Center"
+            ClipToBounds="True"
             FontSize="16"
             Text="{Binding TextContent}"
             TextAlignment="Center" />
-    </Grid>
+    </Border>
 </UserControl>

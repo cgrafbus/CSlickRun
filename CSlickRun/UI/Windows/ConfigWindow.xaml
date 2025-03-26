@@ -23,12 +23,12 @@
         <vm:ConfigWindowVm />
     </Window.DataContext>
     <WindowChrome.WindowChrome>
-        <WindowChrome CaptionHeight="30" CornerRadius="4" />
+        <WindowChrome CaptionHeight="20" CornerRadius="4" />
     </WindowChrome.WindowChrome>
     <Border
         Background="Transparent"
         BorderThickness="1"
-        ClipToBounds="True"
+        ClipToBounds="False"
         RenderOptions.BitmapScalingMode="HighQuality"
         RenderOptions.ClearTypeHint="Enabled"
         SnapsToDevicePixels="True"
@@ -41,22 +41,22 @@
         </Border.Clip>
         <StackPanel
             Height="800"
-            ClipToBounds="True"
+            ClipToBounds="False"
             Orientation="Vertical">
             <StackPanel
                 Width="1600"
-                Height="30"
+                Height="23"
                 VerticalAlignment="Top"
                 Panel.ZIndex="1"
                 Background="{DynamicResource TertiaryBackgroundBrush}"
-                ClipToBounds="True"
+                ClipToBounds="False"
                 FlowDirection="RightToLeft"
                 Orientation="Horizontal">
 
                 <Button
                     x:Name="CloseWindowButton"
-                    Width="50"
-                    Height="30"
+                    Width="40"
+                    Height="23"
                     Background="{DynamicResource TertiaryBackgroundBrush}"
                     Click="CloseWindowButton_OnClick"
                     Content="X"
@@ -65,8 +65,8 @@
                     WindowChrome.IsHitTestVisibleInChrome="True" />
                 <Button
                     x:Name="MinimizeWindowButton"
-                    Width="50"
-                    Height="30"
+                    Width="40"
+                    Height="23"
                     Background="{DynamicResource TertiaryBackgroundBrush}"
                     Click="MinimizeWindowButton_OnClick"
                     Content="__"
@@ -74,35 +74,49 @@
                     ToolTip="Minimize"
                     WindowChrome.IsHitTestVisibleInChrome="True" />
             </StackPanel>
-            <Grid Height="770" ClipToBounds="True">
+            <Grid Height="770" ClipToBounds="False">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="1*" />
                     <ColumnDefinition Width="14*" />
                 </Grid.ColumnDefinitions>
-                <ContentControl
+                <Border
                     Grid.Column="1"
-                    Content="{Binding CurrentView}"
-                    Focusable="True" />
-                <StackPanel
-                    x:Name="NavBar"
+                    Margin="0,7,7,7"
+                    Panel.ZIndex="999"
+                    Background="{DynamicResource SecondaryBackgroundBrush}"
+                    CornerRadius="10">
+                    <ContentControl Content="{Binding CurrentView}" Focusable="True" />
+                </Border>
+                <Border
                     Grid.Column="0"
-                    Background="{DynamicResource SecondaryBackgroundBrush}">
-                    <controls:NavigationBarButton
-                        x:Name="CommandNavButton"
-                        Cursor="Hand"
-                        Style="{DynamicResource NavigationBarButtonStyle}"
-                        TextContent="Commands" />
-                    <controls:NavigationBarButton
-                        x:Name="SettingsNavButton"
-                        Cursor="Hand"
-                        Style="{DynamicResource NavigationBarButtonStyle}"
-                        TextContent="Settings" />
-                    <controls:NavigationBarButton
-                        x:Name="HelpNavButton"
-                        Cursor="Hand"
-                        Style="{DynamicResource NavigationBarButtonStyle}"
-                        TextContent="Help" />
-                </StackPanel>
+                    Margin="7"
+                    Background="{DynamicResource SecondaryBackgroundBrush}"
+                    CornerRadius="6">
+                    <StackPanel x:Name="NavBar">
+                        <controls:NavigationBarButtonTest
+                            x:Name="CommandNavButton"
+                            Background="Transparent"
+                            ClipToBounds="True"
+                            Command="{Binding NavigationCommand}"
+                            Content="Commands"
+                            Group="NavBarButton"
+                            Style="{DynamicResource NavigationBarButtonStyle}" />
+                        <controls:NavigationBarButtonTest
+                            x:Name="SettingsNavButton"
+                            Background="Transparent"
+                            Command="{Binding NavigationCommand}"
+                            Content="Settings"
+                            Group="NavBarButton"
+                            Style="{DynamicResource NavigationBarButtonStyle}" />
+                        <controls:NavigationBarButtonTest
+                            x:Name="HelpNavButton"
+                            Background="Transparent"
+                            Command="{Binding NavigationCommand}"
+                            Content="Help"
+                            Group="NavBarButton"
+                            Style="{DynamicResource NavigationBarButtonStyle}" />
+                    </StackPanel>
+                </Border>
             </Grid>
 
         </StackPanel>

@@ -2,6 +2,7 @@
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using CSlickRun.Logic;
 
 namespace CSlickRun.UI.Controls;
 
@@ -179,5 +180,6 @@ public partial class NavigationBarButton : UserControl
         Active = true;
         Command.Execute(CommandParameter);
     }
+
 }
 

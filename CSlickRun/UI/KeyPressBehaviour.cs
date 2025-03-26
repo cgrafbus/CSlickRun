@@ -45,6 +45,13 @@ public class KeyPressBehavior : Behavior<UIElement>
         set => SetValue(KeyProperty, value);
     }
 
+    //TODO
+    public bool Enabled
+    {
+        get => (bool)GetValue(EnabledProperty);
+        set => SetCurrentValue(EnabledProperty, value);
+    }
+
     /// <summary>
     /// Gets or sets a value indicating whether the command can be executed.
     /// </summary>
@@ -53,6 +60,10 @@ public class KeyPressBehavior : Behavior<UIElement>
         get => (bool)GetValue(CanExecuteProperty);
         set => SetCurrentValue(CanExecuteProperty, value);
     }
+
+    //TODO
+    public static readonly DependencyProperty EnabledProperty = DependencyProperty.Register(
+        nameof(Enabled), typeof(bool), typeof(KeyPressBehavior), new PropertyMetadata(false));
 
     /// <summary>
     /// Called when the behavior is attached to a UI element.
@@ -79,7 +90,7 @@ public class KeyPressBehavior : Behavior<UIElement>
     /// <param name="e">The event data.</param>
     private void OnKeyDown(object sender, KeyEventArgs e)
     {
-        if (e.Key != Key || Command?.CanExecute(null) != true || !CanExecute)
+        if (e.Key != Key || Command?.CanExecute(null) != true || !CanExecute || !Enabled)
         {
             return;
         }

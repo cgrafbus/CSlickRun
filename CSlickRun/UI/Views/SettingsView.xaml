@@ -8,7 +8,7 @@
     xmlns:local="clr-namespace:CSlickRun.UI.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:viewModels="clr-namespace:CSlickRun.UI.ViewModels"
-    d:DesignHeight="800"
+    d:DesignHeight="1500"
     d:DesignWidth="1500"
     FontFamily="Lucida Console"
     mc:Ignorable="d">
@@ -38,11 +38,12 @@
             <StackPanel x:Name="ContentHost" Orientation="Vertical">
                 <controls:PanelHeader HeaderLabelContent="General" />
                 <Grid
-                    Width="600"
+                    Width="1200"
                     Height="25"
                     Margin="0,15,0,0"
                     HorizontalAlignment="Center">
                     <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
                         <ColumnDefinition />
                         <ColumnDefinition />
                         <ColumnDefinition />
@@ -61,6 +62,11 @@
                         Grid.Column="2"
                         Content="Enable History"
                         IsChecked="{Binding WriteHistory, Mode=TwoWay}"
+                        Style="{DynamicResource CheckboxModern}" />
+                    <CheckBox
+                        Grid.Column="3"
+                        Content="Use Keypresses for Buttons"
+                        IsChecked="{Binding UseKeyPressBehaviour, Mode=TwoWay}"
                         Style="{DynamicResource CheckboxModern}" />
                 </Grid>
                 <controls:PanelHeader Margin="0,15,0,0" HeaderLabelContent="Configure Shortcut" />
@@ -167,7 +173,6 @@
             Background="{DynamicResource MainBackgroundBrush}"
             Command="{Binding SaveCommand}"
             Content="Save"
-            Cursor="Hand"
             Style="{DynamicResource ButtonDefault}" />
     </Grid>
 </local:ViewBase>

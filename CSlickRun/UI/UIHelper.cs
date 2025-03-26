@@ -1,7 +1,11 @@
 ﻿using System.IO;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using CSlickRun.UI.Controls;
 
 namespace CSlickRun.UI;
 
@@ -99,6 +103,29 @@ public static class UIHelper
         catch
         {
             return new BitmapImage();
+        }
+    }
+
+    public static bool ChangeControlContentsByKeyPressBehavior(KeyPressBehavior behavior, DependencyObject? source)
+    {
+        try
+        {
+            if (source == null)
+            {
+                return false;
+            }
+            var behaviourCommand = behavior.Command;
+            var behaviourKey = behavior.Key.ToString();
+
+            foreach (var ctrl in FindAllChildrenWithType<Button>(source).Where(ctrl => ctrl.Command == behaviourCommand).Where(ctrl => ctrl.Content.ToString()?.Contains($" ({behaviourKey})") == false))
+            {
+                ctrl.Content += $" ({behaviourKey})";
+            }
+            return true;
+        }
+        catch
+        {
+            return false;
         }
     }
 }

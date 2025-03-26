@@ -9,9 +9,9 @@
     xmlns:local="clr-namespace:CSlickRun.UI.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ui="clr-namespace:CSlickRun.UI"
-    Width="1493"
     d:DesignHeight="800"
     d:DesignWidth="1493"
+    Background="Transparent"
     mc:Ignorable="d">
     <UserControl.Resources>
         <ui:BooleanInverterConverter x:Key="BooleanInverter" />
@@ -54,14 +54,13 @@
             CanExecute="{Binding ForbidShortcutExecution, Mode=OneWay, Converter={StaticResource BooleanInverter}}"
             Command="{Binding ExportCommand}" />
     </b:Interaction.Behaviors>
-    <Grid>
+    <Grid Background="Transparent">
         <Grid.RowDefinitions>
             <RowDefinition Height="14*" />
             <RowDefinition Height="1*" />
         </Grid.RowDefinitions>
         <ScrollViewer
             Grid.Row="0"
-            Width="1478"
             Margin="10,0,0,0"
             HorizontalAlignment="Center"
             Panel.ZIndex="9999"
@@ -69,6 +68,7 @@
             Style="{DynamicResource ModernScrollViewer}">
             <StackPanel
                 Margin="0,10,0,0"
+                Background="Transparent"
                 CanHorizontallyScroll="False"
                 Orientation="Vertical">
                 <controls:PanelHeader HeaderLabelContent="Commands" />
@@ -76,6 +76,7 @@
                     x:Name="CommandHost"
                     Width="1410"
                     Margin="0,10,0,0"
+                    Background="{DynamicResource SecondaryBackgroundBrush}"
                     BindableSelectedItems="{Binding SelectedCommands, Mode=OneWayToSource}"
                     ItemContainerStyle="{DynamicResource ListBoxItemStyle}"
                     ItemsSource="{Binding VisibleCommands, Mode=OneWay}"
@@ -83,7 +84,12 @@
                     SelectionMode="Extended">
                     <controls:CListBox.ItemTemplate>
                         <DataTemplate>
-                            <controls:CommandListButton x:Name="Item" Width="1400" />
+                            <controls:CommandListButton
+                                x:Name="Item"
+                                Width="1400"
+                                Background="{DynamicResource SecondaryBackgroundBrush}"
+                                DeleteCommand="{Binding DataContext.ExecuteDeleteCommand, Mode=OneWay, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                EditCommand="{Binding DataContext.ExecuteEditCommand, Mode=OneWay, RelativeSource={RelativeSource AncestorType=UserControl}}" />
                             <DataTemplate.Triggers>
                                 <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource AncestorType=ListBoxItem}}" Value="True">
                                     <Setter TargetName="Item" Property="Background" Value="{DynamicResource HoverBrushBasic}" />
@@ -98,7 +104,7 @@
             Grid.Row="1"
             HorizontalAlignment="Left"
             Orientation="Horizontal">
-            <Grid>
+            <Grid Background="{DynamicResource SecondaryBackgroundBrush}">
                 <TextBox
                     x:Name="SearchTermTextBox"
                     Width="400"
@@ -141,8 +147,7 @@
                 Width="200"
                 HorizontalAlignment="Center"
                 Command="{Binding SaveCommand}"
-                Content="Save (F)"
-                Cursor="Hand"
+                Content="Save"
                 Style="{DynamicResource ButtonColored}" />
         </StackPanel>
         <StackPanel
@@ -151,23 +156,23 @@
             FlowDirection="LeftToRight"
             Orientation="Horizontal">
             <Button
-                Width="300"
+                Width="200"
                 Background="{DynamicResource MainBackgroundBrush}"
                 Command="{Binding ImportCommand}"
-                Content="Import Commands (O)"
+                Content="Import"
                 Style="{DynamicResource ButtonDefault}" />
             <Button
-                Width="300"
+                Width="200"
                 Background="{DynamicResource MainBackgroundBrush}"
                 Command="{Binding ExportCommand}"
-                Content="Export Commands (P)"
+                Content="Export"
                 IsEnabled="{Binding AnyCommandsSelected, Mode=OneWay}"
                 Style="{DynamicResource ButtonDefault}" />
             <Button
                 Width="200"
                 Background="{DynamicResource MainBackgroundBrush}"
                 Command="{Binding AddCommand}"
-                Content="Add (T)"
+                Content="Add"
                 Style="{DynamicResource ButtonDefault}" />
         </StackPanel>
     </Grid>

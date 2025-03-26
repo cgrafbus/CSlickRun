@@ -105,6 +105,8 @@ public partial class SettingsVm_Base : ViewModelBase
     /// </summary>
     [ObservableProperty] private bool writeHistory;
 
+    [ObservableProperty] private bool useKeyPressBehaviour;
+
     #endregion
 }
 

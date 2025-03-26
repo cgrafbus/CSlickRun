@@ -46,20 +46,24 @@
             Style="{DynamicResource ModernTextBlock}"
             Text="{Binding Name}" />
         <Button
+            x:Name="EditButton"
             Grid.Column="2"
             Background="Transparent"
+            Command="{Binding EditCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
             CommandParameter="{Binding}"
-            Content="Edit (E)"
+            Content="Edit"
             FontSize="22"
-            IsHitTestVisible="False"
+            IsHitTestVisible="True"
             Style="{DynamicResource ButtonDefault}" />
         <Button
+            x:Name="DeleteButton"
             Grid.Column="3"
             Background="Transparent"
+            Command="{Binding DeleteCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
             CommandParameter="{Binding}"
-            Content="Delete (Q)"
+            Content="Delete"
             FontSize="22"
-            IsHitTestVisible="False"
+            IsHitTestVisible="True"
             Style="{DynamicResource ButtonDefault}" />
     </Grid>
 </UserControl>

@@ -8,11 +8,12 @@
     xmlns:viewModels="clr-namespace:CSlickRun.UI.ViewModels"
     d:DesignHeight="800"
     d:DesignWidth="1500"
+    Background="Transparent"
     mc:Ignorable="d">
     <local:ViewBase.DataContext>
         <viewModels:CommandVm />
     </local:ViewBase.DataContext>
-    <Grid>
+    <Grid Background="Transparent">
         <ContentControl Content="{Binding CurrentCommandView}" />
     </Grid>
 </local:ViewBase>
