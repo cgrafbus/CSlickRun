@@ -26,7 +26,7 @@ public class ViewBase : UserControl
     /// <summary>
     /// Initializes the key press behaviours.
     /// </summary>
-    private void InitializeKeyPressBehaviours()
+    protected virtual void InitializeKeyPressBehaviours()
     {
         foreach (var behaviour in Interaction.GetBehaviors(this))
         {

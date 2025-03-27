@@ -1,4 +1,7 @@
-﻿using System.IO;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Diagnostics;
+using System.DirectoryServices.ActiveDirectory;
+using System.IO;
 using System.Reflection;
 using System.Windows;
 using CommunityToolkit.Mvvm.Input;
@@ -194,6 +197,30 @@ public partial class SettingsVm : SettingsVm_Base
                !string.IsNullOrEmpty(BorderInactiveColor) &&
                !string.IsNullOrEmpty(CommandLineWidth) &&
                !string.IsNullOrEmpty(CommandLineHeight);
+    }
+
+    [RelayCommand]
+    private void OpenFile(object? obj)
+    {
+        var filePath = obj switch
+        {
+            "History" => Global.HistoryFile,
+            "Config" => Global.ConfigFile,
+            "Commands" => Global.CommandsFile,
+            _ => string.Empty
+        };
+        try
+        {
+            var info = new ProcessStartInfo(filePath)
+            {
+                UseShellExecute = true
+            };
+            Process.Start(info);
+        }
+        catch
+        {
+            //ignore
+        }
     }
 }
 

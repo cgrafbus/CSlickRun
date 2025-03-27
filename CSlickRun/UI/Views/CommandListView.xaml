@@ -91,13 +91,14 @@
                                 x:Name="Item"
                                 Width="{Binding ElementName=CommandHost, Path=ActualWidth}"
                                 MinWidth="400"
+                                MinHeight="55"
                                 MaxWidth="1400"
                                 Background="{DynamicResource SecondaryBackgroundBrush}"
                                 DeleteCommand="{Binding DataContext.ExecuteDeleteCommand, Mode=OneWay, RelativeSource={RelativeSource AncestorType=UserControl}}"
                                 EditCommand="{Binding DataContext.ExecuteEditCommand, Mode=OneWay, RelativeSource={RelativeSource AncestorType=UserControl}}" />
                             <DataTemplate.Triggers>
                                 <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource AncestorType=ListBoxItem}}" Value="True">
-                                    <Setter TargetName="Item" Property="Background" Value="{DynamicResource HoverBrushBasic}" />
+                                    <Setter TargetName="Item" Property="Background" Value="{DynamicResource HoverBrushColored}" />
                                 </DataTrigger>
                             </DataTemplate.Triggers>
                         </DataTemplate>
@@ -105,11 +106,13 @@
                 </controls:CListBox>
             </StackPanel>
         </ScrollViewer>
-        <StackPanel
-            Grid.Row="1"
-            HorizontalAlignment="Left"
-            Orientation="Horizontal">
-            <Grid Background="{DynamicResource SecondaryBackgroundBrush}">
+        <Grid Grid.Row="1" Background="Transparent">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0" Background="{DynamicResource SecondaryBackgroundBrush}">
                 <TextBox
                     x:Name="SearchTermTextBox"
                     Width="400"
@@ -121,12 +124,13 @@
                     Style="{DynamicResource ModernTextBox}"
                     Text="{Binding CommandFilter, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                 <TextBlock
+                    x:Name="SearchTextBoxPlaceholder"
                     Margin="8,0,0,0"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Center"
                     Foreground="{DynamicResource HoverBrushBasic}"
                     IsHitTestVisible="False"
-                    Text="Search for command...(X)">
+                    Text="Search for command...">
                     <TextBlock.Style>
                         <Style TargetType="{x:Type TextBlock}">
                             <Setter Property="Visibility" Value="Collapsed" />
@@ -149,36 +153,21 @@
                 </TextBlock>
             </Grid>
             <Button
+                Grid.Column="1"
                 Width="200"
                 HorizontalAlignment="Center"
                 Command="{Binding SaveCommand}"
                 Content="Save"
                 Style="{DynamicResource ButtonColored}" />
-        </StackPanel>
-        <StackPanel
-            Grid.Row="1"
-            HorizontalAlignment="Right"
-            FlowDirection="LeftToRight"
-            Orientation="Horizontal">
+
             <Button
+                Grid.Column="2"
                 Width="200"
-                Background="{DynamicResource MainBackgroundBrush}"
-                Command="{Binding ImportCommand}"
-                Content="Import"
-                Style="{DynamicResource ButtonDefault}" />
-            <Button
-                Width="200"
-                Background="{DynamicResource MainBackgroundBrush}"
-                Command="{Binding ExportCommand}"
-                Content="Export"
-                IsEnabled="{Binding AnyCommandsSelected, Mode=OneWay}"
-                Style="{DynamicResource ButtonDefault}" />
-            <Button
-                Width="200"
-                Background="{DynamicResource MainBackgroundBrush}"
+                HorizontalAlignment="Right"
+                Background="Transparent"
                 Command="{Binding AddCommand}"
                 Content="Add"
                 Style="{DynamicResource ButtonDefault}" />
-        </StackPanel>
+        </Grid>
     </Grid>
 </local:ViewBase>

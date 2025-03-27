@@ -2,22 +2,25 @@
     x:Class="CSlickRun.UI.Views.SettingsView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
     xmlns:colorCanvas="clr-namespace:CSlickRun.UI.Controls.ColorCanvas"
     xmlns:controls="clr-namespace:CSlickRun.UI.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:CSlickRun.UI.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ui="clr-namespace:CSlickRun.UI"
     xmlns:viewModels="clr-namespace:CSlickRun.UI.ViewModels"
     d:DesignHeight="1500"
     d:DesignWidth="1500"
+    Background="Transparent"
     FontFamily="Lucida Console"
     mc:Ignorable="d">
     <local:ViewBase.DataContext>
         <viewModels:SettingsVm />
     </local:ViewBase.DataContext>
-    <Grid>
+    <Grid Background="Transparent">
         <Grid.RowDefinitions>
-            <RowDefinition Height="10*" />
+            <RowDefinition Height="13*" />
             <RowDefinition Height="1*" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -34,6 +37,7 @@
             x:Name="Scroller"
             Grid.Row="0"
             Grid.Column="0"
+            Margin="0,0,0,10"
             Style="{DynamicResource ModernScrollViewer}">
             <StackPanel x:Name="ContentHost" Orientation="Vertical">
                 <controls:PanelHeader HeaderLabelContent="General" />
@@ -41,7 +45,8 @@
                     Width="1200"
                     Height="25"
                     Margin="0,15,0,0"
-                    HorizontalAlignment="Center">
+                    HorizontalAlignment="Center"
+                    Background="Transparent">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition />
                         <ColumnDefinition />
@@ -65,7 +70,7 @@
                         Style="{DynamicResource CheckboxModern}" />
                     <CheckBox
                         Grid.Column="3"
-                        Content="Use Keypresses for Buttons"
+                        Content="Use Keybehaviors (experimental)"
                         IsChecked="{Binding UseKeyPressBehaviour, Mode=TwoWay}"
                         Style="{DynamicResource CheckboxModern}" />
                 </Grid>
@@ -74,7 +79,8 @@
                     Width="600"
                     Height="25"
                     Margin="0,15,0,0"
-                    HorizontalAlignment="Center">
+                    HorizontalAlignment="Center"
+                    Background="Transparent">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition />
                         <ColumnDefinition />
@@ -119,7 +125,7 @@
                             x:Name="ShortcutTextBox"
                             Width="20"
                             Margin="3,0,0,0"
-                            Foreground="{DynamicResource MainForegroundBrush}"
+                            CharacterCasing="Lower"
                             MaxLength="1"
                             Style="{DynamicResource ModernTextBox}"
                             Text="{Binding Shortcut, Mode=TwoWay}"
@@ -131,8 +137,12 @@
                     Width="1000"
                     Margin="0,10,0,0"
                     HorizontalAlignment="Stretch"
+                    Background="Transparent"
                     Orientation="Horizontal">
-                    <colorCanvas:ColorCanvas HeaderContent="Foreground" HexadecimalString="{Binding CommandLineForegroundColor, Mode=TwoWay}" />
+                    <colorCanvas:ColorCanvas
+                        Background="Transparent"
+                        HeaderContent="Foreground"
+                        HexadecimalString="{Binding CommandLineForegroundColor, Mode=TwoWay}" />
                     <colorCanvas:ColorCanvas HeaderContent="Active Background" HexadecimalString="{Binding CommandLineBackgroundColor, Mode=TwoWay}" />
                     <colorCanvas:ColorCanvas HeaderContent="Inactive Background" HexadecimalString="{Binding CommandLineInactiveBackgroundColor, Mode=TwoWay}" />
                     <colorCanvas:ColorCanvas HeaderContent="Active Border" HexadecimalString="{Binding BorderColor, Mode=TwoWay}" />
@@ -150,7 +160,6 @@
                     <Label Content="Width, Height:" />
                     <TextBox
                         Width="100"
-                        Foreground="{DynamicResource MainForegroundBrush}"
                         InputScope="Number"
                         PreviewTextInput="UIElement_OnPreviewTextInput"
                         Style="{DynamicResource ModernTextBox}"
@@ -163,16 +172,49 @@
                         Style="{DynamicResource ModernTextBox}"
                         Text="{Binding CommandLineHeight, Mode=TwoWay}" />
                 </StackPanel>
+                <controls:PanelHeader Margin="0,25,0,0" HeaderLabelContent="Actions" />
+                <Grid
+                    Height="40"
+                    Margin="0,10,0,0"
+                    Background="Transparent">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Button
+                        Grid.Column="0"
+                        Width="300"
+                        Background="Transparent"
+                        Command="{Binding OpenFileCommand}"
+                        CommandParameter="History"
+                        Content="Open history file"
+                        Style="{DynamicResource ButtonDefault}" />
+                    <Button
+                        Grid.Column="1"
+                        Width="300"
+                        Background="Transparent"
+                        Command="{Binding OpenFileCommand}"
+                        CommandParameter="Config"
+                        Content="Open configuration file"
+                        Style="{DynamicResource ButtonDefault}" />
+                    <Button
+                        Grid.Column="2"
+                        Width="300"
+                        Background="Transparent"
+                        Command="{Binding OpenFileCommand}"
+                        CommandParameter="Commands"
+                        Content="Open command file"
+                        Style="{DynamicResource ButtonDefault}" />
+                </Grid>
             </StackPanel>
         </ScrollViewer>
         <Button
             Grid.Row="1"
             Grid.Column="0"
-            Grid.ColumnSpan="2"
             Width="300"
-            Background="{DynamicResource MainBackgroundBrush}"
             Command="{Binding SaveCommand}"
             Content="Save"
-            Style="{DynamicResource ButtonDefault}" />
+            Style="{DynamicResource ButtonColored}" />
     </Grid>
 </local:ViewBase>

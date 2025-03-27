@@ -11,7 +11,7 @@
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="RenderOptions.BitmapScalingMode" Value="HighQuality" />
         <Setter Property="RenderOptions.ClearTypeHint" Value="Enabled" />
-        <Setter Property="FontFamily" Value="Lucida Console" />
+        <Setter Property="FontFamily" Value="{DynamicResource MainFont}" />
         <Setter Property="Foreground" Value="{DynamicResource MainForegroundBrush}" />
     </Style>
 
@@ -92,11 +92,12 @@
         <Setter Property="RenderOptions.BitmapScalingMode" Value="HighQuality" />
         <Setter Property="RenderOptions.ClearTypeHint" Value="Enabled" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="Background" Value="Transparent" />
         <Setter Property="Foreground" Value="{DynamicResource MainForegroundBrush}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="CheckBox">
-                    <Grid Cursor="Hand">
+                    <Grid Background="Transparent" Cursor="Hand">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="20" />
                             <ColumnDefinition Width="Auto" />
@@ -157,7 +158,7 @@
         <Setter Property="Padding" Value="0,3,0,0" />
         <Setter Property="RenderOptions.BitmapScalingMode" Value="HighQuality" />
         <Setter Property="RenderOptions.ClearTypeHint" Value="Enabled" />
-        <Setter Property="FontFamily" Value="Lucida Console" />
+        <Setter Property="FontFamily" Value="{DynamicResource MainFont}" />
         <Setter Property="Height" Value="20" />
         <Setter Property="Background" Value="Transparent" />
     </Style>
@@ -169,7 +170,7 @@
         <Setter Property="Padding" Value="0,3,0,0" />
         <Setter Property="RenderOptions.BitmapScalingMode" Value="HighQuality" />
         <Setter Property="RenderOptions.ClearTypeHint" Value="Enabled" />
-        <Setter Property="FontFamily" Value="Lucida Console" />
+        <Setter Property="FontFamily" Value="{DynamicResource MainFont}" />
     </Style>
 
     <Style x:Key="ModernTextBox" TargetType="{x:Type TextBox}">
@@ -181,7 +182,7 @@
         <Setter Property="SelectionBrush" Value="{DynamicResource HoverBrushColored}" />
         <Setter Property="RenderOptions.BitmapScalingMode" Value="HighQuality" />
         <Setter Property="RenderOptions.ClearTypeHint" Value="Enabled" />
-        <Setter Property="FontFamily" Value="Lucida Console" />
+        <Setter Property="FontFamily" Value="{DynamicResource MainFont}" />
         <Setter Property="Height" Value="20" />
         <Setter Property="Foreground" Value="{DynamicResource MainForegroundBrush}" />
         <Setter Property="CaretBrush" Value="{DynamicResource SecondaryAccentBrush}" />
@@ -226,7 +227,7 @@
         <Setter Property="RenderOptions.ClearTypeHint" Value="Enabled" />
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="TextWrapping" Value="Wrap" />
-        <Setter Property="FontFamily" Value="Lucida Console" />
+        <Setter Property="FontFamily" Value="{DynamicResource MainFont}" />
         <Setter Property="SelectionBrush" Value="{DynamicResource HoverBrushColored}" />
         <Setter Property="Background" Value="{DynamicResource TertiaryBackgroundBrush}" />
         <Setter Property="Foreground" Value="{DynamicResource MainForegroundBrush}" />
@@ -335,7 +336,7 @@
         <Setter Property="Padding" Value="0,3,0,0" />
         <Setter Property="RenderOptions.BitmapScalingMode" Value="HighQuality" />
         <Setter Property="RenderOptions.ClearTypeHint" Value="Enabled" />
-        <Setter Property="FontFamily" Value="Lucida Console" />
+        <Setter Property="FontFamily" Value="{DynamicResource MainFont}" />
         <Setter Property="Height" Value="20" />
         <Setter Property="Foreground" Value="{DynamicResource MainForegroundBrush}" />
     </Style>
@@ -403,7 +404,7 @@
         <Setter Property="OverridesDefaultStyle" Value="True" />
         <Setter Property="UseLayoutRounding" Value="True" />
         <Setter Property="FontSize" Value="16" />
-        <Setter Property="FontFamily" Value="Sans Serif Collection" />
+        <Setter Property="FontFamily" Value="{DynamicResource MainFont}" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Foreground" Value="{DynamicResource MainForegroundBrush}" />
         <Setter Property="Template">
@@ -427,11 +428,34 @@
         </Setter>
     </Style>
 
+    <Style x:Key="ButtonNoHover" TargetType="{x:Type Button}">
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="UseLayoutRounding" Value="True" />
+        <Setter Property="FontSize" Value="16" />
+        <Setter Property="FontFamily" Value="{DynamicResource MainFont}" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="Foreground" Value="{DynamicResource MainForegroundBrush}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border
+                        x:Name="Container"
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding Background}"
+                        BorderThickness="0"
+                        CornerRadius="0,2,2,0">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <Style x:Key="ButtonColored" TargetType="{x:Type Button}">
         <Setter Property="OverridesDefaultStyle" Value="True" />
         <Setter Property="UseLayoutRounding" Value="True" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
-        <Setter Property="FontFamily" Value="Lucida Console" />
+        <Setter Property="FontFamily" Value="{DynamicResource MainFont}" />
         <Setter Property="Background" Value="{DynamicResource MainAccentBrush}" />
         <Setter Property="FontSize" Value="16" />
         <Setter Property="Foreground" Value="{DynamicResource MainForegroundBrush}" />
@@ -467,18 +491,18 @@
         <Setter Property="Padding" Value="0" />
         <Setter Property="Width" Value="800" />
         <Setter Property="FontSize" Value="16" />
-        <Setter Property="FontFamily" Value="Lucida Console" />
+        <Setter Property="FontFamily" Value="{DynamicResource MainFont}" />
     </Style>
 
     <Style x:Key="ClickableLabel" TargetType="{x:Type Label}">
         <Setter Property="UseLayoutRounding" Value="True" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Margin" Value="0" />
-        <Setter Property="Background" Value="{DynamicResource MainBackgroundBrush}" />
+        <Setter Property="Background" Value="Transparent" />
         <Setter Property="Padding" Value="0" />
         <Setter Property="MinWidth" Value="150" />
         <Setter Property="FontSize" Value="14" />
-        <Setter Property="FontFamily" Value="Lucida Console" />
+        <Setter Property="FontFamily" Value="Manrope" />
         <Setter Property="HorizontalAlignment" Value="Center" />
         <Setter Property="HorizontalContentAlignment" Value="Center" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
@@ -494,7 +518,7 @@
         <Setter Property="OverridesDefaultStyle" Value="True" />
         <Setter Property="UseLayoutRounding" Value="True" />
         <Setter Property="Padding" Value="0" />
-        <Setter Property="FontFamily" Value="Lucida Console" />
+        <Setter Property="FontFamily" Value="{DynamicResource MainFont}" />
         <Setter Property="Foreground" Value="{DynamicResource MainForegroundBrush}" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">
@@ -527,7 +551,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ScrollBar}">
-                    <Grid>
+                    <Grid Background="Transparent">
                         <Track Name="PART_Track" IsDirectionReversed="True">
                             <Track.Thumb>
                                 <Thumb Style="{DynamicResource ScrollBarThumb}" />

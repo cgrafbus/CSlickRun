@@ -17,6 +17,14 @@ public partial class SettingsView
     public SettingsView()
     {
         InitializeComponent();
+        Loaded += OnLoaded;
+    }
+
+    /// <summary>
+    /// Loaded-Event
+    /// </summary>
+    private void OnLoaded(object sender, RoutedEventArgs e)
+    {
         LoadSideBar();
     }
 

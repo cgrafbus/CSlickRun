@@ -71,8 +71,8 @@ public class KeyPressBehavior : Behavior<UIElement>
     protected override void OnAttached()
     {
         AssociatedObject.KeyDown += OnKeyDown;
-        AssociatedObject.Focusable = true; // Ensure it can receive key events
-        AssociatedObject.Focus(); // Try to set focus on load
+        AssociatedObject.Focusable = true; 
+        AssociatedObject.Focus(); 
     }
 
     /// <summary>
@@ -95,7 +95,7 @@ public class KeyPressBehavior : Behavior<UIElement>
             return;
         }
 
-        Command.Execute(null);
+        Command.Execute(this);
         e.Handled = true;
     }
 }

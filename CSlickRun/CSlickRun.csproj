@@ -12,10 +12,13 @@
   </PropertyGroup>
   <ItemGroup>
     <None Remove="Design\Icons\deleted.png" />
+    <None Remove="Design\Icons\export.png" />
     <None Remove="Design\Icons\file.png" />
     <None Remove="Design\Icons\folder.png" />
+    <None Remove="Design\Icons\import.png" />
     <None Remove="Design\Icons\modified.png" />
     <None Remove="Design\Icons\new.png" />
+    <None Remove="Design\Manrope-Regular.ttf" />
   </ItemGroup>
   <ItemGroup>
     <COMReference Include="IWshRuntimeLibrary">
@@ -35,10 +38,16 @@
     <Content Include="Design\Icons\deleted.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Design\Icons\export.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Design\Icons\file.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Design\Icons\folder.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Design\Icons\import.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Design\Icons\modified.png">
@@ -54,6 +63,12 @@
     <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.135" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="System.Drawing.Common" Version="9.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Design\Manrope-Regular.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 
 </Project>

@@ -11,7 +11,7 @@
     <UserControl.Resources>
         <converter:ItemStatusToImageConverter x:Key="ImageConverter" />
     </UserControl.Resources>
-    <Grid Height="50" Background="{Binding Background, RelativeSource={RelativeSource AncestorType=UserControl}}">
+    <Grid Height="{Binding Height, RelativeSource={RelativeSource AncestorType=UserControl}}" Background="{Binding Background, RelativeSource={RelativeSource AncestorType=UserControl}}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*" MinWidth="60" />
             <ColumnDefinition Width="18*" />
@@ -39,7 +39,7 @@
         <TextBlock
             x:Name="TextHost"
             Grid.Column="1"
-            Height="25"
+            Height="{Binding Height, RelativeSource={RelativeSource AncestorType=UserControl}}"
             HorizontalAlignment="Left"
             Background="Transparent"
             FontSize="22"
@@ -52,9 +52,10 @@
             Command="{Binding EditCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
             CommandParameter="{Binding}"
             Content="Edit"
+            Focusable="False"
             FontSize="22"
             IsHitTestVisible="True"
-            Style="{DynamicResource ButtonDefault}" />
+            Style="{DynamicResource ButtonNoHover}" />
         <Button
             x:Name="DeleteButton"
             Grid.Column="3"
@@ -62,8 +63,9 @@
             Command="{Binding DeleteCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
             CommandParameter="{Binding}"
             Content="Delete"
+            Focusable="False"
             FontSize="22"
             IsHitTestVisible="True"
-            Style="{DynamicResource ButtonDefault}" />
+            Style="{DynamicResource ButtonNoHover}" />
     </Grid>
 </UserControl>

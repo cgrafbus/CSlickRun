@@ -68,7 +68,8 @@ public class Command
     /// <summary>
     /// Flag, whether or not command is a default command
     /// </summary>
-    public bool DefaultCommand { get; set; }
+    [JsonIgnore]
+    public bool? DefaultCommand { get; set; }
 
     /// <summary>
     /// Executes command
@@ -80,7 +81,7 @@ public class Command
             WriteHistory();
         }
 
-        if (DefaultCommand)
+        if (DefaultCommand == true)
         {
             CheckAndExecuteDefaultCommands();
             return;

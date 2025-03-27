@@ -23,7 +23,7 @@
         <vm:ConfigWindowVm />
     </Window.DataContext>
     <WindowChrome.WindowChrome>
-        <WindowChrome CaptionHeight="20" CornerRadius="4" />
+        <WindowChrome CaptionHeight="40" CornerRadius="4" />
     </WindowChrome.WindowChrome>
     <Border
         Background="Transparent"
@@ -46,18 +46,18 @@
             Orientation="Vertical">
             <StackPanel
                 Width="1600"
-                Height="23"
-                VerticalAlignment="Top"
+                Height="40"
+                VerticalAlignment="Center"
                 Panel.ZIndex="1"
-                Background="{DynamicResource TertiaryBackgroundBrush}"
+                Background="{DynamicResource MainBackgroundBrush}"
                 FlowDirection="RightToLeft"
                 Orientation="Horizontal">
 
                 <Button
                     x:Name="CloseWindowButton"
-                    Width="40"
-                    Height="23"
-                    Background="{DynamicResource TertiaryBackgroundBrush}"
+                    Width="55"
+                    Height="40"
+                    Background="{DynamicResource MainBackgroundBrush}"
                     Click="CloseWindowButton_OnClick"
                     Content="X"
                     Style="{DynamicResource ButtonDefault}"
@@ -65,69 +65,119 @@
                     WindowChrome.IsHitTestVisibleInChrome="True" />
                 <Button
                     x:Name="MinimizeWindowButton"
-                    Width="40"
-                    Height="23"
-                    Background="{DynamicResource TertiaryBackgroundBrush}"
+                    Width="55"
+                    Height="40"
+                    Background="{DynamicResource MainBackgroundBrush}"
                     Click="MinimizeWindowButton_OnClick"
                     Content="__"
                     Style="{DynamicResource ButtonDefault}"
                     ToolTip="Minimize"
                     WindowChrome.IsHitTestVisibleInChrome="True" />
             </StackPanel>
-            <Grid Height="770" ClipToBounds="False">
+            <Grid Height="760" ClipToBounds="False">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition x:Name="FirstGrid" Width="1*" />
-                    <ColumnDefinition x:Name="SecondGrid" Width="14*" />
+                    <ColumnDefinition x:Name="SecondGrid" Width="12*" />
                 </Grid.ColumnDefinitions>
                 <StackPanel
                     Grid.Column="1"
-                    Width="{Binding RelativeSource={RelativeSource AncestorType=ColumnDefinition}, Path=ActualWidth}"
-                    Margin="0,7,7,7"
+                    Margin="7,7,7,7"
+                    HorizontalAlignment="Stretch"
                     Orientation="Horizontal">
                     <Border
                         x:Name="BorderGridAdjuster"
-                        Width="10"
+                        Width="15"
                         CornerRadius="10,0,0,10"
                         MouseLeftButtonDown="BorderGridAdjuster_OnMouseLeftButtonDown"
                         Style="{DynamicResource BorderGridAdjuster}" />
                     <Border
+                        x:Name="ViewHost"
+                        Width="1440"
                         Panel.ZIndex="999"
                         Background="{DynamicResource SecondaryBackgroundBrush}"
                         CornerRadius="0,10,10,0">
                         <ContentControl Content="{Binding CurrentView}" Focusable="True" />
                     </Border>
                 </StackPanel>
-
-                <Border
+                <Grid
+                    x:Name="SidePanel"
                     Grid.Column="0"
-                    Margin="7"
-                    Background="{DynamicResource SecondaryBackgroundBrush}"
-                    ClipToBounds="True"
-                    CornerRadius="6">
-                    <StackPanel x:Name="NavBar" Background="Transparent">
-                        <controls:NavigationBarButtonTest
-                            x:Name="CommandNavButton"
+                    Margin="7,7,0,7"
+                    Background="Transparent">
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <Border
+                        Grid.Row="0"
+                        Background="{DynamicResource SecondaryBackgroundBrush}"
+                        ClipToBounds="True"
+                        CornerRadius="6,6,0,0">
+                        <StackPanel x:Name="NavBar" Background="Transparent">
+                            <controls:NavigationBarButtonTest
+                                x:Name="CommandNavButton"
+                                Background="Transparent"
+                                Command="{Binding NavigationCommand}"
+                                Content="Commands"
+                                Group="NavBarButton"
+                                Style="{DynamicResource NavigationBarButtonStyleTopOne}" />
+                            <controls:NavigationBarButtonTest
+                                x:Name="SettingsNavButton"
+                                Background="Transparent"
+                                Command="{Binding NavigationCommand}"
+                                Content="Settings"
+                                Group="NavBarButton"
+                                Style="{DynamicResource NavigationBarButtonStyle}" />
+                            <controls:NavigationBarButtonTest
+                                x:Name="HelpNavButton"
+                                Background="Transparent"
+                                Command="{Binding NavigationCommand}"
+                                Content="Help"
+                                Group="NavBarButton"
+                                Style="{DynamicResource NavigationBarButtonStyle}" />
+                        </StackPanel>
+                    </Border>
+                    <Border
+                        Grid.Row="1"
+                        Background="{DynamicResource SecondaryBackgroundBrush}"
+                        ClipToBounds="True"
+                        CornerRadius="0,0,10,10">
+                        <StackPanel
+                            x:Name="ActionNavBar"
+                            VerticalAlignment="Bottom"
                             Background="Transparent"
-                            Command="{Binding NavigationCommand}"
-                            Content="Commands"
-                            Group="NavBarButton"
-                            Style="{DynamicResource NavigationBarButtonStyleTopOne}" />
-                        <controls:NavigationBarButtonTest
-                            x:Name="SettingsNavButton"
-                            Background="Transparent"
-                            Command="{Binding NavigationCommand}"
-                            Content="Settings"
-                            Group="NavBarButton"
-                            Style="{DynamicResource NavigationBarButtonStyle}" />
-                        <controls:NavigationBarButtonTest
-                            x:Name="HelpNavButton"
-                            Background="Transparent"
-                            Command="{Binding NavigationCommand}"
-                            Content="Help"
-                            Group="NavBarButton"
-                            Style="{DynamicResource NavigationBarButtonStyle}" />
-                    </StackPanel>
-                </Border>
+                            FlowDirection="RightToLeft"
+                            Orientation="Vertical"
+                            Visibility="{Binding CurrentViewIsListView}">
+                            <Button
+                                Height="50"
+                                Background="Transparent"
+                                Command="{Binding ExportCommandsCommand}"
+                                Style="{DynamicResource ButtonDefault}"
+                                ToolTip="Export selected commands">
+                                <Image
+                                    Width="40"
+                                    Height="40"
+                                    Opacity="0.8"
+                                    Source="/Design/Icons/export.png" />
+                            </Button>
+                            <Button
+                                Height="50"
+                                Background="Transparent"
+                                Command="{Binding ImportCommandsCommand}"
+                                Style="{DynamicResource ButtonDefault}"
+                                ToolTip="Import commands">
+                                <Image
+                                    Width="40"
+                                    Height="40"
+                                    Opacity="0.8"
+                                    Source="/Design/Icons/import.png" />
+                            </Button>
+
+                        </StackPanel>
+                    </Border>
+
+                </Grid>
 
             </Grid>
         </StackPanel>

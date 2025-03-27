@@ -1,8 +1,10 @@
-﻿using System.Windows.Controls;
+﻿using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CSlickRun.UI.ViewModels.Base;
+using CSlickRun.UI.Views;
 
 namespace CSlickRun.UI.ViewModels;
 
@@ -11,7 +13,16 @@ namespace CSlickRun.UI.ViewModels;
 /// </summary>
 public partial class ConfigWindowVm : ViewModelBase
 {
-    [ObservableProperty] private UserControl currentView;
+    [ObservableProperty] 
+    [NotifyPropertyChangedFor(nameof(CurrentViewIsListView))]
+    private UserControl? currentView;
+
+    
+
+    public Visibility CurrentViewIsListView =>
+        CurrentView?.DataContext is CommandVm
+            ? Visibility.Visible
+            : Visibility.Hidden;
 
     /// <summary>
     /// Constructor
@@ -34,5 +45,30 @@ public partial class ConfigWindowVm : ViewModelBase
             Keyboard.Focus(CurrentView);
             CurrentView.Focus();
         }
+    }
+
+    [RelayCommand]
+    private async Task ExportCommands()
+    {
+        if (CurrentView?.DataContext is not CommandVm vm)
+        {
+            return;
+        }
+        switch (vm.CurrentCommandView?.DataContext)
+        {
+            case CommandListVm listVm:
+                await listVm.ExportCommand.ExecuteAsync(null);
+                return;
+        }
+    }
+
+    [RelayCommand]
+    private async Task ImportCommands()
+    {
+        if (CurrentView?.DataContext is not CommandVm { CurrentCommandView.DataContext:CommandListVm listVm })
+        {
+            return;
+        }
+        await listVm.ImportCommand.ExecuteAsync(null);
     }
 }

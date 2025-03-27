@@ -115,21 +115,21 @@
             Orientation="Horizontal">
             <Button
                 Width="200"
-                Background="{DynamicResource MainBackgroundBrush}"
+                Background="Transparent"
                 Command="{Binding SaveCommand}"
-                Content="Save (F)"
+                Content="Save "
                 Style="{DynamicResource ButtonDefault}" />
             <Button
                 Width="200"
-                Background="{DynamicResource MainBackgroundBrush}"
+                Background="Transparent"
                 Command="{Binding TestCommandCommand}"
-                Content="Test Command (E)"
+                Content="Test Command "
                 Style="{DynamicResource ButtonDefault}" />
             <Button
                 Width="200"
-                Background="{DynamicResource MainBackgroundBrush}"
+                Background="Transparent"
                 Command="{Binding GoBackCommand}"
-                Content="Cancel (Q)"
+                Content="Cancel "
                 Style="{DynamicResource ButtonDefault}" />
         </StackPanel>
     </Grid>

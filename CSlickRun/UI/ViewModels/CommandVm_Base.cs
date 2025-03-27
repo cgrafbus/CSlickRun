@@ -22,7 +22,10 @@ public partial class CommandVm_Base : ViewModelBase
     /// Current ViewModel
     /// </summary>
     [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(CurrentViewIsList))]
     private UserControl? currentCommandView;
+
+    public bool CurrentViewIsList => CurrentCommandView?.DataContext is CommandListVm;
 
     /// <summary>
     /// Flag, if Save is allowed

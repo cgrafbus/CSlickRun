@@ -46,6 +46,7 @@
                 Height="{Binding CommandLineHeight, Mode=TwoWay}"
                 Margin="3,0,0,0"
                 Panel.ZIndex="1"
+                FontStretch="ExtraExpanded"
                 Foreground="{Binding AutoCompleteForegroundColor, Mode=TwoWay}"
                 Style="{DynamicResource SlickRunCommandLineAutCompleteStyle}" />
             <TextBox
@@ -55,6 +56,7 @@
                 VerticalAlignment="Center"
                 Panel.ZIndex="2"
                 CaretBrush="{Binding CaretColor}"
+                FontStretch="ExtraExpanded"
                 Foreground="{Binding CommandLineForegroundColor, Mode=TwoWay}"
                 KeyDown="CommandTextBox_KeyDown"
                 LostKeyboardFocus="CommandTextBox_LostKeyboardFocus"

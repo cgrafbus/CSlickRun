@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.Windows.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CSlickRun.Logic;
@@ -115,15 +116,25 @@ public partial class CommandListVm : ViewModelBase
 
     /// <inheritdoc cref="CommandVm.Edit"/>
     [RelayCommand]
-    private void ExecuteEdit()
+    private void ExecuteEdit(object? obj)
     {
+        if (obj is Command comm)
+        {
+            ParentVm.EditCommand.Execute(comm);
+            return;
+        }
         ParentVm.EditCommand.Execute(SelectedCommand);
     }
 
     /// <inheritdoc cref="CommandVm.Delete"/>
     [RelayCommand]
-    private void ExecuteDelete()
+    private void ExecuteDelete(object? obj)
     {
+        if (obj is Command comm && obj is not KeyPressBehavior && !SelectedCommands?.Contains(comm) == true)
+        {
+            ParentVm.DeleteCommand.Execute(comm);
+            return;
+        }
         ParentVm.DeleteCommand.Execute(SelectedCommands);
     }
 

@@ -95,7 +95,7 @@ public class Settings
     /// </summary>
     public async Task SaveAsync()
     {
-        var objAsJson = JsonConvert.SerializeObject(this);
+        var objAsJson = JsonConvert.SerializeObject(this, Formatting.Indented);
         await File.WriteAllTextAsync(Global.ConfigFile, objAsJson);
     }
 
@@ -105,12 +105,12 @@ public class Settings
     /// <returns>Default settings as JSON.</returns>
     public string GetDefaultSettingsAsJson()
     {
-        ShortCutCodes = new List<string>
-        {
+        ShortCutCodes =
+        [
             VirtualKeyCodes.ALTKEY,
             VirtualKeyCodes.SHIFTKEY,
             "q"
-        };
+        ];
 
         CommandLineForegroundColor = "#ebebeb";
         CommandLineBackgroundColor = "#141414";
@@ -126,8 +126,9 @@ public class Settings
         AlwaysOnTop = true;
         AutoStartup = false;
         UseKeyPressBehaviour = false;
+        WriteHistory = false;
 
-        return JsonConvert.SerializeObject(this);
+        return JsonConvert.SerializeObject(this, Formatting.Indented);
     }
 
     /// <summary>

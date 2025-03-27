@@ -72,7 +72,7 @@ Stay informed: follow @datagrid on Twitter or Like http://facebook.com/datagrids
         x:Key="ColorCanvasTextBoxStyle"
         BasedOn="{StaticResource {x:Type TextBox}}"
         TargetType="TextBox">
-        <Setter Property="Background" Value="{DynamicResource SecondaryBackgroundBrush}" />
+        <Setter Property="Background" Value="Transparent" />
         <Setter Property="Height" Value="22" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Style.Triggers>
@@ -156,7 +156,7 @@ Stay informed: follow @datagrid on Twitter or Like http://facebook.com/datagrids
                         BorderBrush="{TemplateBinding BorderBrush}"
                         BorderThickness="{TemplateBinding BorderThickness}"
                         SnapsToDevicePixels="true">
-                        <Grid>
+                        <Grid Background="Transparent">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="Auto" MinHeight="{TemplateBinding MinHeight}" />
@@ -236,12 +236,12 @@ Stay informed: follow @datagrid on Twitter or Like http://facebook.com/datagrids
                             Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}">
-                            <Grid Margin="2">
+                            <Grid Margin="2" Background="Transparent">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto" />
                                     <RowDefinition Height="Auto" />
                                 </Grid.RowDefinitions>
-                                <Grid>
+                                <Grid Background="Transparent">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="200" />
                                         <ColumnDefinition Width="Auto" />
@@ -312,7 +312,7 @@ Stay informed: follow @datagrid on Twitter or Like http://facebook.com/datagrids
                                         Grid.Row="1"
                                         Grid.Column="0"
                                         Margin="0,5,0,0">
-                                        <Grid>
+                                        <Grid Background="Transparent">
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="*" />
                                                 <ColumnDefinition Width="*" />
@@ -331,7 +331,7 @@ Stay informed: follow @datagrid on Twitter or Like http://facebook.com/datagrids
                                                 Height="23"
                                                 Margin="2,0,2,0"
                                                 VerticalAlignment="Center"
-                                                Background="{DynamicResource SecondaryBackgroundBrush}"
+                                                Background="Transparent"
                                                 FontSize="12"
                                                 Foreground="{TemplateBinding Foreground}"
                                                 Style="{DynamicResource ModernTextBox}" />
@@ -355,7 +355,7 @@ Stay informed: follow @datagrid on Twitter or Like http://facebook.com/datagrids
                                     Margin="0,10,0,0"
                                     BorderThickness="1"
                                     ClipToBounds="True">
-                                    <Grid>
+                                    <Grid Background="Transparent">
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="Auto" />
                                             <RowDefinition Height="Auto" />
@@ -484,7 +484,7 @@ Stay informed: follow @datagrid on Twitter or Like http://facebook.com/datagrids
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type colorCanvas:ColorSpectrumSlider}">
-                    <Grid>
+                    <Grid Background="Transparent">
                         <Border
                             Margin="0,8,0,0"
                             BorderBrush="{TemplateBinding BorderBrush}"

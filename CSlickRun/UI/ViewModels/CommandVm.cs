@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.Windows.Controls;
 using CommunityToolkit.Mvvm.Input;
 using CSlickRun.Logic;
 using CSlickRun.UI.Controls;
@@ -45,11 +46,25 @@ public partial class CommandVm : CommandVm_Base
     [RelayCommand]
     private void Delete(object? obj)
     {
-        if (obj is not List<Command> commands)
+        if (obj is List<Command> commands)
         {
-            throw new ArgumentNullException($"Parameter {obj} is not a valid command.");
+            foreach (var command in commands)
+            {
+                if (command.ItemStatus != ItemStatus.Deleted)
+                {
+                    command.OldItemStatus = command.ItemStatus;
+                    command.ItemStatus = ItemStatus.Deleted;
+                }
+                else
+                {
+                    command.ItemStatus = command.OldItemStatus;
+                }
+                var index = Commands.IndexOf(command);
+                Commands.RemoveAt(index);
+                Commands.Insert(index, command);
+            }
         }
-        foreach (var command in commands)
+        else if (obj is Command command)
         {
             if (command.ItemStatus != ItemStatus.Deleted)
             {
@@ -64,9 +79,14 @@ public partial class CommandVm : CommandVm_Base
             Commands.RemoveAt(index);
             Commands.Insert(index, command);
         }
-
+        else
+        {
+            throw new InvalidOperationException($"Object {obj} is not a command");
+        }
         OnPropertyChanged(nameof(Commands));
     }
+
+   
 
     /// <summary>
     /// Saves the commands

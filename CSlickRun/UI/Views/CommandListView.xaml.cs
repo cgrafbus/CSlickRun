@@ -6,7 +6,7 @@ namespace CSlickRun.UI.Views;
 /// <summary>
 /// Interaction logic for CommandListView.xaml
 /// </summary>
-public partial class CommandListView
+public partial class CommandListView : ViewBase
 {
     /// <summary>
     /// Constructor
@@ -16,5 +16,12 @@ public partial class CommandListView
     {
         InitializeComponent();
         DataContext = new CommandListVm(viewModel);
+    }
+
+    /// <inheritdoc />
+    protected override void InitializeKeyPressBehaviours()
+    {
+        base.InitializeKeyPressBehaviours();
+        SearchTextBoxPlaceholder.Text += " (X)";
     }
 }

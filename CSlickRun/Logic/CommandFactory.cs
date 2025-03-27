@@ -109,7 +109,7 @@ public class CommandFactory
     /// </summary>
     public async Task SaveCommands()
     {
-        var commandsAsJson = JsonConvert.SerializeObject(_userCommands);
+        var commandsAsJson = JsonConvert.SerializeObject(_userCommands, Formatting.Indented);
         await File.WriteAllTextAsync(Global.CommandsFile, commandsAsJson);
     }
 }

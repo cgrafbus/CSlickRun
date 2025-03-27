@@ -63,10 +63,38 @@ public partial class ConfigWindow
         WindowState = WindowState.Minimized;
     }
 
+    /// <summary>
+    /// MouseLeftButtonDownEvent
+    /// </summary>
     private void BorderGridAdjuster_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
     {
-        FirstGrid.Width = FirstGrid.Width == new GridLength(0)
-            ? new GridLength(1, GridUnitType.Star)
-            : new GridLength(0);
+        if (FirstGrid.Width == new GridLength(0))
+        {
+            SidePanelMode();
+        }
+        else
+        {
+            FullScreenMode();
+        }
+    }
+
+    /// <summary>
+    /// Closes the sidepanel and expands current view
+    /// </summary>
+    private void FullScreenMode()
+    {
+        FirstGrid.Width = new GridLength(0);
+        SidePanel.Visibility = Visibility.Collapsed;
+        ViewHost.Width = 1563;
+    }
+
+    /// <summary>
+    /// Opens the sidepanel and shrinks current view
+    /// </summary>
+    private void SidePanelMode()
+    {
+        FirstGrid.Width = new GridLength(1, GridUnitType.Star);
+        SidePanel.Visibility = Visibility.Visible;
+        ViewHost.Width = 1440;
     }
 }
