@@ -58,13 +58,12 @@
                 <controls:PanelHeader Margin="0,15,0,0" HeaderLabelContent="Paths to execute" />
                 <DataGrid
                     x:Name="DataGridCommands"
-                    Width="1450"
+                    MinWidth="1350"
                     MinHeight="300"
                     Margin="0,15,0,0"
                     AutoGenerateColumns="False"
                     CanUserDeleteRows="True"
-                    CanUserResizeColumns="False"
-                    ColumnWidth="500"
+                    CanUserResizeColumns="True"
                     GotFocus="DataGridCommands_OnGotFocus"
                     HorizontalScrollBarVisibility="Disabled"
                     ItemsSource="{Binding CommandPaths, Mode=TwoWay}"

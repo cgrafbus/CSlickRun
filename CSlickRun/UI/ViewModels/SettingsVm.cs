@@ -8,6 +8,7 @@ using CommunityToolkit.Mvvm.Input;
 using CSlickRun.Logic;
 using CSlickRun.UI.Windows;
 using IWshRuntimeLibrary;
+using Newtonsoft.Json;
 using File = System.IO.File;
 
 namespace CSlickRun.UI.ViewModels;
@@ -221,6 +222,15 @@ public partial class SettingsVm : SettingsVm_Base
         {
             //ignore
         }
+    }
+
+    [RelayCommand]
+    private async Task Reset(object? obj)
+    {
+        Global.GlobalSettings =
+            JsonConvert.DeserializeObject<Settings>(Global.GlobalSettings.GetDefaultSettingsAsJson()) ?? throw new InvalidOperationException();
+        await Global.GlobalSettings.SaveAsync();
+        Load();
     }
 }
 
