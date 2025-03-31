@@ -1,8 +1,5 @@
-﻿using System.IO;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
-using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using CSlickRun.Logic;
@@ -129,13 +126,16 @@ public static class UIHelper
             {
                 return false;
             }
+
             var behaviourCommand = behavior.Command;
             var behaviourKey = behavior.Key.ToString();
 
-            foreach (var ctrl in FindAllChildrenWithType<Button>(source).Where(ctrl => ctrl.Command == behaviourCommand).Where(ctrl => ctrl.Content.ToString()?.Contains($" ({behaviourKey})") == false))
+            foreach (var ctrl in FindAllChildrenWithType<Button>(source).Where(ctrl => ctrl.Command == behaviourCommand)
+                         .Where(ctrl => ctrl.Content.ToString()?.Contains($" ({behaviourKey})") == false))
             {
                 ctrl.Content += $" ({behaviourKey})";
             }
+
             return true;
         }
         catch
@@ -144,7 +144,3 @@ public static class UIHelper
         }
     }
 }
-
-
-
-
