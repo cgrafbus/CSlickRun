@@ -2,6 +2,7 @@
 using System.Windows.Data;
 using System.Windows.Input;
 using CSlickRun.UI.Controls;
+using CSlickRun.UI.ViewModels;
 using CSlickRun.UI.Views;
 
 namespace CSlickRun.UI.Windows;
@@ -68,33 +69,10 @@ public partial class ConfigWindow
     /// </summary>
     private void BorderGridAdjuster_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
     {
-        if (FirstGrid.Width == new GridLength(0))
+        if (DataContext is ConfigWindowVm vm)
         {
-            SidePanelMode();
-        }
-        else
-        {
-            FullScreenMode();
+            vm.UpdateLayoutCommand.Execute(this);
         }
     }
 
-    /// <summary>
-    /// Closes the sidepanel and expands current view
-    /// </summary>
-    private void FullScreenMode()
-    {
-        FirstGrid.Width = new GridLength(0);
-        SidePanel.Visibility = Visibility.Collapsed;
-        ViewHost.Width = 1563;
-    }
-
-    /// <summary>
-    /// Opens the sidepanel and shrinks current view
-    /// </summary>
-    private void SidePanelMode()
-    {
-        FirstGrid.Width = new GridLength(1, GridUnitType.Star);
-        SidePanel.Visibility = Visibility.Visible;
-        ViewHost.Width = 1440;
-    }
 }

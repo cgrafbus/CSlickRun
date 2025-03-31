@@ -6,7 +6,7 @@ namespace CSlickRun.UI.Views;
 /// <summary>
 /// Interaction logic for CommandListView.xaml
 /// </summary>
-public partial class CommandListView : ViewBase
+public partial class CommandListView : ISubView
 {
     /// <summary>
     /// Constructor
@@ -23,5 +23,20 @@ public partial class CommandListView : ViewBase
     {
         base.InitializeKeyPressBehaviours();
         SearchTextBoxPlaceholder.Text += " (X)";
+    }
+
+    public bool OnExit()
+    {
+        throw new NotImplementedException();
+    }
+
+    public void OnEnter()
+    {
+        throw new NotImplementedException();
+    }
+
+    public void OnLayoutChanged()
+    {
+        throw new NotImplementedException();
     }
 }

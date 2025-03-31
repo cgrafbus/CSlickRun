@@ -229,7 +229,7 @@
             Grid.Row="1"
             Grid.Column="0"
             Width="300"
-            Command="{Binding SaveCommand}"
+            Command="{Binding SaveCommand, Mode=OneWay}"
             Content="Save"
             Style="{DynamicResource ButtonColored}" />
     </Grid>

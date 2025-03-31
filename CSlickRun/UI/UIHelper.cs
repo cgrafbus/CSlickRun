@@ -5,7 +5,9 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using CSlickRun.Logic;
 using CSlickRun.UI.Controls;
+using CSlickRun.UI.Windows;
 
 namespace CSlickRun.UI;
 
@@ -103,6 +105,19 @@ public static class UIHelper
         catch
         {
             return new BitmapImage();
+        }
+    }
+
+    public static async Task ShowToastMessage(string message, ToastMessageType type)
+    {
+        var confWindow = Application.Current.Windows
+            .OfType<ConfigWindow>()
+            .FirstOrDefault();
+
+        if (confWindow != null)
+        {
+            confWindow.Activate();
+            await confWindow.MainToastMessage.Show(message, type);
         }
     }
 

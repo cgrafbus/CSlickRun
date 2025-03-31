@@ -7,7 +7,7 @@ namespace CSlickRun.UI.Views;
 /// <summary>
 /// Interaction logic for EditCommandView.xaml
 /// </summary>
-public partial class EditCommandView
+public partial class EditCommandView : ISubView
 {
     private readonly EditCommandVm _currentVm;
 
@@ -48,6 +48,29 @@ public partial class EditCommandView
     private void DataGridCommands_OnLostFocus(object sender, RoutedEventArgs e)
     {
         _currentVm.PathGridFocused = false;
+    }
+
+    public bool OnExit()
+    {
+        return true;
+    }
+
+    public void OnEnter()
+    {
+        //
+    }
+
+    public void OnLayoutChanged()
+    {
+        UpdateDataGridLayout();
+    }
+
+    private void UpdateDataGridLayout()
+    {
+        foreach (var column in DataGridCommands.Columns)
+        {
+            column.Width = DataGridCommands.Width / DataGridCommands.Columns.Count;
+        }
     }
 }
 

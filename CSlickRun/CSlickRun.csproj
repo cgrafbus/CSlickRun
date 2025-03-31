@@ -12,12 +12,16 @@
   </PropertyGroup>
   <ItemGroup>
     <None Remove="Design\Icons\deleted.png" />
+    <None Remove="Design\Icons\Error.png" />
     <None Remove="Design\Icons\export.png" />
     <None Remove="Design\Icons\file.png" />
     <None Remove="Design\Icons\folder.png" />
     <None Remove="Design\Icons\import.png" />
+    <None Remove="Design\Icons\Info.png" />
     <None Remove="Design\Icons\modified.png" />
     <None Remove="Design\Icons\new.png" />
+    <None Remove="Design\Icons\Question.png" />
+    <None Remove="Design\Icons\Warning.png" />
     <None Remove="Design\Manrope-Regular.ttf" />
   </ItemGroup>
   <ItemGroup>
@@ -38,6 +42,9 @@
     <Content Include="Design\Icons\deleted.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Design\Icons\Error.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Design\Icons\export.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -50,10 +57,19 @@
     <Content Include="Design\Icons\import.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Design\Icons\Info.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Design\Icons\modified.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Design\Icons\new.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Design\Icons\Question.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Design\Icons\Warning.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

@@ -9,7 +9,7 @@ namespace CSlickRun.UI.Views;
 /// <summary>
 /// Interaction logic for SettingsView.xaml
 /// </summary>
-public partial class SettingsView
+public partial class SettingsView : ISubView
 {
     /// <summary>
     /// Constructor
@@ -26,6 +26,11 @@ public partial class SettingsView
     private void OnLoaded(object sender, RoutedEventArgs e)
     {
         LoadSideBar();
+    }
+
+    public void OnLayoutChanged()
+    {
+        //
     }
 
     /// <summary>
@@ -57,7 +62,10 @@ public partial class SettingsView
     /// </summary>
     private void LabelOnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
     {
-        if (sender is not Label label) return;
+        if (sender is not Label label)
+        {
+            return;
+        }
         var header = UIHelper.FindAllChildrenWithType<PanelHeader>(ContentHost)
             .First(header => header?.HeaderLabelContent == (string?)label.Content);
         ScrollToElement(header);
@@ -80,6 +88,15 @@ public partial class SettingsView
     private void UIElement_OnPreviewTextInput(object sender, TextCompositionEventArgs e)
     {
         e.Handled = !int.TryParse(e.Text, out _);
+    }
+
+    public bool OnExit()
+    {
+        return true;
+    }
+
+    public void OnEnter()
+    {
     }
 }
 

@@ -5,6 +5,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CSlickRun.UI.ViewModels.Base;
 using CSlickRun.UI.Views;
+using ViewBase = CSlickRun.UI.Views.ViewBase;
 
 namespace CSlickRun.UI.ViewModels;
 
@@ -15,7 +16,37 @@ public partial class ConfigWindowVm : ViewModelBase
 {
     [ObservableProperty] 
     [NotifyPropertyChangedFor(nameof(CurrentViewIsListView))]
-    private UserControl? currentView;
+    private ViewBase? currentView;
+
+    [ObservableProperty]
+    private GridLength firstColLength;
+
+    [ObservableProperty]
+    private Visibility sidePanelVisibility;
+
+    [ObservableProperty]
+    private double viewHostWidth;
+
+    [RelayCommand]
+    private void UpdateLayout()
+    {
+        if (FirstColLength == new GridLength(0))
+        {
+            FirstColLength = new (1, GridUnitType.Star);
+            SidePanelVisibility = Visibility.Visible;
+            ViewHostWidth = 1440;
+        }
+        else
+        {
+            FirstColLength = new(0);
+            SidePanelVisibility = Visibility.Collapsed;
+            ViewHostWidth = 1563;
+        }
+        if (CurrentView is ISubView view)
+        {
+            view.OnLayoutChanged();
+        }
+    }
 
     
 
@@ -29,6 +60,9 @@ public partial class ConfigWindowVm : ViewModelBase
     /// </summary>
     public ConfigWindowVm()
     {
+        FirstColLength = new(1, GridUnitType.Star);
+        SidePanelVisibility = Visibility.Visible;
+        ViewHostWidth = 1440;
     }
 
     /// <summary>
@@ -38,12 +72,24 @@ public partial class ConfigWindowVm : ViewModelBase
     [RelayCommand]
     private void Navigation(object? obj)
     {
-        if (obj is Func<UserControl> viewFactory)
+        if (obj is not Func<ViewBase> viewFactory)
         {
-            CurrentView = viewFactory();
-            Keyboard.ClearFocus();
-            Keyboard.Focus(CurrentView);
-            CurrentView.Focus();
+            return;
+        }
+        if (CurrentView is ISubView oldView)
+        {
+            if (!oldView.OnExit())
+            {
+                return;
+            }
+        }
+        CurrentView = viewFactory();
+        Keyboard.ClearFocus();
+        Keyboard.Focus(CurrentView);
+        CurrentView.Focus();
+        if (CurrentView is ISubView newView)
+        {
+            newView.OnEnter();
         }
     }
 
@@ -54,21 +100,21 @@ public partial class ConfigWindowVm : ViewModelBase
         {
             return;
         }
-        switch (vm.CurrentCommandView?.DataContext)
-        {
-            case CommandListVm listVm:
-                await listVm.ExportCommand.ExecuteAsync(null);
-                return;
-        }
+       // switch (vm.CurrentCommandView?.DataContext)
+        //{
+          //  case CommandListVm listVm:
+          //      await listVm.ExportCommand.ExecuteAsync(null);
+           //     return;
+        //}
     }
 
     [RelayCommand]
     private async Task ImportCommands()
     {
-        if (CurrentView?.DataContext is not CommandVm { CurrentCommandView.DataContext:CommandListVm listVm })
+        /*if (CurrentView?.DataContext is not CommandVm { CurrentCommandView.DataContext:CommandListVm listVm })
         {
             return;
         }
-        await listVm.ImportCommand.ExecuteAsync(null);
+        await listVm.ImportCommand.ExecuteAsync(null);*/
     }
 }

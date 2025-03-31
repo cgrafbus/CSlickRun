@@ -1,4 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CSlickRun.Logic;
+using Newtonsoft.Json;
 
 namespace CSlickRun.UI.ViewModels.Base;
 
@@ -7,4 +9,12 @@ namespace CSlickRun.UI.ViewModels.Base;
 /// </summary>
 public partial class ViewModelBase : ObservableObject
 {
+    public ViewModelBase()
+    {
+    }
+
+    protected async Task OnSaveFinished()
+    {
+        await UIHelper.ShowToastMessage("Save successful", ToastMessageType.Info);
+    }
 }

@@ -18,11 +18,12 @@ namespace CSlickRun.UI.Views
     /// <summary>
     /// Interaction logic for HelpView.xaml
     /// </summary>
-    public partial class HelpView : UserControl
+    public partial class HelpView 
     {
         public HelpView()
         {
             InitializeComponent();
         }
+
     }
 }

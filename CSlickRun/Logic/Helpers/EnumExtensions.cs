@@ -12,7 +12,7 @@ public static class EnumExtensions
     /// </summary>
     /// <param name="e">The enum value.</param>
     /// <returns>The image path from the attribute, or the enum value as a string if no attribute is found.</returns>
-    public static string? GetImagePathFromAttribute(this Enum? e)
+    public static string? GetImagePathFromAttribute(this Enum e)
     {
         var attribute = e.GetAttribute<ImageAttribute>();
         return attribute == null ? e.ToString() : attribute.ImagePath;

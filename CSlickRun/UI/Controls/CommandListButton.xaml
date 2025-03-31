@@ -16,7 +16,6 @@
             <ColumnDefinition Width="1*" MinWidth="60" />
             <ColumnDefinition Width="18*" />
             <ColumnDefinition Width="2*" MinWidth="150" />
-            <ColumnDefinition Width="2*" MinWidth="150" />
         </Grid.ColumnDefinitions>
         <StackPanel
             Grid.Column="0"
@@ -46,19 +45,8 @@
             Style="{DynamicResource ModernTextBlock}"
             Text="{Binding Name}" />
         <Button
-            x:Name="EditButton"
-            Grid.Column="2"
-            Background="Transparent"
-            Command="{Binding EditCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
-            CommandParameter="{Binding}"
-            Content="Edit"
-            Focusable="False"
-            FontSize="22"
-            IsHitTestVisible="True"
-            Style="{DynamicResource ButtonNoHover}" />
-        <Button
             x:Name="DeleteButton"
-            Grid.Column="3"
+            Grid.Column="2"
             Background="Transparent"
             Command="{Binding DeleteCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
             CommandParameter="{Binding}"

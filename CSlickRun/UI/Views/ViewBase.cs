@@ -62,6 +62,7 @@ public class ViewBase : UserControl
         Application.Current.Dispatcher.Invoke(FocusThing);
     }
 
+
     /// <summary>
     /// Sets focus to the current element.
     /// </summary>

@@ -85,7 +85,7 @@ public partial class EditCommandVm : ViewModelBase
             ParentVm.Commands.Add(CurrentCommand);
         }
 
-        ParentVm.CurrentCommandView = new CommandListView(ParentVm);
+        //ParentVm.CurrentCommandView = new CommandListView(ParentVm);
     }
 
     /// <summary>
@@ -120,7 +120,7 @@ public partial class EditCommandVm : ViewModelBase
     [RelayCommand]
     private void GoBack(object? obj)
     {
-        ParentVm.CurrentCommandView = new CommandListView(ParentVm);
+       // ParentVm.CurrentCommandView = new CommandListView(ParentVm);
     }
 
     /// <summary>

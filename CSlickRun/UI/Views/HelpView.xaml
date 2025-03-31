@@ -1,4 +1,4 @@
-﻿<UserControl
+﻿<local:ViewBase
     x:Class="CSlickRun.UI.Views.HelpView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -33,4 +33,4 @@
             <TextBlock Foreground="{DynamicResource SecondaryAccentBrush}" Text="Important: you must always press the 'Save'-Button in the ListView to finally save your changes." />
         </StackPanel>
     </Grid>
-</UserControl>
+</local:ViewBase>

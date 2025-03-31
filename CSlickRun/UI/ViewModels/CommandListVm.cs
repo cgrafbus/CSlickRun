@@ -118,12 +118,13 @@ public partial class CommandListVm : ViewModelBase
     [RelayCommand]
     private void ExecuteEdit(object? obj)
     {
-        if (obj is Command comm)
+        /*if (obj is Command comm)
         {
             ParentVm.EditCommand.Execute(comm);
             return;
         }
         ParentVm.EditCommand.Execute(SelectedCommand);
+        */
     }
 
     /// <inheritdoc cref="CommandVm.Delete"/>
@@ -149,7 +150,7 @@ public partial class CommandListVm : ViewModelBase
     [RelayCommand]
     private void Add()
     {
-        ParentVm.AddCommand.Execute(new Command());
+        //ParentVm.AddCommand.Execute(new Command());
     }
 
     [RelayCommand]

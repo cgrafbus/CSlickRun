@@ -44,7 +44,7 @@ public class CommandFactory
     /// Exports the given commands to a file
     /// </summary>
     /// <param name="commands">Commands to export</param>
-    public static async Task ExportCommands(List<Command?> commands)
+    public static async Task ExportCommands(List<Command> commands)
     {
         var commandAsJson = JsonConvert.SerializeObject(commands, Formatting.Indented);
         var saveFileDialog = new SaveFileDialog

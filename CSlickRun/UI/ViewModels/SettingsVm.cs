@@ -1,9 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
 using System.DirectoryServices.ActiveDirectory;
 using System.IO;
 using System.Reflection;
 using System.Windows;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CSlickRun.Logic;
 using CSlickRun.UI.Windows;
@@ -20,6 +22,7 @@ public partial class SettingsVm : SettingsVm_Base
 {
     private const string AppName = "CSlickRun";
     private static readonly string StartupFolderPath = Environment.GetFolderPath(Environment.SpecialFolder.Startup);
+
 
     /// <summary>
     /// Constructor
@@ -72,25 +75,26 @@ public partial class SettingsVm : SettingsVm_Base
     {
         if (!CheckIfShortCutValid())
         {
-            MessageBox.Show($"Shortcut {Shortcut} not valid, save failed.", "Error", MessageBoxButton.OK,
-                MessageBoxImage.Error);
+            await UIHelper.ShowToastMessage($"Shortcut {Shortcut} not valid, save failed.", ToastMessageType.Error);
             return;
         }
-
         if (!CheckIfFieldsValid())
         {
-            MessageBox.Show("Fields not valid, save failed.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            await UIHelper.ShowToastMessage("Fields not valid, save failed", ToastMessageType.Error);
             return;
         }
 
         Mapper.MapClasses(this, Global.GlobalSettings);
-        var codeList = BuildShortCodeList();
+        var codeList = BuildShortCodeList();                                         
+
         Global.GlobalSettings.ShortCutCodes = codeList;
 
         await Global.GlobalSettings.SaveAsync();
         ((CommandLineVm)(((CommandLineWindow)(Application.Current.MainWindow!)).DataContext)).InitUI();
         Global.ResetGlobalHotkey();
         ApplyAutoStartup();
+        await OnSaveFinished();
+        Load();
     }
 
     /// <summary>

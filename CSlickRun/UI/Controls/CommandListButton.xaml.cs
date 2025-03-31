@@ -40,10 +40,6 @@ public partial class CommandListButton
         {
             return;
         }
-        if (EditButton.Content.ToString()?.Contains(" (E)") == false)
-        {
-            EditButton.Content += " (E)";
-        }
         if (DeleteButton.Content.ToString()?.Contains(" (Q)") == false)
         {
             DeleteButton.Content += " (Q)";
